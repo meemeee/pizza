@@ -77,4 +77,4 @@ class OrderDinnerPlatters(models.Model):
     price = models.FloatField()
 
     def __str__(self):
-        return f"{self.name} at {self.price}"
+        return f"{self.size} {self.name} at {self.price}"

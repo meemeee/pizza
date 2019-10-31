@@ -9,21 +9,16 @@ Menu
 <h4>Regular</h4>
 <ul>
     {% for item in r_pizzas %}
-    <li>item.topping_choice</li>
+    <li>{{ item.topping_choice }}</li>
     {% endfor %}
 </ul>
 
-<h4>Sicilian</h4>
-<ul>
-    {% for item in s_pizzas %}
-    <li>item.topping_choice</li>
-    {% endfor %}
-</ul>
+
 
 <h2>Subs</h2>
 <ul>
     {% for sub in subs %}
-    <li>sub.name</li>
+    <li>{{ sub.name }}</li>
     {% endfor %}
 </ul>
 

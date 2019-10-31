@@ -14,3 +14,9 @@ urlpatterns += [
 urlpatterns += [
     path('accounts/register/', views.register, name="register")
 ]
+
+# Add path for Menu
+
+urlpatterns += [
+    path('menu/', views.menu, name="menu")
+]

@@ -33,13 +33,34 @@ def register(request):
     return render(request, "registration/register.html", {'form': form})
 
 def menu(request):
-    context = {
-        "r_pizzas": OrderPizza.objects.filter(name=Regular)
-        "s_pizzas" : OrderPizza.objects.filter(name=Sicilian)
-        "subs": OrderSubs.objects.all()
-        "pastas": OrderPasta.objects.all()
-        "salads": OrderSalads.objects.all()
+        
+    r_pizzas = OrderPizza.objects.filter(name__name="Regular")
+
+    #
+    regular = []
+    for option in ['Cheese', '1 topping', '2 toppings', '3 toppings', 'Special']:
+        p = {'choice': option}
+        for item in r_pizzas:
+            if str(item.topping_choice).strip() == option:
+                if str(item.size).strip() == "Small":
+                    p['small'] = item.price
+                else:
+                    p['large'] = item.price
+        
+        regular.append(p)
+
+    print(regular)
+                
+            
+    context = {   
+        "r_pizzas": OrderPizza.objects.filter(name__name="Regular"), # passing the "name" - foreign key of "name" in OrderPizza
+        "s_pizzas": OrderPizza.objects.filter(name__name="Sicilian"),
+        "subs": OrderSubs.objects.all(),
+        "pastas": OrderPasta.objects.all(),
+        "salads": OrderSalads.objects.all(),
         "dinnerplatters": OrderDinnerPlatters.objects.all()
     }
 
-    return render(request, "orders/menu.html", context)
+    return render(request, "menu.html", context)
+
+    # https://stackoverflow.com/questions/16633566/how-to-render-lists-of-column-values-into-a-table-using-a-template-such-as-jinj

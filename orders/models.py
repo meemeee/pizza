@@ -78,3 +78,5 @@ class OrderDinnerPlatters(models.Model):
 
     def __str__(self):
         return f"{self.size} {self.name} at {self.price}"
+
+

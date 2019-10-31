@@ -1,5 +1,9 @@
 {% extends "base_generic.html" %}
 
+{% block title %}
+Log in
+{% endblock %}
+
 {% block content %}
 
 {% if form.errors %}
@@ -33,8 +37,5 @@
     <input type="submit" value="login" />
     <input type="hidden" name="next" value="{{ next }}" />
 </form>
-
-{# Assumes you setup the password_reset view in your URLconf #}
-<p><a href="{% url 'password_reset' %}">Lost password?</a></p>
 
 {% endblock %}

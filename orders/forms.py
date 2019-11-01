@@ -12,3 +12,13 @@ class RegisterForm(UserCreationForm):
     class Meta:
         model = User
         fields = ('username', 'first_name', 'last_name', 'email', 'password1', 'password2', )
+
+class OrderDish(forms.Form):
+    size_choices = [
+        ('none', 'none'),
+        ('small', 'small'),
+        ('large', 'large'),
+    ]
+    topping = ???
+    size = forms.CharField(choices=size_choices, default='none', required=False)
+    quantity = forms.IntegerField(max_value=10, min_value=1, default=1)

@@ -20,7 +20,9 @@ Menu
         {% for item in r_pizzas %}
         <tr>
             <td>
-                <i id="regular_{{ item.id }}" class="fa fa-plus-circle"></i>
+                <a href="/menu/regular_{{ item.id }}">
+                    <i id="regular_{{ item.id }}" class="fa fa-plus-circle"></i>
+                </a>
             </td>
             <td>{{ item.type }}</td>
             <td>{{ item.small }}</td>
@@ -46,7 +48,9 @@ Menu
         {% for item in s_pizzas %}
         <tr>
             <td>
-                <i id="sicilian_{{ item.id }}" class="fa fa-plus-circle"></i>
+                <a href="/menu/sicilian_{{ item.id }}">
+                    <i id="sicilian_{{ item.id }}" class="fa fa-plus-circle"></i>
+                </a>
             </td>
             <td>{{ item.type }}</td>
             <td>{{ item.small }}</td>
@@ -72,7 +76,9 @@ Menu
         {% for item in subs %}
         <tr>
             <td>
-                <i id="sub_{{ item.id }}" class="fa fa-plus-circle"></i>
+                <a href="/menu/sub_{{ item.id }}">
+                    <i id="sub_{{ item.id }}" class="fa fa-plus-circle"></i>
+                </a>
             </td>
             <td>{{ item.type }}</td>
             <td>{{ item.small }}</td>
@@ -97,7 +103,9 @@ Menu
         {% for item in pastas %}
         <tr>
             <td>
-                <i id="pasta_{{ item.id }}" class="fa fa-plus-circle"></i>
+                <a href="/menu/pasta_{{ item.id }}">
+                    <i id="pasta_{{ item.id }}" class="fa fa-plus-circle"></i>
+                </a>
             </td>
             <td>{{ item.name }}</td>
             <td>{{ item.price }}</td>
@@ -121,7 +129,9 @@ Menu
         {% for item in salads %}
         <tr>
             <td>
-                <i id="salad_{{ item.id }}" class="fa fa-plus-circle"></i>
+                <a href="/menu/salad_{{ item.id }}">
+                    <i id="salad_{{ item.id }}" class="fa fa-plus-circle"></i>
+                </a>
             </td>
             <td>{{ item.name }}</td>
             <td>{{ item.price }}</td>
@@ -146,7 +156,9 @@ Menu
         {% for item in dinnerplatters %}
         <tr>
             <td>
-                <i id="dp_{{ item.id }}"class="fa fa-plus-circle"></i>
+                <a href="/menu/dp_{{ item.id }}">
+                    <i id="dp_{{ item.id }}" class="fa fa-plus-circle"></i>
+                </a>
             </td>
             <td>{{ item.type }}</td>
             <td>{{ item.small }}</td>

@@ -84,9 +84,14 @@ def menu(request):
         subs_menu.append(p)
        
 
-    pastas_menu = OrderPasta.objects.all().values('id', 'name','price')
+    pasta_menu = OrderPasta.objects.all().values('id', 'name', 'price')
+    for item in pasta_menu:
+        item['price'] = format(item['price'], '.2f')
+   
 
     salads_menu = OrderSalads.objects.all().values('id', 'name','price')
+    for item in salads_menu:
+        item['price'] = format(item['price'], '.2f')
 
 
     dinnerplatters = OrderDinnerPlatters.objects.all()
@@ -109,7 +114,7 @@ def menu(request):
         "r_pizzas": regular_menu, 
         "s_pizzas": sicilian_menu,
         "subs": subs_menu,
-        "pastas": pastas_menu,
+        "pastas": pasta_menu,
         "salads": salads_menu,
         "dinnerplatters": dinnerplatters_menu
     }

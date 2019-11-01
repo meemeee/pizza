@@ -36,12 +36,13 @@ def menu(request):
 
     # Get price infomation for Menu
     r_pizzas = OrderPizza.objects.filter(name__name="Regular") # passing the "name" - foreign key of "name" in OrderPizza
-    topping_choice = ToppingChoice.objects.all().values_list('topping', flat=True)
+    topping_choice = ToppingChoice.objects.all().values('id','topping')
     regular_menu = []
+
     for option in topping_choice:
-        p = {'choice': option}
+        p = {'id': option['id'], 'type': option['topping']}
         for item in r_pizzas:
-            if str(item.topping_choice).strip() == option:
+            if str(item.topping_choice).strip() == option['topping']:
                 if str(item.size).strip() == "Small":
                     # Modify price to display 2 decimal places
                     p['small'] = format(item.price, '.2f')
@@ -49,55 +50,61 @@ def menu(request):
                     p['large'] = format(item.price, '.2f')
         
         regular_menu.append(p)
-    
+
+    print(regular_menu)
+
     s_pizzas = OrderPizza.objects.filter(name__name="Sicilian")
     sicilian_menu = []
+
     for option in topping_choice:
-        p = {'choice': option}
+        p = {'id': option['id'], 'type': option['topping']}
         for item in s_pizzas:
-            if str(item.topping_choice).strip() == option:
+            if str(item.topping_choice).strip() == option['topping']:
                 if str(item.size).strip() == "Small":
                     # Modify price to display 2 decimal places
                     p['small'] = format(item.price, '.2f')
                 else:
                     p['large'] = format(item.price, '.2f')
         sicilian_menu.append(p)
-    
+        
+
     subs = OrderSubs.objects.all()
     subs_menu = []
-    subs_choice = SubsType.objects.all().values_list('name', flat=True)
-
+    subs_choice = SubsType.objects.exclude(steak_subs_extra=True).values('id', 'name')
+    
     for option in subs_choice:
-        p = {'choice': option}
+        p = {'id': option['id'], 'type': option['name']}
         for item in subs:
-            if str(item.name).strip() == option:
+            if str(item.name).strip() == option['name']:
                 if str(item.size).strip() == "Small":
                     # Modify price to display 2 decimal places
                     p['small'] = format(item.price, '.2f')
                 else:
                     p['large'] = format(item.price, '.2f')
         subs_menu.append(p)
-   
-    pastas_menu = OrderPasta.objects.all().values('name','price')
+       
 
-    salads_menu = OrderSalads.objects.all().values('name','price')
+    pastas_menu = OrderPasta.objects.all().values('id', 'name','price')
+
+    salads_menu = OrderSalads.objects.all().values('id', 'name','price')
 
 
     dinnerplatters = OrderDinnerPlatters.objects.all()
     dinnerplatters_menu = []
-    dinnerplatters_choice = DinnerPlattersType.objects.all().values_list('name', flat=True)
-
+    dinnerplatters_choice = DinnerPlattersType.objects.all().values('id', 'name')
+    
     for option in dinnerplatters_choice:
-        p = {'choice': option}
+        p = {'id': option['id'], 'type': option['name']}
         for item in dinnerplatters:
-            if str(item.name).strip() == option:
+            if str(item.name).strip() == option['name']:
                 if str(item.size).strip() == "Small":
                     # Modify price to display 2 decimal places
                     p['small'] = format(item.price, '.2f')
                 else:
                     p['large'] = format(item.price, '.2f')
         dinnerplatters_menu.append(p)
- 
+        
+
     context = {   
         "r_pizzas": regular_menu, 
         "s_pizzas": sicilian_menu,

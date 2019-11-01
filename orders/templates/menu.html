@@ -4,22 +4,155 @@
 Menu
 {% endblock %}
 
-{% block content %}
-<h2>Pizza</h2>
+{% block main %}
+<h2>PIZZA</h2>
 <h4>Regular</h4>
-<ul>
-    {% for item in r_pizzas %}
-    <li>{{ item.topping_choice }}</li>
-    {% endfor %}
-</ul>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col"></th>
+            <th scope="col">Type</th>
+            <th scope="col">Small</th>
+            <th scope="col">Large</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in r_pizzas %}
+        <tr>
+            <td>
+                <i id="regular_{{ item.id }}" class="fa fa-plus-circle"></i>
+            </td>
+            <td>{{ item.type }}</td>
+            <td>{{ item.small }}</td>
+            <td>{{ item.large }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<br>
 
 
+<h4>Sicilian</h4>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col"></th>
+            <th scope="col">Type</th>
+            <th scope="col">Small</th>
+            <th scope="col">Large</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in s_pizzas %}
+        <tr>
+            <td>
+                <i id="sicilian_{{ item.id }}" class="fa fa-plus-circle"></i>
+            </td>
+            <td>{{ item.type }}</td>
+            <td>{{ item.small }}</td>
+            <td>{{ item.large }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<br>
 
-<h2>Subs</h2>
-<ul>
-    {% for sub in subs %}
-    <li>{{ sub.name }}</li>
-    {% endfor %}
-</ul>
 
+<h2>SUBS</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col"></th>
+            <th scope="col">Type</th>
+            <th scope="col">Small</th>
+            <th scope="col">Large</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in subs %}
+        <tr>
+            <td>
+                <i id="subs_{{ item.id }}" class="fa fa-plus-circle"></i>
+            </td>
+            <td>{{ item.type }}</td>
+            <td>{{ item.small }}</td>
+            <td>{{ item.large }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<br>
+
+
+<h2>PASTA</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col"></th>
+            <th scope="col">Type</th>
+            <th scope="col">Price</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in pastas %}
+        <tr>
+            <td>
+                <i id="pasta_{{ item.id }}" class="fa fa-plus-circle"></i>
+            </td>
+            <td>{{ item.name }}</td>
+            <td>{{ item.price }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<br>
+
+
+<h2>SALADS</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col"></th>
+            <th scope="col">Type</th>
+            <th scope="col">Price</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in salads %}
+        <tr>
+            <td>
+                <i id="salads_{{ item.id }}" class="fa fa-plus-circle"></i>
+            </td>
+            <td>{{ item.name }}</td>
+            <td>{{ item.price }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<br>
+
+
+<h2>Dinner Platters</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col"></th>
+            <th scope="col">Type</th>
+            <th scope="col">Small</th>
+            <th scope="col">Large</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in dinnerplatters %}
+        <tr>
+            <td>
+                <i id="dinnerp_{{ item.id }}"class="fa fa-plus-circle"></i>
+            </td>
+            <td>{{ item.type }}</td>
+            <td>{{ item.small }}</td>
+            <td>{{ item.large }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
 {% endblock %}

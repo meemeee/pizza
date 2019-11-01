@@ -1,6 +1,6 @@
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
-from django.http import HttpResponse
+from django.http import HttpResponse, Http404
 from django.shortcuts import render, redirect
 
 from .forms import RegisterForm
@@ -115,3 +115,29 @@ def menu(request):
     }
 
     return render(request, "menu.html", context)
+
+def order(request, item_id):
+    item = item_id.split("_")
+    dish = {}
+    
+    short = ['regular', 'sicilian', 'sub', 'pasta', 'salad', 'dp']
+    full = ['Regular Pizza', 'Sicilian Pizza', 'Sub', 'Pasta', 'Salad', 'Dinner Platter']
+    database = [ToppingChoice, ToppingChoice, SubsType, OrderPasta, OrderSalads, DinnerPlattersType]
+    
+    for i in range(len(short)):
+        if item[0] == short[i]:
+            dish['name'] = full[i]
+            try:
+                if item[0] in ['pasta', 'salad']:
+                    # Convert to string to avoid <databse:result> format
+                    dish['type'] = str(database[i].objects.get(pk=item[1]).name)
+                else:
+                    dish['type'] = str(database[i].objects.get(pk=item[1]))
+            except database[i].DoesNotExist:
+                raise Http404("Dish does not exist")
+            
+            break
+    context = {
+        "dish": dish
+    } 
+    return render(request, "single_item.html", context)

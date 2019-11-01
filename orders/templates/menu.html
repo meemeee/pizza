@@ -1,6 +1,6 @@
 {% extends "base_generic.html" %}
 
-{% block title %}
+{% block tittle %}
 Menu
 {% endblock %}
 
@@ -72,7 +72,7 @@ Menu
         {% for item in subs %}
         <tr>
             <td>
-                <i id="subs_{{ item.id }}" class="fa fa-plus-circle"></i>
+                <i id="sub_{{ item.id }}" class="fa fa-plus-circle"></i>
             </td>
             <td>{{ item.type }}</td>
             <td>{{ item.small }}</td>
@@ -121,7 +121,7 @@ Menu
         {% for item in salads %}
         <tr>
             <td>
-                <i id="salads_{{ item.id }}" class="fa fa-plus-circle"></i>
+                <i id="salad_{{ item.id }}" class="fa fa-plus-circle"></i>
             </td>
             <td>{{ item.name }}</td>
             <td>{{ item.price }}</td>
@@ -146,7 +146,7 @@ Menu
         {% for item in dinnerplatters %}
         <tr>
             <td>
-                <i id="dinnerp_{{ item.id }}"class="fa fa-plus-circle"></i>
+                <i id="dp_{{ item.id }}"class="fa fa-plus-circle"></i>
             </td>
             <td>{{ item.type }}</td>
             <td>{{ item.small }}</td>

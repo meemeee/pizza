@@ -36,6 +36,12 @@ class SubsType(models.Model):
     def __str__(self):
         return f"{self.name}"  
 
+class DinnerPlattersType(models.Model):
+    name = models.CharField(max_length=64) 
+
+    def __str__(self):
+        return f"{self.name}" 
+
 class OrderPizza(models.Model):
     name = models.ForeignKey(PizzaType, on_delete=models.CASCADE)
     topping_choice = models.ForeignKey(ToppingChoice, on_delete=models.CASCADE)
@@ -72,7 +78,7 @@ class OrderSalads(models.Model):
         return f"{self.name} at {self.price}"
 
 class OrderDinnerPlatters(models.Model):
-    name = models.CharField(max_length=64)
+    name = models.ForeignKey(DinnerPlattersType, on_delete=models.CASCADE)
     size = models.ForeignKey(Size, on_delete=models.CASCADE)
     price = models.FloatField()
 

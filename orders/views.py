@@ -33,34 +33,78 @@ def register(request):
     return render(request, "registration/register.html", {'form': form})
 
 def menu(request):
-        
-    r_pizzas = OrderPizza.objects.filter(name__name="Regular")
 
-    #
-    regular = []
-    for option in ['Cheese', '1 topping', '2 toppings', '3 toppings', 'Special']:
+    # Get price infomation for Menu
+    r_pizzas = OrderPizza.objects.filter(name__name="Regular") # passing the "name" - foreign key of "name" in OrderPizza
+    topping_choice = ToppingChoice.objects.all().values_list('topping', flat=True)
+    regular_menu = []
+    for option in topping_choice:
         p = {'choice': option}
         for item in r_pizzas:
             if str(item.topping_choice).strip() == option:
                 if str(item.size).strip() == "Small":
-                    p['small'] = item.price
+                    # Modify price to display 2 decimal places
+                    p['small'] = format(item.price, '.2f')
                 else:
-                    p['large'] = item.price
+                    p['large'] = format(item.price, '.2f')
         
-        regular.append(p)
+        regular_menu.append(p)
+    
+    s_pizzas = OrderPizza.objects.filter(name__name="Sicilian")
+    sicilian_menu = []
+    for option in topping_choice:
+        p = {'choice': option}
+        for item in s_pizzas:
+            if str(item.topping_choice).strip() == option:
+                if str(item.size).strip() == "Small":
+                    # Modify price to display 2 decimal places
+                    p['small'] = format(item.price, '.2f')
+                else:
+                    p['large'] = format(item.price, '.2f')
+        sicilian_menu.append(p)
+    
+    subs = OrderSubs.objects.all()
+    subs_menu = []
+    subs_choice = SubsType.objects.all().values_list('name', flat=True)
 
-    print(regular)
-                
-            
+    for option in subs_choice:
+        p = {'choice': option}
+        for item in subs:
+            if str(item.name).strip() == option:
+                if str(item.size).strip() == "Small":
+                    # Modify price to display 2 decimal places
+                    p['small'] = format(item.price, '.2f')
+                else:
+                    p['large'] = format(item.price, '.2f')
+        subs_menu.append(p)
+   
+    pastas_menu = OrderPasta.objects.all().values('name','price')
+
+    salads_menu = OrderSalads.objects.all().values('name','price')
+
+
+    dinnerplatters = OrderDinnerPlatters.objects.all()
+    dinnerplatters_menu = []
+    dinnerplatters_choice = DinnerPlattersType.objects.all().values_list('name', flat=True)
+
+    for option in dinnerplatters_choice:
+        p = {'choice': option}
+        for item in dinnerplatters:
+            if str(item.name).strip() == option:
+                if str(item.size).strip() == "Small":
+                    # Modify price to display 2 decimal places
+                    p['small'] = format(item.price, '.2f')
+                else:
+                    p['large'] = format(item.price, '.2f')
+        dinnerplatters_menu.append(p)
+ 
     context = {   
-        "r_pizzas": OrderPizza.objects.filter(name__name="Regular"), # passing the "name" - foreign key of "name" in OrderPizza
-        "s_pizzas": OrderPizza.objects.filter(name__name="Sicilian"),
-        "subs": OrderSubs.objects.all(),
-        "pastas": OrderPasta.objects.all(),
-        "salads": OrderSalads.objects.all(),
-        "dinnerplatters": OrderDinnerPlatters.objects.all()
+        "r_pizzas": regular_menu, 
+        "s_pizzas": sicilian_menu,
+        "subs": subs_menu,
+        "pastas": pastas_menu,
+        "salads": salads_menu,
+        "dinnerplatters": dinnerplatters_menu
     }
 
     return render(request, "menu.html", context)
-
-    # https://stackoverflow.com/questions/16633566/how-to-render-lists-of-column-values-into-a-table-using-a-template-such-as-jinj

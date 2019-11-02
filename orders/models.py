@@ -49,7 +49,7 @@ class OrderPizza(models.Model):
     price = models.FloatField()
 
     def __str__(self):
-        return f"{self.size} {self.name}, {self.topping_choice}, at {self.price}"
+        return f"{self.name}, {self.size}, {self.topping_choice}, {self.price}"
     
 class OrderSubs(models.Model):
     name = models.ForeignKey(SubsType, on_delete=models.CASCADE)
@@ -61,21 +61,21 @@ class OrderSubs(models.Model):
     price = models.FloatField()
     
     def __str__(self):
-        return f"{self.size} {self.name} at {self.price}"
+        return f"{self.name}, {self.size}, {self.price}"
 
 class OrderPasta(models.Model):
     name = models.CharField(max_length=64)
     price = models.FloatField()
 
     def __str__(self):
-        return f"{self.name} at {self.price}"
+        return f"{self.name}, {self.price}"
 
 class OrderSalads(models.Model):
     name = models.CharField(max_length=64)
     price = models.FloatField()
 
     def __str__(self):
-        return f"{self.name} at {self.price}"
+        return f"{self.name}, {self.price}"
 
 class OrderDinnerPlatters(models.Model):
     name = models.ForeignKey(DinnerPlattersType, on_delete=models.CASCADE)
@@ -83,6 +83,25 @@ class OrderDinnerPlatters(models.Model):
     price = models.FloatField()
 
     def __str__(self):
-        return f"{self.size} {self.name} at {self.price}"
+        return f"{self.name}, {self.size}, {self.price}"
 
 
+class Order(models.Model):
+    name = models.CharField(max_length=64, null=False)
+    
+    size_choices = [
+        ('na', 'none'),
+        ('s', 'small'),
+        ('l', 'large'),
+    ]
+    size = models.CharField(choices=size_choices, max_length=1, blank=True)
+    
+    quantity_choices = [(i, i) for i in range (1, 11)]
+    quantity = models.IntegerField(choices=quantity_choices, default=1)
+
+    topping = models.ManyToManyField(Toppings, blank=True)
+
+    price = models.IntegerField()
+
+    def __str__(self):
+        return f"{self.name}, {self.size}, {self.topping}, {self.quantity}, {self.price}"

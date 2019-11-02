@@ -13,4 +13,5 @@ admin.site.register(OrderSubs)
 admin.site.register(OrderPasta)
 admin.site.register(OrderSalads)
 admin.site.register(OrderDinnerPlatters)
+admin.site.register(Order)
 

@@ -9,7 +9,7 @@
 
 <form action="" method="post">
     {% csrf_token %}
-    {% for field in form %}
+    <!-- {% for field in form %}
         <p>
             {{ field.label_tag }}<br>
             {{ field }}
@@ -18,7 +18,17 @@
                 <p style="color: red">{{ error }}</p>
             {% endfor %}
         </p>
-    {% endfor %}
-    <button type="submit">Add to cart</button>
+    {% endfor %} -->
+    <div class="form-group">
+        <div class="p-2 flex-grow-1 bd-highlight">
+            <input class="form-control" id="id_name" name="name" 
+            value="{{ dish.name }}: {{ dish.type }}" maxlength="64" type="hidden">
+        </div>
+        <div class="p-2 bd-highlight">
+            <button class="btn btn-primary" type="submit">Add to cart</button>   
+        </div>
+    </div>
+    <!-- <br>
+    <button type="submit">Add to cart</button> -->
 </form>
 {% endblock %}

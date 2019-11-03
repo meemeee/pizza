@@ -43,6 +43,7 @@ class DinnerPlattersType(models.Model):
         return f"{self.name}" 
 
 class OrderPizza(models.Model):
+    ref = models.CharField(max_length=16, default='na')
     name = models.ForeignKey(PizzaType, on_delete=models.CASCADE)
     topping_choice = models.ForeignKey(ToppingChoice, on_delete=models.CASCADE)
     size = models.ForeignKey(Size, on_delete=models.CASCADE)
@@ -50,20 +51,18 @@ class OrderPizza(models.Model):
 
     def __str__(self):
         return f"{self.name}, {self.size}, {self.topping_choice}, {self.price}"
-    
+
 class OrderSubs(models.Model):
+    ref = models.CharField(max_length=16, default='na')
     name = models.ForeignKey(SubsType, on_delete=models.CASCADE)
     size = models.ForeignKey(Size, on_delete=models.CASCADE)
-    # steak_extra = models.ForeignKey(Toppings, on_delete=models.CASCADE, 
-    # limit_choices_to= {'steak_subs_extra': True}, related_name="steak_extras")
-    # extra = models.ForeignKey(Toppings, on_delete=models.CASCADE, 
-    # limit_choices_to= {'subs_extra': True})
     price = models.FloatField()
     
     def __str__(self):
         return f"{self.name}, {self.size}, {self.price}"
 
 class OrderPasta(models.Model):
+    ref = models.CharField(max_length=16, default='na')
     name = models.CharField(max_length=64)
     price = models.FloatField()
 
@@ -71,6 +70,7 @@ class OrderPasta(models.Model):
         return f"{self.name}, {self.price}"
 
 class OrderSalads(models.Model):
+    ref = models.CharField(max_length=16, default='na')
     name = models.CharField(max_length=64)
     price = models.FloatField()
 
@@ -78,6 +78,7 @@ class OrderSalads(models.Model):
         return f"{self.name}, {self.price}"
 
 class OrderDinnerPlatters(models.Model):
+    ref = models.CharField(max_length=16, default='na')
     name = models.ForeignKey(DinnerPlattersType, on_delete=models.CASCADE)
     size = models.ForeignKey(Size, on_delete=models.CASCADE)
     price = models.FloatField()
@@ -90,7 +91,6 @@ class Order(models.Model):
     name = models.CharField(max_length=64, null=False)
     
     size_choices = [
-        ('na', 'none'),
         ('s', 'small'),
         ('l', 'large'),
     ]

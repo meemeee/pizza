@@ -72,7 +72,7 @@ class OrderSubsX(models.Model):
     price = models.FloatField()
 
     def __str__(self):
-        return f"{self.name}"
+        return f"{self.name} (+{self.price})"
 
 class OrderPasta(models.Model):
     ref = models.CharField(max_length=16, default='na')
@@ -119,7 +119,8 @@ class Order(models.Model):
     ]
     status = models.CharField(choices=status_choices, max_length=1, blank=False, default='s')
     total_price = models.FloatField(null=True)
-
+    def __str__(self):
+        return f"{self.id}"
 
 class Item(models.Model):
     item = models.CharField(max_length=64, null=False)
@@ -136,11 +137,22 @@ class Item(models.Model):
     topping = models.ManyToManyField(Toppings, blank=True)
     def display_topping(self):
         """Create a string for the Topping. This is required to display topping in Admin."""
-        return ', '.join(topping.name for topping in self.topping.all()[:3])
-    
+        return ', '.join(topping.topping for topping in self.topping.all()[:3])
     display_topping.short_description = 'Topping'
 
-    price = models.IntegerField()
+    subx = models.ManyToManyField(OrderSubsX, blank=True)
+    def display_subx(self):
+        """Create a string for the Sub Extra. This is required to display SubX in Admin."""
+        return ', '.join(subx.name for subx in self.subx.all()[:4])
+    
+    display_subx.short_description = 'Sub Extra'
+
+    # Merge Subx & Topping columns into Notes
+    # def notes(obj):
+    #     return f"{obj.display_topping} {obj.display_subx}"
+    # notes.short_description = 'Notes'
+
+    price = models.FloatField()
     order_id = models.ForeignKey(Order, on_delete=models.CASCADE)
 
    

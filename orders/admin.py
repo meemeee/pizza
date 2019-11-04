@@ -60,7 +60,8 @@ admin.site.register(Order, OrderAdmin)
 
 
 # admin.site.register(Item)
+
 class ItemAdmin(admin.ModelAdmin):
-    list_display = ('id', 'item', 'display_topping', 'size', 'quantity', 'price', 'order_id')
+    list_display = ('id', 'item', 'display_topping', 'display_subx', 'size', 'quantity', 'price', 'order_id')
 admin.site.register(Item, ItemAdmin)
 

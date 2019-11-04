@@ -13,12 +13,29 @@
 <form action="" method="post">
     {% csrf_token %}
     <div class="form-group">
+        <label>Sub Extra(s)</label>
+        {% for item in form.subx %}
+        <div class="form-check">
+            {{ item }}
+        </div>
+        {% endfor %} 
+
+        {% for error in form.subx.errors %}
+            <p style="color: red">{{ error }}</p>
+        {% endfor %}
+    </div>
+    <div class="form-group">
         <label for="id_topping">Topping(s)</label>
         <select multiple class="form-control" name="topping" id="id_topping">
             {% for item in form.topping %}
                 {{ item }}
             {% endfor %}      
         </select>
+
+        <small style="color: grey">{{ form.topping.help_text }}</small>
+        {% for error in form.topping.errors %}
+            <p style="color: red">{{ error }}</p>
+        {% endfor %}
     </div>
     <div class="form-group">
         <label for="id_size">Size:</label>
@@ -27,6 +44,10 @@
                 {{ item }}
             {% endfor %}
         </select> 
+
+        {% for error in form.size.errors %}
+            <p style="color: red">{{ error }}</p>
+        {% endfor %}
     </div>
     <div class="form-group">
         <label for="id_quantity">Quantity:</label>
@@ -35,6 +56,10 @@
                 {{ item }}
             {% endfor %}
         </select>
+
+        {% for error in form.quantity.errors %}
+            <p style="color: red">{{ error }}</p>
+        {% endfor %}
     </div>
 
     <br>

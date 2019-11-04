@@ -4,7 +4,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from .models import Item
 
-
+from django.utils.translation import gettext_lazy as _
 
 class RegisterForm(UserCreationForm):
     first_name = forms.CharField(max_length=32, required=False, help_text='Optional.')
@@ -19,4 +19,11 @@ class RegisterForm(UserCreationForm):
 class ItemForm(ModelForm):
     class Meta:
         model = Item
-        fields = ['topping', 'size', 'quantity']
+        fields = ['subx', 'topping', 'size', 'quantity']
+        widgets = {
+        'subx': forms.CheckboxSelectMultiple(),
+        }
+        help_texts = {
+            'topping': _('Hold ⇧ or ⌘ to select more toppings. '),
+        }
+

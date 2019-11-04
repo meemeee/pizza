@@ -19,4 +19,4 @@ class RegisterForm(UserCreationForm):
 class ItemForm(ModelForm):
     class Meta:
         model = Item
-        fields = ['item', 'topping', 'size', 'quantity', 'price']
+        fields = ['topping', 'size', 'quantity']

@@ -1,4 +1,5 @@
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.http import HttpResponse, Http404
 from django.shortcuts import render, redirect
@@ -32,49 +33,6 @@ def register(request):
         form = RegisterForm()
     return render(request, "registration/register.html", {'form': form})
 
-def item(request, item_id):
-    if request.method == "POST":
-        form = ItemForm(request.POST)
-
-        if form.is_valid():
-            # Save ? order
-            form.save()
-            return redirect('index')
-    
-    else:
-        # Get item's info
-        item = item_id.split("_")
-        dish = {}
-        
-        short = ['regular', 'sicilian', 'sub', 'pasta', 'salad', 'dp']
-        full = ['Regular Pizza', 'Sicilian Pizza', 'Sub', 'Pasta', 'Salad', 'Dinner Platter']
-        database = [ToppingChoice, ToppingChoice, SubsType, OrderPasta, OrderSalads, DinnerPlattersType]
-        
-        for i in range(len(short)):
-            if item[0] == short[i]:
-                dish['name'] = full[i]
-                try:
-                    if item[0] in ['pasta', 'salad']:
-                        # Convert to string to avoid <databse:result> format
-                        dish['type'] = str(database[i].objects.get(pk=item[1]).name)
-                    else:
-                        dish['type'] = str(database[i].objects.get(pk=item[1]))
-                except database[i].DoesNotExist:
-                    raise Http404("Dish does not exist")
-                
-                break
-        
-        # Create form from Order Model
-        form = ItemForm()
-
-        context = {
-            "dish": dish,
-            "form": form
-        } 
-        return render(request, "single_item.html", context)
-        
-    return render(request, "menu/<str:item_id>", {'form': form})
-
 
 
 def menu(request):
@@ -95,8 +53,6 @@ def menu(request):
                     p['large'] = format(item.price, '.2f')
         
         regular_menu.append(p)
-
-    print(regular_menu)
 
     s_pizzas = OrderPizza.objects.filter(name__name="Sicilian")
     sicilian_menu = []
@@ -139,9 +95,9 @@ def menu(request):
         item['price'] = format(item['price'], '.2f')
 
 
-    dinnerplatters = OrderDinnerPlatters.objects.all()
+    dinnerplatters = OrderDP.objects.all()
     dinnerplatters_menu = []
-    dinnerplatters_choice = DinnerPlattersType.objects.all().values('id', 'name')
+    dinnerplatters_choice = OrderDP.objects.all().values('id', 'name')
     
     for option in dinnerplatters_choice:
         p = {'id': option['id'], 'type': option['name']}
@@ -166,28 +122,67 @@ def menu(request):
 
     return render(request, "menu.html", context)
 
-# def order(request, item_id):
-#     item = item_id.split("_")
-#     dish = {}
+@login_required
+def item(request, item_id):
+    # Get item's info from item_id
+    item = item_id.split("_")                       
+    dish = {}
     
-#     short = ['regular', 'sicilian', 'sub', 'pasta', 'salad', 'dp']
-#     full = ['Regular Pizza', 'Sicilian Pizza', 'Sub', 'Pasta', 'Salad', 'Dinner Platter']
-#     database = [ToppingChoice, ToppingChoice, SubsType, OrderPasta, OrderSalads, DinnerPlattersType]
-    
-#     for i in range(len(short)):
-#         if item[0] == short[i]:
-#             dish['name'] = full[i]
-#             try:
-#                 if item[0] in ['pasta', 'salad']:
-#                     # Convert to string to avoid <databse:result> format
-#                     dish['type'] = str(database[i].objects.get(pk=item[1]).name)
-#                 else:
-#                     dish['type'] = str(database[i].objects.get(pk=item[1]))
-#             except database[i].DoesNotExist:
-#                 raise Http404("Dish does not exist")
+    short = ['regular', 'sicilian', 'sub', 'pasta', 'salad', 'dp']
+    full = ['Pizza', 'Pizza', 'Sub', 'Pasta', 'Salad', 'Dinner Platter']
+    database = [OrderPizza, OrderPizza, OrderSubs, OrderPasta, OrderSalads, OrderDP]
+    for i in range(len(short)):
+        if item[0] == short[i]:
+            dish['type'] = full[i]
+            try:
+                if item[0] in ['regular', 'sicilian']:
+                    dish_data = database[i].objects.filter(ref=item_id)
+                    dish['name'] = dish_data.values_list('name__name', flat=True)[0] + " " + dish_data.values_list('topping_choice__topping', flat=True)[0]
+                elif item[0] in ['salad', 'pasta']:
+                    dish_data = database[i].objects.get(ref=item_id)
+                    dish['name'] = str(dish_data.name)
+                else:
+                    dish_data = database[i].objects.filter(ref=item_id)
+                    dish['name'] = dish_data.values_list('name__name', flat=True)[0]
+        
+            except database[i].DoesNotExist:
+                raise Http404("Dish does not exist")           
+            break
+
+    if request.method == "POST":
+        form = ItemForm(request.POST)
+
+        # Retrive price for size S
+        for item in dish_data.values():
+            if item['size'] == 's':
+                price_s = item['price']
+            else:
+                price_l = item['price']
+
+        if form.is_valid():
+            # Calculate total price
+            if form.cleaned_data['size'] == 's':
+                form.price = price_s * form.cleaned_data['quantity']
+            else:
+                form.price = price_l * form.cleaned_data['quantity']
             
-#             break
-#     context = {
-#         "dish": dish
-#     } 
-#     return render(request, "single_item.html", context)
+            print(form.price)
+            return redirect('index')
+    
+    else:
+        price = dish_data.values()
+        print(price)
+
+        # Create form from Order Model
+        form = ItemForm()
+        form.item = dish['type'] +" "+ dish['name']
+        # form.save(commit=False)
+      
+        context = {
+            "dish": dish,
+            "form": form
+        } 
+        return render(request, "single_item.html", context)
+        
+    return render(request, "menu/<str:item_id>", {'form': form})
+

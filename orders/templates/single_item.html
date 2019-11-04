@@ -5,30 +5,43 @@
 {% endblock %}
 
 {% block main %}
-<h4>{{ dish.name }}: {{ dish.type }}</h4>
+<h3>Order {{ dish.type }}:</h3> 
+<h4>{{ dish.name }}</h4>
+
+<br>
 
 <form action="" method="post">
     {% csrf_token %}
-    <!-- {% for field in form %}
-        <p>
-            {{ field.label_tag }}<br>
-            {{ field }}
-
-            {% for error in field.errors %}
-                <p style="color: red">{{ error }}</p>
-            {% endfor %}
-        </p>
-    {% endfor %} -->
     <div class="form-group">
-        <div class="p-2 flex-grow-1 bd-highlight">
-            <input class="form-control" id="id_name" name="name" 
-            value="{{ dish.name }}: {{ dish.type }}" maxlength="64" type="hidden">
-        </div>
-        <div class="p-2 bd-highlight">
-            <button class="btn btn-primary" type="submit">Add to cart</button>   
-        </div>
+        <label for="id_topping">Topping(s)</label>
+        <select multiple class="form-control" name="topping" id="id_topping">
+            {% for item in form.topping %}
+                {{ item }}
+            {% endfor %}      
+        </select>
     </div>
-    <!-- <br>
-    <button type="submit">Add to cart</button> -->
+    <div class="form-group">
+        <label for="id_size">Size:</label>
+        <select class="form-control" name="size" id="id_size">
+            {% for item in form.size %}
+                {{ item }}
+            {% endfor %}
+        </select> 
+    </div>
+    <div class="form-group">
+        <label for="id_quantity">Quantity:</label>
+        <select class="form-control" name="quantity" id="id_quantity">
+            {% for item in form.quantity %}
+                {{ item }}
+            {% endfor %}
+        </select>
+    </div>
+
+    <br>
+    <div class="p-2 bd-highlight">
+        <button class="btn btn-primary" type="submit">Add to cart</button>   
+    </div>
+    
+ 
 </form>
 {% endblock %}

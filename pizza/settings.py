@@ -31,8 +31,8 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'menu.apps.MenuConfig',
-    'orders.apps.OrdersConfig'
+    'orders.apps.OrdersConfig',
+    'admin_reorder',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -42,6 +42,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'admin_reorder.middleware.ModelAdminReorder',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -70,6 +71,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'pizza.wsgi.application'
+
 
 
 # Database
@@ -123,3 +125,27 @@ STATIC_URL = '/static/'
 
 # Redirect to home URL after login (Default redirects to /accounts/profile/)
 LOGIN_REDIRECT_URL = '/'
+
+ADMIN_REORDER = (
+    # Keep original label and models
+    'sites',
+
+    # Rename app
+    {'app': 'auth', 'label': 'Users and Authorization'},
+
+    # Order section
+    {'app': 'orders', 'label': 'Orders'
+    , 'models': ('orders.Order', 'orders.Item')
+    },
+
+    # Menu section
+    {'app': 'orders', 'label': 'Menu'
+    , 'models': ('orders.PizzaType', 'orders.ToppingChoice', 
+    'orders.Size', 'orders.Toppings', 'orders.SubsType',
+    'orders.DinnerPlattersType','orders.OrderPizza', 'orders.OrderSubs', 
+    'orders.OrderSubsX', 
+    'orders.OrderPasta', 'orders.OrderSalads', 'orders.OrderDP')
+    },
+
+    
+)

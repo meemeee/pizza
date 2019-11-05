@@ -109,6 +109,7 @@ var price = document.querySelector('#id_price');
 var price_from_size = price.getAttribute('value');
 var final_price;
 
+// Change price when size changes
 size.onchange = () => {
     size_value = size.options[size.selectedIndex].value;
 
@@ -126,6 +127,7 @@ size.onchange = () => {
     price.innerHTML = final_price.toString();
 }
 
+// Change price when quantity changes
 quantity.onchange = () => {
     quantity_value = quantity.options[quantity.selectedIndex].value;
     final_price = parseFloat(price_from_size) * parseInt(quantity_value);

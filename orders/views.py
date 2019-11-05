@@ -1,9 +1,9 @@
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from django.http import HttpResponse, Http404
+from django.http import HttpResponse, Http404, HttpResponseRedirect
 from django.shortcuts import render, redirect
-
+from django.urls import reverse
 from .forms import *
 from .models import *
 
@@ -171,13 +171,22 @@ def item(request, item_id):
 
         # Add information to object
         if form.is_valid():
+            form.item = dish['type'] + ": " + dish['name']
+            form.size = form.cleaned_data['size']
+            form.quantity = form.cleaned_data['quantity']
+            form.topping = form.cleaned_data['topping']
+            form.subx = form.cleaned_data['subx']
+
             # Calculate total price based on size & quantity
-            if form.cleaned_data['size'] == 's':
-                form.price = price['small'] * form.cleaned_data['quantity']
+            if form.size == 's':
+                form.price = float(price['small']) * int(form.quantity)
+            elif form.size == 'l':
+                form.price = float(price['large']) * int(form.quantity)
             else:
-                form.price = price['large'] * form.cleaned_data['quantity']
-            
-            return redirect('index')
+                form.price = float(price['na']) * int(form.quantity)
+            form.save()
+            # print(form.topping, form.subx)
+            return HttpResponseRedirect(reverse("menu"))
     
     else:
         # Create form from Order Model

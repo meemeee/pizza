@@ -5,14 +5,16 @@
 {% endblock %}
 
 {% block main %}
-<h3>Order {{ dish.type }}:</h3> 
+<h3>Order 
+    <span id="dish-type">{{ dish.type }}</span>:
+</h3> 
 <h4>{{ dish.name }}</h4>
 
 <br>
 
 <form action="" method="post">
     {% csrf_token %}
-    <div class="form-group">
+    <div id="subX" class="form-group" style="display: none">
         <label>Sub Extra(s)</label>
         {% for item in form.subx %}
         <div class="form-check">
@@ -24,7 +26,7 @@
             <p style="color: red">{{ error }}</p>
         {% endfor %}
     </div>
-    <div class="form-group">
+    <div id ="topping" class="form-group" style="display: none">
         <label for="id_topping">Topping(s)</label>
         <select multiple class="form-control" name="topping" id="id_topping">
             {% for item in form.topping %}
@@ -37,7 +39,7 @@
             <p style="color: red">{{ error }}</p>
         {% endfor %}
     </div>
-    <div class="form-group">
+    <div id="size" class="form-group" style="display: none">
         <label for="id_size">Size:</label>
         <select class="form-control" name="size" id="id_size">
             {% for item in form.size %}
@@ -61,12 +63,39 @@
             <p style="color: red">{{ error }}</p>
         {% endfor %}
     </div>
+    ====================
+    <div>
+        <b>Price:
+        <span id="price"></span>
+        </b>
+    </div>
 
-    <br>
+    <br><br>
     <div class="p-2 bd-highlight">
         <button class="btn btn-primary" type="submit">Add to cart</button>   
     </div>
-    
- 
 </form>
+
+
+<script>
+// Select sections to show based on dish type
+var dishtype = document.querySelector('#dish-type').innerHTML;
+if (dishtype === 'Pizza') {
+    document.querySelector('#topping').style.display = "block";
+    document.querySelector('#size').style.display = "block";
+}
+
+if (dishtype === 'Sub') {
+    document.querySelector('#subX').style.display = "block";
+    document.querySelector('#size').style.display = "block";
+}
+
+if (dishtype === 'Dinner Platter') {
+    document.querySelector('#size').style.display = "block";
+}
+
+
+
+</script>
+
 {% endblock %}

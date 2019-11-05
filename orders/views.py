@@ -125,7 +125,9 @@ def menu(request):
 @login_required
 def item(request, item_id):
     # Get item's info from item_id
-    item = item_id.split("_")                       
+    item = item_id.split("_")   
+
+    # Retrieve item's name                    
     dish = {}
     
     short = ['regular', 'sicilian', 'sub', 'pasta', 'salad', 'dp']
@@ -148,25 +150,25 @@ def item(request, item_id):
             except database[i].DoesNotExist:
                 raise Http404("Dish does not exist")           
             break
+    # Retrive price for each size
+    price = {}
+    for item in dish_data.values():
+        # id 1 corresponding to size 'small'
+        if item['size_id'] == 1:
+            price['small'] = float(item['price'])
+        else:
+            price['large'] = float(item['price'])  
 
     if request.method == "POST":
-        form = ItemForm(request.POST)
-
-        # Retrive price for each size
-        for item in dish_data.values():
-            # id 1 corresponding to size 'small'
-            if item['size_id'] == 1:
-                price_s = float(item['price'])
-            else:
-                price_l = float(item['price'])      
+        form = ItemForm(request.POST)    
 
         # Add information to object
         if form.is_valid():
             # Calculate total price based on size & quantity
             if form.cleaned_data['size'] == 's':
-                form.price = price_s * form.cleaned_data['quantity']
+                form.price = price['small'] * form.cleaned_data['quantity']
             else:
-                form.price = price_l * form.cleaned_data['quantity']
+                form.price = price['large'] * form.cleaned_data['quantity']
             
             return redirect('index')
     
@@ -177,6 +179,7 @@ def item(request, item_id):
         # form.save(commit=False)
       
         context = {
+            "price": price,
             "dish": dish,
             "form": form
         } 

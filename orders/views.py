@@ -129,6 +129,7 @@ def item(request, item_id):
 
     # Retrieve item's name                    
     dish = {}
+    price = {}
     
     short = ['regular', 'sicilian', 'sub', 'pasta', 'salad', 'dp']
     full = ['Pizza', 'Pizza', 'Sub', 'Pasta', 'Salad', 'Dinner Platter']
@@ -136,28 +137,34 @@ def item(request, item_id):
     for i in range(len(short)):
         if item[0] == short[i]:
             dish['type'] = full[i]
-            try:
-                if item[0] in ['regular', 'sicilian']:
-                    dish_data = database[i].objects.filter(ref=item_id)
-                    dish['name'] = dish_data.values_list('name__name', flat=True)[0] + " " + dish_data.values_list('topping_choice__topping', flat=True)[0]
-                elif item[0] in ['salad', 'pasta']:
+            try:                  
+                if item[0] in ['salad', 'pasta']:
+                    # These items get only 1 result per id.
                     dish_data = database[i].objects.get(ref=item_id)
                     dish['name'] = str(dish_data.name)
+
+                    # Retrive price, format to show 2 decimal places
+                    price['na'] = format(float(dish_data.price),'.2f')
                 else:
+                    # These items get 2 results per id.
                     dish_data = database[i].objects.filter(ref=item_id)
                     dish['name'] = dish_data.values_list('name__name', flat=True)[0]
-        
+
+                    # Plus 'Topping Choice' for pizza
+                    if item[0] in ['regular', 'sicilian']:
+                        dish['name'] = dish['name'] + " " + dish_data.values_list('topping_choice__topping', flat=True)[0]
+                    
+                    # Retrive price for each size
+                    for value in dish_data.values():
+                        # id 1 corresponding to size 'small'
+                        if value['size_id'] == 1:
+                            price['small'] = format(float(value['price']), '.2f')
+                        else:
+                            price['large'] = format(float(value['price']), '.2f')
+
             except database[i].DoesNotExist:
                 raise Http404("Dish does not exist")           
             break
-    # Retrive price for each size
-    price = {}
-    for item in dish_data.values():
-        # id 1 corresponding to size 'small'
-        if item['size_id'] == 1:
-            price['small'] = float(item['price'])
-        else:
-            price['large'] = float(item['price'])  
 
     if request.method == "POST":
         form = ItemForm(request.POST)    

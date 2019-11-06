@@ -6,6 +6,7 @@ from django.shortcuts import render, redirect
 from django.urls import reverse
 from .forms import *
 from .models import *
+from . import urls
 
 # Create your views here.
 def index(request):
@@ -134,6 +135,9 @@ def item(request, item_id):
     short = ['regular', 'sicilian', 'sub', 'pasta', 'salad', 'dp']
     full = ['Pizza', 'Pizza', 'Sub', 'Pasta', 'Salad', 'Dinner Platter']
     database = [OrderPizza, OrderPizza, OrderSubs, OrderPasta, OrderSalads, OrderDP]
+    if not item[0] in short:
+        raise Http404("Wrong URL") 
+    
     for i in range(len(short)):
         if item[0] == short[i]:
             dish['type'] = full[i]
@@ -165,33 +169,53 @@ def item(request, item_id):
             except database[i].DoesNotExist:
                 raise Http404("Dish does not exist")           
             break
+    
+
 
     if request.method == "POST":
+        # Create a form instance and populate it with data from the request
         form = ItemForm(request.POST)    
+
+        # Create an object in Item model
+        new_item = Item()
 
         # Add information to object
         if form.is_valid():
-            form.item = dish['type'] + ": " + dish['name']
-            form.size = form.cleaned_data['size']
-            form.quantity = form.cleaned_data['quantity']
-            form.topping = form.cleaned_data['topping']
-            form.subx = form.cleaned_data['subx']
+            new_item.item = dish['type'] + ": " + dish['name']
+            new_item.size = form.cleaned_data['size']
+            new_item.quantity = form.cleaned_data['quantity']
+            
+            
 
             # Calculate total price based on size & quantity
-            if form.size == 's':
-                form.price = float(price['small']) * int(form.quantity)
-            elif form.size == 'l':
-                form.price = float(price['large']) * int(form.quantity)
+            if new_item.size == 's':
+                new_item.price = float(price['small']) * int(new_item.quantity)
+            elif new_item.size == 'l':
+                new_item.price = float(price['large']) * int(new_item.quantity)
             else:
-                form.price = float(price['na']) * int(form.quantity)
-            form.save()
+                new_item.price = float(price['na']) * int(new_item.quantity)
+            
+            # form.order_id = 1
+            
+            new_item.save()
+
+            new_item.topping.set(form.cleaned_data['topping'])
+            # Add values to ManyToManyField
+            # print(form.cleaned_data['topping'])
+            # for topping in form.cleaned_data['topping']:
+            #     new_item.topping.add(topping)
+            # for subx in form.cleaned_data['subx']:
+            #     new_item.subx.add(subx)
+            
+            # new_item.topping = form.cleaned_data['topping']
+            # new_item.subx = form.cleaned_data['subx']
             # print(form.topping, form.subx)
             return HttpResponseRedirect(reverse("menu"))
     
     else:
         # Create form from Order Model
         form = ItemForm()
-        form.item = dish['type'] +" "+ dish['name']
+        # form.item = dish['type'] +" "+ dish['name']
         # form.save(commit=False)
       
         context = {

@@ -89,15 +89,18 @@ if (dishtype === 'Pizza') {
     document.querySelector('#size').style.display = "block";
 }
 
-if (dishtype === 'Sub') {
+else if (dishtype === 'Sub') {
     document.querySelector('#subX').style.display = "block";
     document.querySelector('#size').style.display = "block";
 }
 
-if (dishtype === 'Dinner Platter') {
+else if (dishtype === 'Dinner Platter') {
     document.querySelector('#size').style.display = "block";
 }
-
+else {
+    // Deselect default size Small for Pasta and Salad
+    document.querySelector('#id_size').selectedIndex = -1;
+}
 // Display price based on size and quantity
 var size = document.querySelector('#id_size');
 var size_value = size.options[size.selectedIndex].value;
@@ -124,7 +127,7 @@ size.onchange = () => {
     }
     
     final_price = parseFloat(price_from_size) * parseInt(quantity_value);
-    price.innerHTML = final_price.toString();
+    price.innerHTML = final_price.toFixed(2);
 }
 
 // Change price when quantity changes

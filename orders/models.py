@@ -153,7 +153,7 @@ class Item(models.Model):
     # notes.short_description = 'Notes'
 
     price = models.FloatField()
-    order_id = models.ForeignKey(Order, on_delete=models.CASCADE)
+    order_id = models.ForeignKey(Order, on_delete=models.CASCADE, null=True)
 
    
 

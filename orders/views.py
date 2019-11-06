@@ -200,6 +200,7 @@ def item(request, item_id):
             new_item.save()
 
             new_item.topping.set(form.cleaned_data['topping'])
+            new_item.subx.set(form.cleaned_data['subx'])
             # Add values to ManyToManyField
             # print(form.cleaned_data['topping'])
             # for topping in form.cleaned_data['topping']:

@@ -17,7 +17,7 @@
 <form id="form" action="" method="post">
     {% csrf_token %}
     <div id="subX" class="form-group" style="display: none">
-        <label>Sub Extra(s)</label>
+        <label>Sub Extra(s):</label>
         {% for item in form.subx %}
         <div class="form-check">
             {{ item }}
@@ -93,7 +93,23 @@ if (dishtype === 'Pizza') {
 
     if (dishname.includes("1") || dishname.includes("2") || dishname.includes("3")) {
         document.querySelector('#topping').style.display = "block";
-
+        // Allow a certain number of selected options for Topping
+        document.querySelector('#form').onsubmit = event => {
+            event.preventDefault();
+            if (dishname.includes("1") && topping.selectedOptions.length != 1) {
+                alert("Must choose 1 topping");
+            }
+            else if (dishname.includes("2") && topping.selectedOptions.length != 2) {
+                alert("Must choose 2 toppings");
+            }
+            else if (dishname.includes("3") && topping.selectedOptions.length != 3) {
+                alert("Must choose 3 toppings");
+            }
+            else {
+                document.querySelector('#form').submit();
+            }
+            
+        }
         
         
     }
@@ -152,23 +168,6 @@ quantity.onchange = () => {
     price.innerHTML = final_price.toFixed(2);
 }
 
-// Allow a certain number of selected options for Topping
-document.querySelector('#form').onsubmit = event => {
-    event.preventDefault();
-    if (dishname.includes("1") && topping.selectedOptions.length != 1) {
-        alert("Must choose 1 topping");
-    }
-    else if (dishname.includes("2") && topping.selectedOptions.length != 2) {
-        alert("Must choose 2 toppings");
-    }
-    else if (dishname.includes("3") && topping.selectedOptions.length != 3) {
-        alert("Must choose 3 toppings");
-    }
-    else {
-        document.querySelector('#form').submit();
-    }
-    
-}
 
 
 

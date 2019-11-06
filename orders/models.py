@@ -142,7 +142,8 @@ class Item(models.Model):
         return ', '.join(topping.topping for topping in self.topping.all()[:3])
     display_topping.short_description = 'Topping'
 
-    subx = models.ManyToManyField(OrderSubsX, blank=True)
+    subx = models.ManyToManyField(SubsType, blank=True,
+        limit_choices_to=Q(subs_extra=True) | Q(steak_subs_extra=True))
     def display_subx(self):
         """Create a string for the Sub Extra. This is required to display SubX in Admin."""
         return ', '.join(subx.name for subx in self.subx.all()[:4])

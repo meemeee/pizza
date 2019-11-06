@@ -8,11 +8,13 @@
 <h3>Order 
     <span id="dish-type">{{ dish.type }}</span>:
 </h3> 
-<h4>{{ dish.name }}</h4>
+<h4>
+    <span id="dish-name">{{ dish.name }}</span>
+</h4>
 
 <br>
 
-<form action="" method="post">
+<form id="form" action="" method="post">
     {% csrf_token %}
     <div id="subX" class="form-group" style="display: none">
         <label>Sub Extra(s)</label>
@@ -84,8 +86,19 @@
 <script>
 // Select sections to show based on dish type
 var dishtype = document.querySelector('#dish-type').innerHTML;
+
 if (dishtype === 'Pizza') {
-    document.querySelector('#topping').style.display = "block";
+    var dishname = document.querySelector('#dish-name').innerHTML.split(" ");
+    var topping = document.querySelector('#id_topping');
+
+    if (dishname.includes("1") || dishname.includes("2") || dishname.includes("3")) {
+        document.querySelector('#topping').style.display = "block";
+
+        
+        
+    }
+        
+    
     document.querySelector('#size').style.display = "block";
 }
 
@@ -139,6 +152,23 @@ quantity.onchange = () => {
     price.innerHTML = final_price.toFixed(2);
 }
 
+// Allow a certain number of selected options for Topping
+document.querySelector('#form').onsubmit = event => {
+    event.preventDefault();
+    if (dishname.includes("1") && topping.selectedOptions.length != 1) {
+        alert("Must choose 1 topping");
+    }
+    else if (dishname.includes("2") && topping.selectedOptions.length != 2) {
+        alert("Must choose 2 toppings");
+    }
+    else if (dishname.includes("3") && topping.selectedOptions.length != 3) {
+        alert("Must choose 3 toppings");
+    }
+    else {
+        document.querySelector('#form').submit();
+    }
+    
+}
 
 
 

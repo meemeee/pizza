@@ -183,16 +183,19 @@ def item(request, item_id):
         if form.is_valid():
             new_item.item = dish['type'] + ": " + dish['name']
             new_item.size = form.cleaned_data['size']
-            new_item.quantity = form.cleaned_data['quantity']
+            new_item.quantity = int(form.cleaned_data['quantity'])
             
             
 
-            # Calculate total price based on size & quantity
+            # Calculate total price based on size & quantity + extra subs (if any)
+            subX_price_per_pax = int(len(form.cleaned_data['subx'])) * 0.5
+            print(subX_price_per_pax)
             if new_item.size == 's':
-                new_item.price = float(price['small']) * int(new_item.quantity)
+                new_item.price = new_item.quantity * (float(price['small']) + subX_price_per_pax)
             elif new_item.size == 'l':
-                new_item.price = float(price['large']) * int(new_item.quantity)
+                new_item.price = new_item.quantity * (float(price['large']) + subX_price_per_pax)
             else:
+                # Item is either a salad or pasta
                 new_item.price = float(price['na']) * int(new_item.quantity)
             
             # form.order_id = 1
@@ -201,16 +204,8 @@ def item(request, item_id):
 
             new_item.topping.set(form.cleaned_data['topping'])
             new_item.subx.set(form.cleaned_data['subx'])
-            # Add values to ManyToManyField
-            # print(form.cleaned_data['topping'])
-            # for topping in form.cleaned_data['topping']:
-            #     new_item.topping.add(topping)
-            # for subx in form.cleaned_data['subx']:
-            #     new_item.subx.add(subx)
-            
-            # new_item.topping = form.cleaned_data['topping']
-            # new_item.subx = form.cleaned_data['subx']
-            # print(form.topping, form.subx)
+            print(len(form.cleaned_data['subx']))
+
             return HttpResponseRedirect(reverse("menu"))
     
     else:
@@ -224,6 +219,7 @@ def item(request, item_id):
             "dish": dish,
             "form": form
         } 
+        print(price)
         return render(request, "single_item.html", context)
         
     # return render(request, "menu/<str:item_id>", {'form': form})

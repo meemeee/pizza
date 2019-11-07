@@ -112,9 +112,13 @@ def menu(request):
                 else:
                     p['large'] = format(item.price, '.2f')
         dinnerplatters_menu.append(p)
-        
+    
+    # Get number of current cart items
+    cart_num = Item.objects.filter(created_by=request.user).filter(status__exact='p').order_by('id')
+    request.session['cart_num'] = len(cart_num)
 
-    context = {   
+    context = {
+        "cart_num": request.session['cart_num'],  
         "r_pizzas": regular_menu, 
         "s_pizzas": sicilian_menu,
         "subs": subs_menu,
@@ -191,9 +195,9 @@ def item(request, item_id):
             # Calculate total price based on size & quantity + extra subs (if any)
             subX_price_per_pax = int(len(form.cleaned_data['subx'])) * 0.5
             print(subX_price_per_pax)
-            if new_item.size == 's':
+            if new_item.size == 'S':
                 new_item.price = new_item.quantity * (float(price['small']) + subX_price_per_pax)
-            elif new_item.size == 'l':
+            elif new_item.size == 'L':
                 new_item.price = new_item.quantity * (float(price['large']) + subX_price_per_pax)
             else:
                 # Item is either a salad or pasta
@@ -213,22 +217,20 @@ def item(request, item_id):
     else:
         # Create form from Order Model
         form = ItemForm()
-        # form.item = dish['type'] +" "+ dish['name']
-        # form.save(commit=False)
-      
+        
+        # Get number of current cart items
+        cart_num = Item.objects.filter(created_by=request.user).filter(status__exact='p').order_by('id')
+        request.session['cart_num'] = len(cart_num)
+
         context = {
             "price": price,
             "dish": dish,
-            "form": form
+            "form": form,
+            'cart_num': request.session.get('cart_num'),
         } 
-        print(price)
+
         return render(request, "single_item.html", context)
         
-def cart(request):
-    return HttpResponse("Your shopping cart")
-
-# class GenericView(generic.ListView):
-#     model = OrderSubs
 
 class ItemByUserListView(LoginRequiredMixin, generic.ListView):
     """Generic class-based view showing by current user."""

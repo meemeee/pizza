@@ -101,3 +101,14 @@ quantity.onchange = () => {
     // Show price with 2 decimal places, toFixed also convert number to string
     price.innerHTML = final_price.toFixed(2);
 }
+
+// Change cart number whenever a new item is added to cart
+// var current_num, updated_num;
+// document.querySelector('#form').onsubmit = event => {
+//     event.preventDefault();
+//     current_num = parseInt(document.querySelector('#cart-num').innerHTML);
+//     updated_num = current_num + 1;
+//     await sleep(2000);
+//     document.querySelector('#form').submit();
+
+// }

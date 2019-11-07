@@ -7,6 +7,8 @@ from django.urls import reverse
 from .forms import *
 from .models import *
 from . import urls
+from django.views import generic
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 # Create your views here.
 def index(request):
@@ -225,3 +227,16 @@ def item(request, item_id):
 def cart(request):
     return HttpResponse("Your shopping cart")
 
+# class GenericView(generic.ListView):
+#     model = OrderSubs
+
+class ItemByUserListView(LoginRequiredMixin, generic.ListView):
+    """Generic class-based view showing by current user."""
+    model = Item
+    template_name ='cart.html'
+    paginate_by = 10
+    
+    def get_queryset(self):
+        return Item.objects.filter(created_by=self.request.user).filter(status__exact='p').order_by('id')
+    
+ 

@@ -12,6 +12,6 @@ urlpatterns = [
     # Path for placing an order
     path('menu/<str:item_id>', views.item),
     # Path for shopping cart
-    path('cart', views.cart, name="cart"),
+    path('cart', views.ItemByUserListView.as_view(), name="cart"),
 ]
 

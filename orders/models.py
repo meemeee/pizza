@@ -127,8 +127,8 @@ class Item(models.Model):
     item = models.CharField(max_length=64, null=False)
     
     size_choices = [
-        ('s', 'small'),
-        ('l', 'large'),
+        ('S', 'small'),
+        ('L', 'large'),
     ]
     size = models.CharField(choices=size_choices, max_length=1, blank=True, default='s')
     
@@ -169,7 +169,7 @@ class Item(models.Model):
     # created_by = models.ForeignKey(settings.AUTH_USER_MODEL)
     created_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
 
-   
+  
  
 
 

@@ -5,5 +5,62 @@ Shopping cart
 {% endblock %}
 
 {% block main %}
+<h1>Your cart</h1>
+<br>
+{% if item_list %}
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Item</th>
+                <th scope="col">Notes</th>
+                <th scope="col">Size</th>
+                <th scope="col">Quantity</th>
+                <th scope="col">Price</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in item_list %}
+            <tr>
+                <td>{{ item.item }}</td>
+                {% if item.display_topping %}
+                    <td>{{ item.display_topping }}</td>
+                {% elif item.display_subx %}
+                    <td>{{ item.display_subx}}</td>
+                {% else %}
+                    <td>N/A</td>
+                {% endif %}
+                <td>{{ item.size }}</td>
+                <td>{{ item.quantity }}</td>
+                <td><span class="item-price">{{ item.price }}</span></td>
+            </tr>
+            {% endfor %}
 
+        </tbody>
+    </table>
+
+{% else %}
+    <p>Empty cart.</p>
+{% endif %}
+
+<div class="text-right">
+    <h3>
+        Total: $ <span id="total-price"></span>
+    </h3>
+</div>
+<br>
+<div class="text-center p-2 bd-highlight">
+    <button class="btn btn-primary" type="submit">Place an order</button>
+    <a href="{% url 'menu' %}">
+        <p style="font-size: 0.75em;">Continue shopping</p>
+    </a>   
+</div>
+
+<script>
+    var total_price = 0;
+    document.querySelectorAll('.item-price').forEach(price => {
+        total_price += parseFloat(price.innerHTML);
+    })
+
+    document.querySelector('#total-price').innerHTML = total_price.toFixed(2);
+</script>
 {% endblock %}

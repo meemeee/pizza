@@ -169,8 +169,6 @@ def item(request, item_id):
             except database[i].DoesNotExist:
                 raise Http404("Dish does not exist")           
             break
-    
-
 
     if request.method == "POST":
         # Create a form instance and populate it with data from the request
@@ -184,6 +182,7 @@ def item(request, item_id):
             new_item.item = dish['type'] + ": " + dish['name']
             new_item.size = form.cleaned_data['size']
             new_item.quantity = int(form.cleaned_data['quantity'])
+            new_item.created_by = request.user
             
             
 
@@ -198,7 +197,8 @@ def item(request, item_id):
                 # Item is either a salad or pasta
                 new_item.price = float(price['na']) * int(new_item.quantity)
             
-            # form.order_id = 1
+            # # save user data
+            # new_item.created_by = request.user
             
             new_item.save()
 
@@ -222,5 +222,6 @@ def item(request, item_id):
         print(price)
         return render(request, "single_item.html", context)
         
-    # return render(request, "menu/<str:item_id>", {'form': form})
+def cart(request):
+    return HttpResponse("Your shopping cart")
 

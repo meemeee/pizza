@@ -11,5 +11,7 @@ urlpatterns = [
     path('menu/', views.menu, name="menu"),
     # Path for placing an order
     path('menu/<str:item_id>', views.item),
+    # Path for shopping cart
+    path('cart', views.cart, name="cart"),
 ]
 

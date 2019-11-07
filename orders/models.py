@@ -1,8 +1,7 @@
 from django.db import models
 from django.conf import settings
 from django.db.models import Q
-from django.contrib.contenttypes.fields import GenericForeignKey
-from django.contrib.contenttypes.models import ContentType
+from django.contrib.auth.models import User
 
 # Create your models here.
 
@@ -156,10 +155,22 @@ class Item(models.Model):
     # notes.short_description = 'Notes'
 
     price = models.FloatField()
+
+    status_choices = [
+        ('p', 'pending'),
+        ('s', 'submitted'),
+        ('pr', 'processing'),
+        ('c', 'completed'),
+    ]
+    status = models.CharField(choices=status_choices, max_length=2, blank=True, default='p')
+
     order_id = models.ForeignKey(Order, on_delete=models.CASCADE, null=True)
 
-   
+    # created_by = models.ForeignKey(settings.AUTH_USER_MODEL)
+    created_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
 
+   
+ 
 
 
     

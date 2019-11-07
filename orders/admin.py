@@ -54,6 +54,7 @@ admin.site.register(OrderDP, OrderDPAdmin)
 
 
 # admin.site.register(Order)
+
 class OrderAdmin(admin.ModelAdmin):
     list_display = ('id', 'total_price', 'created_by', 'time', 'status')
 admin.site.register(Order, OrderAdmin)
@@ -62,6 +63,26 @@ admin.site.register(Order, OrderAdmin)
 # admin.site.register(Item)
 
 class ItemAdmin(admin.ModelAdmin):
-    list_display = ('id', 'item', 'display_topping', 'display_subx', 'size', 'quantity', 'price', 'order_id')
-admin.site.register(Item, ItemAdmin)
+    list_display = ('id', 'item', 'display_topping', 'display_subx', 'size', 
+        'quantity', 'price', 'order_id', 'status', 'created_by')
 
+    fieldsets = (
+        ('General', {
+            'fields': ('item', 'topping', 'subx', 'size', 
+                'quantity', 'price')
+        }), 
+        ('More information', {
+            'fields': ('order_id', 'status', 'created_by')
+        }),
+    )
+
+    # def save_model(self, request, instance, form, change):
+    #     user = request.user 
+    #     instance = form.save(commit=False)
+    #     if not change or not instance.created_by:
+    #         instance.created_by = user
+    #     instance.modified_by = user
+    #     instance.save()
+    #     form.save_m2m()
+    #     return instance
+admin.site.register(Item, ItemAdmin)

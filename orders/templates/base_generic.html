@@ -40,34 +40,38 @@
             
             <div class="collapse navbar-collapse ml-auto" id="navbarNav">
                 <div class="navbar-nav mr-auto">
-                    <a class="nav-link" href="#">Menu</a>
+                    <a class="nav-link" href="{% url 'menu' %}">Menu</a>
                 </div>
-                <!-- {% if session.user_id %}
-                    <ul class="navbar-nav">
-                        <li id="userreview" class="nav-item">
-                            <a class="nav-link" href="#">Your reviews</a>
-                        </li>
-                    </ul>
-                    <ul class="navbar-nav">
-                        <li id="logout" class="nav-item">
-                            <a class="nav-link" href="#">Log out</a>
-                        </li>
-                    </ul>
+            
+                {% if user.is_authenticated %}
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'cart' %}">
+                            <i class="fa fa-shopping-cart" style="font-size: 1.5em;"></i>
+                            <span class="cart-count"></span>
+                        </a>
+                    </li>
+
+                    <li class="ml-3 nav-item">
+                        <a class="nav-link" href="{% url 'logout' %}">Log out</a>
+                    </li>
+                </ul>
                 {% else %}
-                    <ul class="navbar-nav">
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Register</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Log in</a>
-                        </li>
-                    </ul>
-                {% endif %} -->
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'register' %}">Register</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'login' %}">Log in</a>
+                    </li>
+                </ul>
+
+                {% endif %}
             </div>
         </nav>
 
         <main class="container p-7">
-            <div class="container-fluid py-md-5 py-sm-5">
+            <div class="container-fluid py-md-3 py-sm-3">
                 {% block main %}{% endblock %}
             </div>
         </main>

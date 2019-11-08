@@ -58,6 +58,7 @@ def menu(request):
         regular_menu.append(p)
 
     s_pizzas = OrderPizza.objects.filter(name__name="Sicilian")
+    print(s_pizzas)
     sicilian_menu = []
 
     for option in topping_choice:
@@ -178,6 +179,18 @@ def item(request, item_id):
             break
 
     if request.method == "POST":
+        
+        # Get order ID
+        # Check if user have an existing pending order: 
+        if len(Order.objects.filter(created_by=request.user).filter(status__exact='p')) == 0:
+            new_order = Order()
+            new_order.created_by = request.user
+            new_order.save()
+
+        pendingOrder = Order.objects.filter(created_by=request.user).filter(status__exact='p')
+        pendingOrder_id = pendingOrder.values_list('id', flat=True)[0]
+
+            
         # Do not allow user to have more than 10 items per cart
         if len(Item.objects.filter(created_by=request.user).filter(status__exact='p')) > 9:
             context = {
@@ -196,6 +209,8 @@ def item(request, item_id):
             new_item.size = form.cleaned_data['size']
             new_item.quantity = int(form.cleaned_data['quantity'])
             new_item.created_by = request.user
+            print(request.user)
+            new_item.order_id = Order.objects.filter(created_by=request.user).filter(status__exact='p')
 
             # Calculate total price based on size & quantity + extra subs (if any)
             subX_price_per_pax = int(len(form.cleaned_data['subx'])) * 0.5

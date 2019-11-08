@@ -117,10 +117,10 @@ class Order(models.Model):
     status_choices = [
         ('p', 'pending'),
         ('s', 'submitted'),
-        ('p', 'processing'),
+        ('pr', 'processing'),
         ('c', 'completed'),
     ]
-    status = models.CharField(choices=status_choices, max_length=1, blank=False, default='p')
+    status = models.CharField(choices=status_choices, max_length=2, blank=False, default='p')
     total_price = models.FloatField(null=True)
 
 

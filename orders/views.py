@@ -210,7 +210,7 @@ def item(request, item_id):
             new_item.quantity = int(form.cleaned_data['quantity'])
             new_item.created_by = request.user
             print(request.user)
-            new_item.order_id = Order.objects.filter(created_by=request.user).filter(status__exact='p')
+            new_item.order_id = Order.objects.get(pk=pendingOrder_id)
 
             # Calculate total price based on size & quantity + extra subs (if any)
             subX_price_per_pax = int(len(form.cleaned_data['subx'])) * 0.5

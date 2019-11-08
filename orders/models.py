@@ -170,8 +170,7 @@ class Item(models.Model):
     ]
     status = models.CharField(choices=status_choices, max_length=2, blank=True, default='p')
 
-    # Use 'string' on Order because the model has not been defined yet
-    order_id = models.ForeignKey(Order, on_delete=models.CASCADE, null=True, related_name="linkedToOrder")
+    order_id = models.ForeignKey(Order, on_delete=models.SET_NULL, null=True, blank=True)
 
     # created_by = models.ForeignKey(settings.AUTH_USER_MODEL)
     created_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)

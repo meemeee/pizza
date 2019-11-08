@@ -103,25 +103,31 @@ class OrderDP(models.Model):
 
 
 class Order(models.Model):
-    created_by = models.ForeignKey(settings.AUTH_USER_MODEL,
-        null=True, blank=True, on_delete=models.SET_NULL)
-    def save_model(self, request, obj, form, change):
-        if not obj.pk:
-            # Only set added_by during the first save.
-            obj.added_by = request.user
-            super().save_model(request, obj, form, change)
+    created_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
+    # created_by = models.ForeignKey(settings.AUTH_USER_MODEL,
+    #     null=True, blank=True, on_delete=models.SET_NULL)
+    # def save_model(self, request, obj, form, change):
+    #     if not obj.pk:
+    #         # Only set added_by during the first save.
+    #         obj.added_by = request.user
+    #         super().save_model(request, obj, form, change)
         
     time = models.DateTimeField(auto_now=True)
 
     status_choices = [
+        ('p', 'pending'),
         ('s', 'submitted'),
         ('p', 'processing'),
         ('c', 'completed'),
     ]
-    status = models.CharField(choices=status_choices, max_length=1, blank=False, default='s')
+    status = models.CharField(choices=status_choices, max_length=1, blank=False, default='p')
     total_price = models.FloatField(null=True)
+
+
     def __str__(self):
         return f"{self.id}"
+
+
 
 class Item(models.Model):
     item = models.CharField(max_length=64, null=False)
@@ -164,10 +170,15 @@ class Item(models.Model):
     ]
     status = models.CharField(choices=status_choices, max_length=2, blank=True, default='p')
 
-    order_id = models.ForeignKey(Order, on_delete=models.CASCADE, null=True)
+    # Use 'string' on Order because the model has not been defined yet
+    order_id = models.ForeignKey(Order, on_delete=models.CASCADE, null=True, related_name="linkedToOrder")
 
     # created_by = models.ForeignKey(settings.AUTH_USER_MODEL)
     created_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
+    
+    def __str__(self):
+        return f"Id: {self.id} ({self.status})"
+
 
   
  

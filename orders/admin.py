@@ -53,13 +53,6 @@ class OrderDPAdmin(admin.ModelAdmin):
 admin.site.register(OrderDP, OrderDPAdmin)
 
 
-# admin.site.register(Order)
-
-class OrderAdmin(admin.ModelAdmin):
-    list_display = ('id', 'total_price', 'created_by', 'time', 'status')
-admin.site.register(Order, OrderAdmin)
-
-
 # admin.site.register(Item)
 
 class ItemAdmin(admin.ModelAdmin):
@@ -86,3 +79,14 @@ class ItemAdmin(admin.ModelAdmin):
     #     form.save_m2m()
     #     return instance
 admin.site.register(Item, ItemAdmin)
+
+# Inline for Order admin page
+class ItemInline(admin.TabularInline):
+    model = Item
+
+# admin.site.register(Order)
+
+class OrderAdmin(admin.ModelAdmin):
+    list_display = ('id', 'created_by', 'total_price', 'status', 'time')
+    inlines = [ItemInline]
+admin.site.register(Order, OrderAdmin)

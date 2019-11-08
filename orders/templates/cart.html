@@ -38,22 +38,31 @@ Shopping cart
         </tbody>
     </table>
 
-{% else %}
-    <p>Empty cart.</p>
-{% endif %}
-
 <div class="text-right">
     <h3>
         Total: $ <span id="total-price"></span>
     </h3>
 </div>
+
 <br>
 <div class="text-center p-2 bd-highlight">
-    <button class="btn btn-primary" type="submit">Place an order</button>
+    <a href="{% url 'new_order' order_id %}">
+        <button class="btn btn-primary" type="submit">Place an order</button>
+    </a>
     <a href="{% url 'menu' %}">
         <p style="font-size: 0.75em;">Continue shopping</p>
     </a>   
 </div>
+
+{% else %}
+    <p>Empty cart.</p>
+
+    <div class="text-center p-2 bd-highlight">
+        <a href="{% url 'menu' %}">
+            <p style="font-size: 0.75em;">Continue shopping</p>
+        </a>   
+    </div>
+{% endif %}
 
 <script>
     var total_price = 0;

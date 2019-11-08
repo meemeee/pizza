@@ -88,5 +88,6 @@ class ItemInline(admin.TabularInline):
 
 class OrderAdmin(admin.ModelAdmin):
     list_display = ('id', 'created_by', 'total_price', 'status', 'time')
+    list_filter = ('status',)
     inlines = [ItemInline]
 admin.site.register(Order, OrderAdmin)

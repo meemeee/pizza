@@ -2,7 +2,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.http import HttpResponse, Http404, HttpResponseRedirect
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404, get_list_or_404
 from django.urls import reverse
 from .forms import *
 from .models import *
@@ -182,6 +182,7 @@ def item(request, item_id):
         
         # Get order ID
         # Check if user have an existing pending order: 
+        print(f"length: {len(Order.objects.filter(created_by=request.user).filter(status__exact='p'))}")
         if len(Order.objects.filter(created_by=request.user).filter(status__exact='p')) == 0:
             new_order = Order()
             new_order.created_by = request.user
@@ -290,6 +291,31 @@ class ItemByUserListView(LoginRequiredMixin, generic.ListView,):
 
         # Call the base implementation first to get the context
         context = super(ItemByUserListView, self).get_context_data(**kwargs)
-        # Create cart_num data and add it to the context
+        
+        # Add cart_num data & order id to the context
         context['cart_num'] = cart_num
+        items = Item.objects.filter(created_by=self.request.user).filter(status__exact='p').order_by('id')
+        context['order_id'] = items.values_list('order_id', flat=True)[0]
+
         return context
+
+
+def submit_order(request, order_id):
+    # Change order status to 'submitted'
+    order = get_object_or_404(Order, pk=order_id)
+    order.status = 's'
+    order.save()
+    
+    # Change items status AND calculate total price
+    total_price = 0
+    items = get_list_or_404(Item, order_id=order_id)
+    for item in items:
+        item.status = 's'
+        item.save()
+        total_price += float(item.price)
+    
+    order.total_price = total_price
+    order.save()
+    print(total_price)
+
+    return HttpResponse("Order submitted")

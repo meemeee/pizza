@@ -114,10 +114,9 @@ def menu(request):
                     p['large'] = format(item.price, '.2f')
         dinnerplatters_menu.append(p)
     
-    # Get cart items
-    cart = Item.objects.filter(created_by=request.user).filter(status__exact='p')
-    # Get cart num value, set a new value if not exists
-    cart_num = request.session.get('cart_num', len(cart))
+    # Set cart num value
+    cart_num = len(Item.objects.filter(created_by=request.user).filter(status__exact='p'))
+
 
     context = {
         "cart_num": cart_num,  
@@ -179,6 +178,12 @@ def item(request, item_id):
             break
 
     if request.method == "POST":
+        # Do not allow user to have more than 10 items per cart
+        if len(Item.objects.filter(created_by=request.user).filter(status__exact='p')) > 9:
+            context = {
+                "cart_num": len(Item.objects.filter(created_by=request.user).filter(status__exact='p')),
+            }
+            return render(request, "add_item_message.html", context)
         # Create a form instance and populate it with data from the request
         form = ItemForm(request.POST)    
 
@@ -220,27 +225,26 @@ def item(request, item_id):
                 subx.append(item)
 
             # Set new cart num value
-            request.session['cart_num'] = len(Item.objects.filter(created_by=request.user).filter(status__exact='p'))
-
+            cart_num = len(Item.objects.filter(created_by=request.user).filter(status__exact='p'))
+            success = True
             context = {
+                "success": success,
                 "dish": new_item.item,
                 "quantity": new_item.quantity,
                 "size": new_item.size,
                 "topping": topping,
                 "subx": subx,
-                "cart_num": request.session['cart_num'],
+                "cart_num": cart_num,
             }
-            return render(request, "success.html", context)
+            return render(request, "add_item_message.html", context)
             
     
     else:
         # Create form from Order Model
         form = ItemForm()
         
-        # Get cart items
-        cart = Item.objects.filter(created_by=request.user).filter(status__exact='p')
-        # Get cart num value, set a new value if not exists
-        cart_num = request.session.get('cart_num', len(cart))
+        # Set cart num value
+        cart_num = len(Item.objects.filter(created_by=request.user).filter(status__exact='p'))
 
         context = {
             "price": price,
@@ -266,10 +270,8 @@ class ItemByUserListView(LoginRequiredMixin, generic.ListView,):
 
     # Add additional data
     def get_context_data(self, **kwargs):
-        # Get cart items
-        cart = Item.objects.filter(created_by=self.request.user).filter(status__exact='p')
-        # Get cart num value, set a new value if not exists
-        cart_num = self.request.session.get('cart_num', len(cart))
+        # Set cart num value
+        cart_num = len(Item.objects.filter(created_by=self.request.user).filter(status__exact='p'))
 
         # Call the base implementation first to get the context
         context = super(ItemByUserListView, self).get_context_data(**kwargs)

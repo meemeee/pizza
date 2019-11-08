@@ -51,10 +51,11 @@ else if (dishtype === 'Dinner Platter') {
 else {
     // Deselect default size Small for Pasta and Salad
     document.querySelector('#id_size').selectedIndex = -1;
+    size_value = "-";
 }
 // Display price based on size and quantity
 var size = document.querySelector('#id_size');
-var size_value = size.options[size.selectedIndex].value;
+var size_value;
 
 var quantity = document.querySelector('#id_quantity');
 var quantity_value = quantity.options[quantity.selectedIndex].value;

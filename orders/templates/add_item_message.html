@@ -6,6 +6,7 @@ Success
 
 {% block main %}
 <div class="mx-5">
+    {% if success %}
     <div class="alert alert-success" role="alert">
         Order {{ quantity }} {{ dish }}
         <ul>
@@ -35,6 +36,17 @@ Success
             <button class="btn btn-primary" type="submit">Go to cart</button>
         </a> 
     </div>
+
+    {% else %}
+    <div class="alert alert-danger" role="alert">
+        Your cart must not have more than 10 items. Please edit cart before adding new items.
+    </div>
+    <div class=" text-center p-2 bd-highlight">  
+        <a href="{% url 'cart' %}">
+            <button class="btn btn-primary" type="submit">Go to cart</button>
+        </a> 
+    </div>
+    {% endif %}
 </div>
 
 {% endblock %}

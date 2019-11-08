@@ -70,7 +70,8 @@ def menu(request):
                 else:
                     p['large'] = format(item.price, '.2f')
         sicilian_menu.append(p)
-        
+    
+    
 
     subs = OrderSubs.objects.all()
     subs_menu = []
@@ -100,7 +101,7 @@ def menu(request):
 
     dinnerplatters = OrderDP.objects.all()
     dinnerplatters_menu = []
-    dinnerplatters_choice = OrderDP.objects.all().values('id', 'name')
+    dinnerplatters_choice = DinnerPlattersType.objects.all().values('id', 'name')
     
     for option in dinnerplatters_choice:
         p = {'id': option['id'], 'type': option['name']}
@@ -113,12 +114,13 @@ def menu(request):
                     p['large'] = format(item.price, '.2f')
         dinnerplatters_menu.append(p)
     
-    # Get number of current cart items
-    cart_num = Item.objects.filter(created_by=request.user).filter(status__exact='p').order_by('id')
-    request.session['cart_num'] = len(cart_num)
+    # Get cart items
+    cart = Item.objects.filter(created_by=request.user).filter(status__exact='p')
+    # Get cart num value, set a new value if not exists
+    cart_num = request.session.get('cart_num', len(cart))
 
     context = {
-        "cart_num": request.session['cart_num'],  
+        "cart_num": cart_num,  
         "r_pizzas": regular_menu, 
         "s_pizzas": sicilian_menu,
         "subs": subs_menu,
@@ -164,7 +166,7 @@ def item(request, item_id):
                     if item[0] in ['regular', 'sicilian']:
                         dish['name'] = dish['name'] + " " + dish_data.values_list('topping_choice__topping', flat=True)[0]
                     
-                    # Retrive price for each size
+                    # Retrieve price for each size
                     for value in dish_data.values():
                         # id 1 corresponding to size 'small'
                         if value['size_id'] == 1:
@@ -189,12 +191,10 @@ def item(request, item_id):
             new_item.size = form.cleaned_data['size']
             new_item.quantity = int(form.cleaned_data['quantity'])
             new_item.created_by = request.user
-            
-            
 
             # Calculate total price based on size & quantity + extra subs (if any)
             subX_price_per_pax = int(len(form.cleaned_data['subx'])) * 0.5
-            print(subX_price_per_pax)
+ 
             if new_item.size == 'S':
                 new_item.price = new_item.quantity * (float(price['small']) + subX_price_per_pax)
             elif new_item.size == 'L':
@@ -203,42 +203,76 @@ def item(request, item_id):
                 # Item is either a salad or pasta
                 new_item.price = float(price['na']) * int(new_item.quantity)
             
-            # # save user data
-            # new_item.created_by = request.user
-            
             new_item.save()
 
+
+            # Add topping and subx
             new_item.topping.set(form.cleaned_data['topping'])
             new_item.subx.set(form.cleaned_data['subx'])
-            print(len(form.cleaned_data['subx']))
+           
+            # Add topping and subx results into list
+            topping = list()
+            for item in form.cleaned_data['topping'].values_list('topping', flat=True):
+                topping.append(item)
+          
+            subx = list()
+            for item in form.cleaned_data['subx'].values_list('name', flat=True):
+                subx.append(item)
 
-            return HttpResponseRedirect(reverse("menu"))
+            # Set new cart num value
+            request.session['cart_num'] = len(Item.objects.filter(created_by=request.user).filter(status__exact='p'))
+
+            context = {
+                "dish": new_item.item,
+                "quantity": new_item.quantity,
+                "size": new_item.size,
+                "topping": topping,
+                "subx": subx,
+                "cart_num": request.session['cart_num'],
+            }
+            return render(request, "success.html", context)
+            
     
     else:
         # Create form from Order Model
         form = ItemForm()
         
-        # Get number of current cart items
-        cart_num = Item.objects.filter(created_by=request.user).filter(status__exact='p').order_by('id')
-        request.session['cart_num'] = len(cart_num)
+        # Get cart items
+        cart = Item.objects.filter(created_by=request.user).filter(status__exact='p')
+        # Get cart num value, set a new value if not exists
+        cart_num = request.session.get('cart_num', len(cart))
 
         context = {
             "price": price,
             "dish": dish,
             "form": form,
-            'cart_num': request.session.get('cart_num'),
+            'cart_num': cart_num,
         } 
 
         return render(request, "single_item.html", context)
         
 
-class ItemByUserListView(LoginRequiredMixin, generic.ListView):
+class ItemByUserListView(LoginRequiredMixin, generic.ListView,):
     """Generic class-based view showing by current user."""
     model = Item
     template_name ='cart.html'
     paginate_by = 10
-    
+
+    # Return list of items
     def get_queryset(self):
         return Item.objects.filter(created_by=self.request.user).filter(status__exact='p').order_by('id')
     
- 
+    
+
+    # Add additional data
+    def get_context_data(self, **kwargs):
+        # Get cart items
+        cart = Item.objects.filter(created_by=self.request.user).filter(status__exact='p')
+        # Get cart num value, set a new value if not exists
+        cart_num = self.request.session.get('cart_num', len(cart))
+
+        # Call the base implementation first to get the context
+        context = super(ItemByUserListView, self).get_context_data(**kwargs)
+        # Create cart_num data and add it to the context
+        context['cart_num'] = cart_num
+        return context

@@ -99,7 +99,7 @@ class OrderDP(models.Model):
     price = models.FloatField()
 
     def __str__(self):
-        return f"{self.name}, {self.size}"
+        return f"{self.ref}, {self.name}, {self.size}"
 
 
 class Order(models.Model):
@@ -130,7 +130,7 @@ class Item(models.Model):
         ('S', 'small'),
         ('L', 'large'),
     ]
-    size = models.CharField(choices=size_choices, max_length=1, blank=True, default='s')
+    size = models.CharField(choices=size_choices, max_length=1, blank=True, default='S')
     
     quantity_choices = [(i, i) for i in range (1, 11)]
     quantity = models.IntegerField(choices=quantity_choices, default=1)

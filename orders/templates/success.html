@@ -1,0 +1,40 @@
+{% extends "base_generic.html" %}
+
+{% block tittle %}
+Success
+{% endblock %}
+
+{% block main %}
+<div class="mx-5">
+    <div class="alert alert-success" role="alert">
+        Order {{ quantity }} {{ dish }}
+        <ul>
+            {% if size %}
+            <li>Size {{ size }}</li>
+            {% endif %}
+    
+            {% if topping or subx %}
+                <li>Toppings/Sub extras: 
+                {% for item in topping %}
+                    {{ item }}
+                {% endfor %}
+                {% for item2 in subx %}
+                    {{ item2 }}
+                {% endfor %}
+                </li>
+            {% endif %}
+        </ul>
+        Item has been added to your cart.
+    </div>
+    
+    <div class=" text-center p-2 bd-highlight">
+        <a href="{% url 'menu' %}">
+            <button class="btn btn-primary" type="submit">Continue shopping</button>
+        </a>   
+        <a href="{% url 'cart' %}">
+            <button class="btn btn-primary" type="submit">Go to cart</button>
+        </a> 
+    </div>
+</div>
+
+{% endblock %}

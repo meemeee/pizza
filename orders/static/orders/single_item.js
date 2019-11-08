@@ -2,6 +2,7 @@
 var dishtype = document.querySelector('#dish-type').innerHTML;
 var dishname = document.querySelector('#dish-name').innerHTML;
 var subx = document.querySelector('#subx');
+
 if (dishtype === 'Pizza') {
     var dishsplit = dishname.split(" ");
     var topping = document.querySelector('#id_topping');
@@ -40,21 +41,8 @@ else if (dishtype === 'Sub') {
             document.querySelector('label[for="id_subx_' + [i] +'"]').className = "text-muted";
         }
     }
-    checked_count = 0
-    document.querySelectorAll('input[name=subx]').forEach(input => {
-        input.onclick = () => {
-            if (input.checked) {
-                // Refer to price & final_price variable below
-                final_price += 0.5 * parseInt(quantity_value);
-                checked_count += 1;
-            }
-            else {
-                final_price -= 0.5 * parseInt(quantity_value);
-                checked_count -= 1;
-            }
-            price.innerHTML = final_price.toFixed(2);
-        }
-    })
+    
+    
 }
 
 else if (dishtype === 'Dinner Platter') {
@@ -75,11 +63,28 @@ var price = document.querySelector('#id_price');
 var price_from_size = price.getAttribute('value');
 var final_price = parseFloat(price_from_size);
 
+// Change price when selecting subx
+var checked_count = 0;
+document.querySelectorAll('input[name=subx]').forEach(input => {
+    input.onclick = () => {
+        if (input.checked) {
+            // Refer to price & final_price variable below
+            final_price += 0.5 * parseInt(quantity_value);
+            checked_count += 1;
+        }
+        else {
+            final_price -= 0.5 * parseInt(quantity_value);
+            checked_count -= 1;
+        }
+        price.innerHTML = final_price.toFixed(2);
+    }
+})
+
 // Change price when size changes
 size.onchange = () => {
     size_value = size.options[size.selectedIndex].value;
 
-    if (size_value == 'l') {
+    if (size_value == 'L') {
         price.setAttribute('value', localStorage.getItem("price_large"));
         price_from_size = price.getAttribute('value');
         

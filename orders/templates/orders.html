@@ -8,35 +8,39 @@ Your orders
 <h1>Your orders</h1>
 <br>
 {% if order_list %}
-    <table class="table">
-        <thead>
-            <tr>
-                <th scope="col">ID</th>
-                <th scope="col">Items</th>
-                <th scope="col">Total price</th>
-                <th scope="col">Status</th>
-                <th scope="col">Created at</th>
-                
-            </tr>
-        </thead>
-        <tbody>
-            {% for item in item_list %}
-            <tr>
-                <td>{{ item.item }}</td>
-                {% if item.display_topping %}
-                    <td>{{ item.display_topping }}</td>
-                {% elif item.display_subx %}
-                    <td>{{ item.display_subx}}</td>
-                {% else %}
-                    <td>N/A</td>
-                {% endif %}
-                <td>{{ item.size }}</td>
-                <td>{{ item.quantity }}</td>
-                <td><span class="item-price">{{ item.price }}</span></td>
-            </tr>
-            {% endfor %}
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Total price</th>
+            <th scope="col">Status</th>
+            <th scope="col">Created at</th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for order in order_list %}
+        <tr>
+            <td>#{{ order.id }}</td>
+            <td>{{ order.total_price }}</td>
+            <td>{{ order.get_status_display }}</td>
+            <td>{{ order.time }}</td>
+            <td><a href="{% url 'order-detail' order.pk %}">Details</a></td>
+        </tr>
+        {% endfor %}
 
-        </tbody>
-    </table>
+    </tbody>
+</table>
 
+<br>
+
+{% else %}
+<p><i>No orders yet</i></p>
+
+<div class="text-center p-2 bd-highlight">
+    <a href="{% url 'menu' %}">
+        <p style="font-size: 0.75em;">Start shopping</p>
+    </a>   
+</div>
+{% endif %}
 {% endblock %}

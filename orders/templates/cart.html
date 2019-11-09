@@ -23,15 +23,15 @@ Shopping cart
             <tr>
                 <td>{{ item.item }}</td>
                 {% if item.display_topping %}
-                    <td>{{ item.display_topping }}</td>
+                <td>{{ item.display_topping }}</td>
                 {% elif item.display_subx %}
-                    <td>{{ item.display_subx}}</td>
+                <td>{{ item.display_subx}}</td>
                 {% else %}
-                    <td>N/A</td>
+                <td>N/A</td>
                 {% endif %}
-                <td>{{ item.size }}</td>
+                <td>{{ item.get_size_display }}</td>
                 <td>{{ item.quantity }}</td>
-                <td><span class="item-price">{{ item.price }}</span></td>
+                <td>$ <span class="item-price">{{ item.price }}</span></td>
             </tr>
             {% endfor %}
 
@@ -46,10 +46,9 @@ Shopping cart
 
 <br>
 <div class="text-center p-2 bd-highlight">
-    <form id="submit_order" action="{% url 'new_order' %}" method="post">
+    <form action="{% url 'new_order' %}" method="post">
         {% csrf_token %}
         <input name="order_id" value="{{ order_id }}" style="display: none">
-        <!-- <input id="timestamp" name="timestamp" value="" style="display: none"> -->
         <button class="btn btn-primary" type="submit">Place an order</button>
     </form>
     <a href="{% url 'menu' %}">
@@ -75,14 +74,5 @@ Shopping cart
 
     document.querySelector('#total-price').innerHTML = total_price.toFixed(2);
     
-    // document.querySelector('#submit_order').onsubmit = () => {
-    //     const timestamp = new Date().getFullYear() +"-"
-    //         + new Date().getMonth() +"-"
-    //         + new Date().getDate() +" "
-    //         + new Date().getHours() + ":" 
-    //         + new Date().getMinutes();
-    //     const input = document.querySelector('#timestamp');
-    //     input.setAttribute('value', timestamp);
-    // }
 </script>
 {% endblock %}

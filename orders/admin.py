@@ -95,7 +95,7 @@ class OrderAdmin(admin.ModelAdmin):
 
     # Update timestamp when order is submitted
     def save_model(self, request, obj, form, change):
-        if obj.status == 'submitted':
+        if obj.status == 'Submitted':
             obj.time = datetime.now()
             obj.save()
 admin.site.register(Order, OrderAdmin)

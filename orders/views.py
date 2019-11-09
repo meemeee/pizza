@@ -182,7 +182,6 @@ def item(request, item_id):
         
         # Get order ID
         # Check if user have an existing pending order: 
-        print(f"length: {len(Order.objects.filter(created_by=request.user).filter(status__exact='p'))}")
         if len(Order.objects.filter(created_by=request.user).filter(status__exact='p')) == 0:
             new_order = Order()
             new_order.created_by = request.user
@@ -210,20 +209,21 @@ def item(request, item_id):
             new_item.size = form.cleaned_data['size']
             new_item.quantity = int(form.cleaned_data['quantity'])
             new_item.created_by = request.user
-            print(request.user)
             new_item.order_id = Order.objects.get(pk=pendingOrder_id)
 
             # Calculate total price based on size & quantity + extra subs (if any)
             subX_price_per_pax = int(len(form.cleaned_data['subx'])) * 0.5
  
             if new_item.size == 'S':
-                new_item.price = new_item.quantity * (float(price['small']) + subX_price_per_pax)
+                price = new_item.quantity * (float(price['small']) + subX_price_per_pax)
             elif new_item.size == 'L':
-                new_item.price = new_item.quantity * (float(price['large']) + subX_price_per_pax)
+                price = new_item.quantity * (float(price['large']) + subX_price_per_pax)
             else:
                 # Item is either a salad or pasta
-                new_item.price = float(price['na']) * int(new_item.quantity)
-            
+                price = float(price['na']) * int(new_item.quantity)
+            print(price)
+            new_item.price = format(price, '.2f')
+            print(new_item.price)
             new_item.save()
 
 
@@ -272,7 +272,7 @@ def item(request, item_id):
         return render(request, "single_item.html", context)
         
 
-class ItemByUserListView(LoginRequiredMixin, generic.ListView):
+class ItemListView(LoginRequiredMixin, generic.ListView):
     """Generic class-based view showing by current user."""
     model = Item
     template_name ='cart.html'
@@ -289,12 +289,13 @@ class ItemByUserListView(LoginRequiredMixin, generic.ListView):
         cart_num = len(Item.objects.filter(created_by=self.request.user).filter(status__exact='p'))
 
         # Call the base implementation first to get the context
-        context = super(ItemByUserListView, self).get_context_data(**kwargs)
+        context = super(ItemListView, self).get_context_data(**kwargs)
         
         # Add cart_num data & order id to the context
         context['cart_num'] = cart_num
         items = Item.objects.filter(created_by=self.request.user).filter(status__exact='p').order_by('id')
-        context['order_id'] = items.values_list('order_id', flat=True)[0]
+        if len(items) > 0:    
+            context['order_id'] = items.values_list('order_id', flat=True)[0]
 
         return context
 
@@ -315,7 +316,7 @@ def submit_order(request):
             item.save()
             total_price += float(item.price)
         
-        order.total_price = total_price
+        order.total_price = format(total_price, '.2f')
         order.save()
       
         # Redirect to success page
@@ -328,19 +329,15 @@ def submit_order(request):
         }
         return render(request, "place_order_message.html", context)
 
-@login_required
-def orders(request):
-    pass
 
-class OrdersByUserListView(LoginRequiredMixin, generic.ListView):
-    """Generic class-based view showing by current user."""
+class OrderListView(LoginRequiredMixin, generic.ListView):
     model = Order
     template_name ='orders.html'
-    paginate_by = 10
+    # paginate_by = 10
 
-    # Return list of items
+    # Return list of orders, descending
     def get_queryset(self):
-        return Item.objects.filter(created_by=self.request.user).order_by('id')
+        return Order.objects.filter(created_by=self.request.user).order_by('-id')
     
 
     # Add additional data
@@ -349,9 +346,25 @@ class OrdersByUserListView(LoginRequiredMixin, generic.ListView):
         cart_num = len(Item.objects.filter(created_by=self.request.user).filter(status__exact='p'))
 
         # Call the base implementation first to get the context
-        context = super(ItemByUserListView, self).get_context_data(**kwargs)
+        context = super(OrderListView, self).get_context_data(**kwargs)
         
         # Add cart_num data & order id to the context
         context['cart_num'] = cart_num
         
+        return context
+
+class OrderDetailView(generic.DetailView):
+    model = Order
+    
+    # Add additional data
+    def get_context_data(self, **kwargs):
+        # Set cart num value
+        cart_num = len(Item.objects.filter(created_by=self.request.user).filter(status__exact='p'))
+
+        # Call the base implementation first to get the context
+        context = super(OrderDetailView, self).get_context_data(**kwargs)
+        
+        # Add cart_num data & order id to the context
+        context['cart_num'] = cart_num
+
         return context

@@ -115,10 +115,10 @@ class Order(models.Model):
     time = models.DateTimeField(auto_now=True)
 
     status_choices = [
-        ('p', 'pending'),
-        ('s', 'submitted'),
-        ('pr', 'processing'),
-        ('c', 'completed'),
+        ('p', 'Pending'),
+        ('s', 'Submitted'),
+        ('pr', 'Processing'),
+        ('c', 'Completed'),
     ]
     status = models.CharField(choices=status_choices, max_length=2, blank=False, default='p')
     total_price = models.FloatField(null=True)
@@ -133,8 +133,8 @@ class Item(models.Model):
     item = models.CharField(max_length=64, null=False)
     
     size_choices = [
-        ('S', 'small'),
-        ('L', 'large'),
+        ('S', 'Small'),
+        ('L', 'Large'),
     ]
     size = models.CharField(choices=size_choices, max_length=1, blank=True, default='S')
     
@@ -163,10 +163,10 @@ class Item(models.Model):
     price = models.FloatField()
 
     status_choices = [
-        ('p', 'pending'),
-        ('s', 'submitted'),
-        ('pr', 'processing'),
-        ('c', 'completed'),
+        ('p', 'Pending'),
+        ('s', 'Submitted'),
+        ('pr', 'Processing'),
+        ('c', 'Completed'),
     ]
     status = models.CharField(choices=status_choices, max_length=2, blank=True, default='p')
 

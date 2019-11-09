@@ -12,9 +12,11 @@ urlpatterns = [
     # Path for placing an order
     path('menu/<str:item_id>', views.item),
     # Path for shopping cart
-    path('cart', views.ItemByUserListView.as_view(), name="cart"),
-    # Path for view all orders
-    path('orders/', views.orders, name="orders"),
+    path('cart', views.ItemListView.as_view(), name="cart"),
+    # Path to view all orders
+    path('orders', views.OrderListView.as_view(), name="orders"),
+    # Path to view order's items
+    path('order/<int:pk>', views.OrderDetailView.as_view(), name="order-detail"),
     # Path for placing an order
     path('new_order', views.submit_order, name="new_order"),
 ]

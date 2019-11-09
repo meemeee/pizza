@@ -1,0 +1,42 @@
+{% extends "base_generic.html" %}
+
+{% block tittle %}
+Your orders
+{% endblock %}
+
+{% block main %}
+<h1>Your orders</h1>
+<br>
+{% if order_list %}
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Items</th>
+                <th scope="col">Total price</th>
+                <th scope="col">Status</th>
+                <th scope="col">Created at</th>
+                
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in item_list %}
+            <tr>
+                <td>{{ item.item }}</td>
+                {% if item.display_topping %}
+                    <td>{{ item.display_topping }}</td>
+                {% elif item.display_subx %}
+                    <td>{{ item.display_subx}}</td>
+                {% else %}
+                    <td>N/A</td>
+                {% endif %}
+                <td>{{ item.size }}</td>
+                <td>{{ item.quantity }}</td>
+                <td><span class="item-price">{{ item.price }}</span></td>
+            </tr>
+            {% endfor %}
+
+        </tbody>
+    </table>
+
+{% endblock %}

@@ -46,9 +46,12 @@ Shopping cart
 
 <br>
 <div class="text-center p-2 bd-highlight">
-    <a href="{% url 'new_order' order_id %}">
+    <form id="submit_order" action="{% url 'new_order' %}" method="post">
+        {% csrf_token %}
+        <input name="order_id" value="{{ order_id }}" style="display: none">
+        <!-- <input id="timestamp" name="timestamp" value="" style="display: none"> -->
         <button class="btn btn-primary" type="submit">Place an order</button>
-    </a>
+    </form>
     <a href="{% url 'menu' %}">
         <p style="font-size: 0.75em;">Continue shopping</p>
     </a>   
@@ -71,5 +74,15 @@ Shopping cart
     })
 
     document.querySelector('#total-price').innerHTML = total_price.toFixed(2);
+    
+    // document.querySelector('#submit_order').onsubmit = () => {
+    //     const timestamp = new Date().getFullYear() +"-"
+    //         + new Date().getMonth() +"-"
+    //         + new Date().getDate() +" "
+    //         + new Date().getHours() + ":" 
+    //         + new Date().getMinutes();
+    //     const input = document.querySelector('#timestamp');
+    //     input.setAttribute('value', timestamp);
+    // }
 </script>
 {% endblock %}

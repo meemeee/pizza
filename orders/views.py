@@ -272,7 +272,7 @@ def item(request, item_id):
         return render(request, "single_item.html", context)
         
 
-class ItemByUserListView(LoginRequiredMixin, generic.ListView,):
+class ItemByUserListView(LoginRequiredMixin, generic.ListView):
     """Generic class-based view showing by current user."""
     model = Item
     template_name ='cart.html'
@@ -281,7 +281,6 @@ class ItemByUserListView(LoginRequiredMixin, generic.ListView,):
     # Return list of items
     def get_queryset(self):
         return Item.objects.filter(created_by=self.request.user).filter(status__exact='p').order_by('id')
-    
     
 
     # Add additional data
@@ -300,22 +299,59 @@ class ItemByUserListView(LoginRequiredMixin, generic.ListView,):
         return context
 
 
-def submit_order(request, order_id):
-    # Change order status to 'submitted'
-    order = get_object_or_404(Order, pk=order_id)
-    order.status = 's'
-    order.save()
-    
-    # Change items status AND calculate total price
-    total_price = 0
-    items = get_list_or_404(Item, order_id=order_id)
-    for item in items:
-        item.status = 's'
-        item.save()
-        total_price += float(item.price)
-    
-    order.total_price = total_price
-    order.save()
-    print(total_price)
+def submit_order(request):
+    if request.method == "POST":
+        order_id = int(request.POST["order_id"])
+        # Change order status to 'submitted'
+        order = get_object_or_404(Order, pk=order_id)
+        order.status = 's'
+        order.save()
+        
+        # Change items status AND calculate total price
+        total_price = 0
+        items = get_list_or_404(Item, order_id=order_id)
+        for item in items:
+            item.status = 's'
+            item.save()
+            total_price += float(item.price)
+        
+        order.total_price = total_price
+        order.save()
+      
+        # Redirect to success page
+        # Set new cart num value
+        cart_num = len(Item.objects.filter(created_by=request.user).filter(status__exact='p'))
+        context = {
+            "items": items,
+            "order_id": order_id,
+            "cart_num": cart_num,
+        }
+        return render(request, "place_order_message.html", context)
 
-    return HttpResponse("Order submitted")
+@login_required
+def orders(request):
+    pass
+
+class OrdersByUserListView(LoginRequiredMixin, generic.ListView):
+    """Generic class-based view showing by current user."""
+    model = Order
+    template_name ='orders.html'
+    paginate_by = 10
+
+    # Return list of items
+    def get_queryset(self):
+        return Item.objects.filter(created_by=self.request.user).order_by('id')
+    
+
+    # Add additional data
+    def get_context_data(self, **kwargs):
+        # Set cart num value
+        cart_num = len(Item.objects.filter(created_by=self.request.user).filter(status__exact='p'))
+
+        # Call the base implementation first to get the context
+        context = super(ItemByUserListView, self).get_context_data(**kwargs)
+        
+        # Add cart_num data & order id to the context
+        context['cart_num'] = cart_num
+        
+        return context

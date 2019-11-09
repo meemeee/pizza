@@ -1,0 +1,29 @@
+{% extends "base_generic.html" %}
+
+{% block tittle %}
+Order submitted
+{% endblock %}
+
+{% block main %}
+<div class="mx-5">
+    <div class="alert alert-success" role="alert">
+        Congrats! Order <b>#{{ order_id }}</b> will be ready in a few minutes.
+        <ul>
+            {% for item in items %}
+                <li>{{ item.quantity }} piece(s) of {{ item.item}}</li>
+            {% endfor %}
+        </ul>
+    </div>
+    
+    <div class=" text-center p-2 bd-highlight">
+        <a href="{% url 'menu' %}">
+            <button class="btn btn-primary">Continue shopping</button>
+        </a>   
+        <a href="{% url 'orders' %}">
+            <button class="btn btn-primary">Your orders</button>
+        </a> 
+    </div>
+</div>
+
+
+{% endblock %}

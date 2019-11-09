@@ -1,4 +1,6 @@
 from django.contrib import admin
+from datetime import datetime
+
 from .models import *
 
 # Register your models here.
@@ -90,4 +92,10 @@ class OrderAdmin(admin.ModelAdmin):
     list_display = ('id', 'created_by', 'total_price', 'status', 'time')
     list_filter = ('status',)
     inlines = [ItemInline]
+
+    # Update timestamp when order is submitted
+    def save_model(self, request, obj, form, change):
+        if obj.status == 'submitted':
+            obj.time = datetime.now()
+            obj.save()
 admin.site.register(Order, OrderAdmin)

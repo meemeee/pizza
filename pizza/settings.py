@@ -149,3 +149,5 @@ ADMIN_REORDER = (
 
     
 )
+
+APPEND_SLASH=False

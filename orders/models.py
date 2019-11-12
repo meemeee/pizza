@@ -104,13 +104,6 @@ class OrderDP(models.Model):
 
 class Order(models.Model):
     created_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
-    # created_by = models.ForeignKey(settings.AUTH_USER_MODEL,
-    #     null=True, blank=True, on_delete=models.SET_NULL)
-    # def save_model(self, request, obj, form, change):
-    #     if not obj.pk:
-    #         # Only set added_by during the first save.
-    #         obj.added_by = request.user
-    #         super().save_model(request, obj, form, change)
         
     time = models.DateTimeField(auto_now=True)
 
@@ -123,7 +116,9 @@ class Order(models.Model):
     status = models.CharField(choices=status_choices, max_length=2, blank=False, default='p')
     total_price = models.FloatField(null=True)
 
-
+    class Meta:
+        permissions = (("can_change_status", "Change order status"),)   
+    
     def __str__(self):
         return f"{self.id}"
 

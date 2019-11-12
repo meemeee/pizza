@@ -1,0 +1,47 @@
+{% extends "base_generic.html" %}
+
+{% block tittle %}
+Change order status
+{% endblock %}
+
+{% block main %}
+<h1>Order #{{ order_instance.id }}</h1>
+<ul>
+    <li>Buyer: {{ order_instance.created_by }}</li>
+    <li>Current status: <span id="current_status">{{ order_instance.get_status_display }}</span></li>
+</ul>
+    <form action="" method="post">
+        {% csrf_token %}
+        <label for="id_status">New status:</label> 
+        <select class="form-control" name="status" id="id_status">
+            {{ form.status.2 }}
+            {{ form.status.3 }}
+        </select>
+        <small style="color: grey">{{ form.status.help_text }}</small>
+        {% for error in form.status.errors %}
+            <p style="color: red">{{ error }}</p>
+        {% endfor %}
+
+        <div class="py-3">
+            <button class="btn btn-primary" type="submit">Update</button>
+        </div>
+    </form>
+
+<script>
+// var new_status = document.querySelector('#id_status');
+// new_status.onchange = () => {
+
+//     console.log(new_status.options[new_status.selectedIndex].value)
+// }
+// // const current_status = document.querySelector('#current_status').innerHTML;
+// // // Suggest new value based on current status
+
+// // if (current_status == 'Submitted') {
+// //     new_status.value = 'pr';
+// // }
+// // else if (current_status == 'Processing') {
+// //     new_status.value = 'c';
+// // }
+
+</script>
+{% endblock %}

@@ -1,5 +1,5 @@
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth.models import User
 from django.http import HttpResponse, Http404, HttpResponseRedirect
 from django.shortcuts import render, redirect, get_object_or_404, get_list_or_404
@@ -262,14 +262,14 @@ def item(request, item_id):
         # Set cart num value
         cart_num = len(Item.objects.filter(created_by=request.user).filter(status__exact='p'))
 
-        context = {
-            "price": price,
-            "dish": dish,
-            "form": form,
-            'cart_num': cart_num,
-        } 
+    context = {
+        "price": price,
+        "dish": dish,
+        "form": form,
+        'cart_num': cart_num,
+    } 
 
-        return render(request, "single_item.html", context)
+    return render(request, "single_item.html", context)
         
 
 class ItemListView(LoginRequiredMixin, generic.ListView):
@@ -368,3 +368,39 @@ class OrderDetailView(generic.DetailView):
         context['cart_num'] = cart_num
 
         return context
+
+@permission_required('orders.')
+def change_status_admin(request, pk):
+    order_instance = get_object_or_404(Order, pk=pk)
+
+    if request.method =='POST':
+        #Create a form instance and populate form data
+        form = OrderStatusForm(request.POST)
+        print(form)
+
+        # Check if form is valid
+        if form.is_valid():
+
+            # Change order status
+            order_instance.status = form.cleaned_data['status']
+            order_instance.save()
+
+            # Change items status accordingly
+            items = get_list_or_404(Item, order_id=order_instance.id)
+            for item in items:
+                item.status = form.cleaned_data['status']
+                item.save()
+            # return HttpResponseRedirect(reverse('menu'))
+            return HttpResponseRedirect(reverse('order-detail', args=(pk,)))
+        # else:
+        #     return HttpResponse("Something's wrong")
+
+    else:
+        form = OrderStatusForm()
+     
+    context = {
+        'form': form,
+        'order_instance': order_instance
+    }
+
+    return render(request, 'orders/change_order_status.html', context)

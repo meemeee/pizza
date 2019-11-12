@@ -2,7 +2,7 @@ from django import forms
 from django.forms import ModelForm
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from .models import Item
+from .models import Item, Order
 
 from django.utils.translation import gettext_lazy as _
 
@@ -28,3 +28,16 @@ class ItemForm(ModelForm):
         }
 
        
+class OrderStatusForm(ModelForm):
+    # status_choices = [
+    #     ('pr', 'Processing'),
+    #     ('c', 'Completed'),
+    # ]
+    # new_status = forms.ChoiceField(choices=status_choices, required=True)
+
+    class Meta:
+        model = Order
+        fields = ['status']
+        help_texts = {
+            'status': _('Item(s) in this order will be updated accordingly'),
+        }

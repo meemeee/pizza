@@ -21,5 +21,8 @@ urlpatterns = [
     path('new_order', views.submit_order, name="new_order"),
     # Path for changing order status
     path('order/<int:pk>/status', views.change_status_admin, name="change-order-status"),
+    # Path for view all orders for admin
+    path('orders/all', views.AllOrdersListView.as_view(), name="all-orders"),
+
 ]
 

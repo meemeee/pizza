@@ -391,16 +391,45 @@ def change_status_admin(request, pk):
                 item.status = form.cleaned_data['status']
                 item.save()
             # return HttpResponseRedirect(reverse('menu'))
-            return HttpResponseRedirect(reverse('order-detail', args=(pk,)))
+            return HttpResponseRedirect(reverse('all-orders'))
         # else:
         #     return HttpResponse("Something's wrong")
 
     else:
         form = OrderStatusForm()
-     
+    # Set cart num value
+    cart_num = len(Item.objects.filter(created_by=request.user).filter(status__exact='p'))
+
     context = {
         'form': form,
-        'order_instance': order_instance
+        'order_instance': order_instance,
+        'cart_num': cart_num,
     }
 
     return render(request, 'orders/change_order_status.html', context)
+
+class AllOrdersListView(LoginRequiredMixin, generic.ListView):
+    model = Order
+    template_name ='all_orders.html'
+    # paginate_by = 10
+
+    # Return list of 'submitted' orders, descending
+    def get_queryset(self):
+        return Order.objects.filter(status='s').order_by('id')
+    
+
+    # Add additional data
+    def get_context_data(self, **kwargs):
+        # Set cart num value
+        cart_num = len(Item.objects.filter(created_by=self.request.user).filter(status__exact='p'))
+
+        # Call the base implementation first to get the context
+        context = super(AllOrdersListView, self).get_context_data(**kwargs)
+        
+        # Add cart_num data to the context
+        context['cart_num'] = cart_num
+
+        # Add another query to the context
+        context['processing_orders'] = Order.objects.filter(status='pr').order_by('id')
+        
+        return context

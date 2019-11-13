@@ -5,8 +5,8 @@ All orders
 {% endblock %}
 
 {% block main %}
-<h1>All orders</h1>
-<br>
+<h1>Orders in progress</h1>
+<br><br>
 <h3>Submitted</h3>
 {% if order_list %}
 <table class="table">
@@ -24,7 +24,7 @@ All orders
         <tr>
             <td>#{{ order.id }}</td>
             <td>{{ order.total_price }}</td>
-            <td><a href="/order/{{ order.id }}/status">{{ order.get_status_display }}</a></td>
+            <td><a href="{% url 'change-order-status' order.pk %}">{{ order.get_status_display }}</a></td>
             <td>{{ order.time }}</td>
             <td><a href="{% url 'order-detail' order.pk %}">Details</a></td>
         </tr>

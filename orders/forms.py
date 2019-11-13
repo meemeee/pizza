@@ -38,6 +38,3 @@ class OrderStatusForm(ModelForm):
     class Meta:
         model = Order
         fields = ['status']
-        help_texts = {
-            'status': _('Item(s) in this order will be updated accordingly'),
-        }

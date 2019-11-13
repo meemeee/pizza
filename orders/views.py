@@ -16,7 +16,6 @@ def index(request):
 
 
 def register(request):
-
     if request.method == "POST":
         form = RegisterForm(request.POST)
 
@@ -58,7 +57,6 @@ def menu(request):
         regular_menu.append(p)
 
     s_pizzas = OrderPizza.objects.filter(name__name="Sicilian")
-    print(s_pizzas)
     sicilian_menu = []
 
     for option in topping_choice:
@@ -116,7 +114,10 @@ def menu(request):
         dinnerplatters_menu.append(p)
     
     # Set cart num value
-    cart_num = len(Item.objects.filter(created_by=request.user).filter(status__exact='p'))
+    if request.user.is_authenticated:
+        cart_num = len(Item.objects.filter(created_by=request.user).filter(status__exact='p'))
+    else:
+        cart_num = 0
 
 
     context = {
@@ -192,7 +193,9 @@ def item(request, item_id):
 
             
         # Do not allow user to have more than 10 items per cart
-        if len(Item.objects.filter(created_by=request.user).filter(status__exact='p')) > 9:
+        pendingItems = Item.objects.filter(created_by=request.user).filter(status__exact='p')
+    
+        if len(pendingItems) > 9:
             context = {
                 "cart_num": len(Item.objects.filter(created_by=request.user).filter(status__exact='p')),
             }
@@ -200,11 +203,33 @@ def item(request, item_id):
         # Create a form instance and populate it with data from the request
         form = ItemForm(request.POST)    
 
-        # Create an object in Item model
-        new_item = Item()
-
-        # Add information to object
         if form.is_valid():
+        # Iterate through existing pending items, only create a new object if the same item does not exist
+            dish_name = dish['type'] + ": " + dish['name']
+            # for item in pendingItems:
+            #     if (item.item == dish_name and 
+            #         item.size == form.cleaned_data['size'].strip() and
+            #         list(item.topping.all()) == list(form.cleaned_data['topping']) and
+            #         list(item.subx.all()) == list(form.cleaned_data['subx'])):
+                   
+            #         item.quantity += int(form.cleaned_data['quantity'])
+            #         item.price += int(form.cleaned_data['quantity'])*
+            #         if item.size == 'S':
+            #             item.price = item.quantity * (float(price['small']) + subX_price_per_pax)
+            #         elif item.size == 'L':
+            #             item.price = new_item.quantity * (float(price['large']) + subX_price_per_pax)
+            #         else:
+            #             # Item is either a salad or pasta
+            #             pritem.pricece = float(price['na']) * int(new_item.quantity)
+            #         item.save()
+
+            #         return HttpResponseRedirect(reverse('cart'))
+            #     # else: 
+            # Else, create a new object in Item model
+            new_item = Item()
+            
+            # Add information to object
+            
             new_item.item = dish['type'] + ": " + dish['name']
             new_item.size = form.cleaned_data['size']
             new_item.quantity = int(form.cleaned_data['quantity'])
@@ -213,29 +238,52 @@ def item(request, item_id):
 
             # Calculate total price based on size & quantity + extra subs (if any)
             subX_price_per_pax = int(len(form.cleaned_data['subx'])) * 0.5
- 
+
             if new_item.size == 'S':
-                price = new_item.quantity * (float(price['small']) + subX_price_per_pax)
+                new_item.price = new_item.quantity * (float(price['small']) + subX_price_per_pax)
             elif new_item.size == 'L':
-                price = new_item.quantity * (float(price['large']) + subX_price_per_pax)
+                new_item.price = new_item.quantity * (float(price['large']) + subX_price_per_pax)
             else:
                 # Item is either a salad or pasta
-                price = float(price['na']) * int(new_item.quantity)
-            print(price)
-            new_item.price = format(price, '.2f')
-            print(new_item.price)
+                new_item.price = float(price['na']) * int(new_item.quantity)
+
             new_item.save()
+            
 
 
             # Add topping and subx
             new_item.topping.set(form.cleaned_data['topping'])
             new_item.subx.set(form.cleaned_data['subx'])
+            
+            # Get the latest added item's value from database
+            latest_values = Item.objects.filter(created_by=request.user).order_by('-id').values_list('item', 'size', 'topping', 'subx')[0]
+            # print(latest)
+            # print(pendingItems.values_list('item', 'size', 'topping', 'subx'))
+            if latest_values in pendingItems.values_list('item', 'size', 'topping', 'subx'):
+                for item in pendingItems:
+                    if (item.item == dish_name and 
+                        item.size == form.cleaned_data['size'].strip() and
+                        list(item.topping.all()) == list(form.cleaned_data['topping']) and
+                        list(item.subx.all()) == list(form.cleaned_data['subx'])):
+                    
+                        item.quantity += new_item.quantity
+                        item.price += new_item.price
+                        item.save()
+                        # Delete the duplicate item
+                        dup = Item.objects.filter(created_by=request.user).order_by('-id')[0]
+                        dup.delete()
+
+                        break
+    
            
+            
+            # return HttpResponseRedirect(reverse('cart'))
+        
             # Add topping and subx results into list
             topping = list()
             for item in form.cleaned_data['topping'].values_list('topping', flat=True):
                 topping.append(item)
-          
+        
             subx = list()
             for item in form.cleaned_data['subx'].values_list('name', flat=True):
                 subx.append(item)
@@ -299,7 +347,7 @@ class ItemListView(LoginRequiredMixin, generic.ListView):
 
         return context
 
-
+@login_required
 def submit_order(request):
     if request.method == "POST":
         order_id = int(request.POST["order_id"])
@@ -369,14 +417,13 @@ class OrderDetailView(generic.DetailView):
 
         return context
 
-@permission_required('orders.')
+@permission_required('orders.can_change_status')
 def change_status_admin(request, pk):
     order_instance = get_object_or_404(Order, pk=pk)
 
     if request.method =='POST':
         #Create a form instance and populate form data
         form = OrderStatusForm(request.POST)
-        print(form)
 
         # Check if form is valid
         if form.is_valid():
@@ -408,12 +455,12 @@ def change_status_admin(request, pk):
 
     return render(request, 'orders/change_order_status.html', context)
 
+
 class AllOrdersListView(LoginRequiredMixin, generic.ListView):
     model = Order
     template_name ='all_orders.html'
-    # paginate_by = 10
 
-    # Return list of 'submitted' orders, descending
+    # Return list of 'submitted' orders
     def get_queryset(self):
         return Order.objects.filter(status='s').order_by('id')
     
@@ -429,7 +476,7 @@ class AllOrdersListView(LoginRequiredMixin, generic.ListView):
         # Add cart_num data to the context
         context['cart_num'] = cart_num
 
-        # Add another query to the context
+        # Add another query (a list of 'processing' orders) to the context
         context['processing_orders'] = Order.objects.filter(status='pr').order_by('id')
         
         return context

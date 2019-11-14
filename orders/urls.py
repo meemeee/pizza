@@ -14,6 +14,8 @@ urlpatterns = [
     path('menu/<str:item_id>', views.item),
     # Path for shopping cart
     path('cart', views.ItemListView.as_view(), name="cart"),
+    # Path for removing item from shopping cart
+    path('cart/remove_item', views.remove_item, name="remove-item"),
     # Path to view all orders
     path('orders', views.OrderListView.as_view(), name="orders"),
     # Path to view order's items

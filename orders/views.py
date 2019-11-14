@@ -9,6 +9,7 @@ from .models import *
 from . import urls
 from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.http import JsonResponse
 
 # Create your views here.
 def index(request):
@@ -198,111 +199,96 @@ def item(request, item_id):
         if len(pendingItems) > 9:
             context = {
                 "cart_num": len(Item.objects.filter(created_by=request.user).filter(status__exact='p')),
+                "error": "Maximum dishes per cart: 10",
             }
             return render(request, "add_item_message.html", context)
         # Create a form instance and populate it with data from the request
         form = ItemForm(request.POST)    
 
-        if form.is_valid():
-        # Iterate through existing pending items, only create a new object if the same item does not exist
-            dish_name = dish['type'] + ": " + dish['name']
-            # for item in pendingItems:
-            #     if (item.item == dish_name and 
-            #         item.size == form.cleaned_data['size'].strip() and
-            #         list(item.topping.all()) == list(form.cleaned_data['topping']) and
-            #         list(item.subx.all()) == list(form.cleaned_data['subx'])):
-                   
-            #         item.quantity += int(form.cleaned_data['quantity'])
-            #         item.price += int(form.cleaned_data['quantity'])*
-            #         if item.size == 'S':
-            #             item.price = item.quantity * (float(price['small']) + subX_price_per_pax)
-            #         elif item.size == 'L':
-            #             item.price = new_item.quantity * (float(price['large']) + subX_price_per_pax)
-            #         else:
-            #             # Item is either a salad or pasta
-            #             pritem.pricece = float(price['na']) * int(new_item.quantity)
-            #         item.save()
-
-            #         return HttpResponseRedirect(reverse('cart'))
-            #     # else: 
-            # Else, create a new object in Item model
-            new_item = Item()
-            
-            # Add information to object
-            
-            new_item.item = dish['type'] + ": " + dish['name']
-            new_item.size = form.cleaned_data['size']
-            new_item.quantity = int(form.cleaned_data['quantity'])
-            new_item.created_by = request.user
-            new_item.order_id = Order.objects.get(pk=pendingOrder_id)
-
+        def add_details(obj, prev_quantity, form):
             # Calculate total price based on size & quantity + extra subs (if any)
             subX_price_per_pax = int(len(form.cleaned_data['subx'])) * 0.5
 
-            if new_item.size == 'S':
-                new_item.price = new_item.quantity * (float(price['small']) + subX_price_per_pax)
-            elif new_item.size == 'L':
-                new_item.price = new_item.quantity * (float(price['large']) + subX_price_per_pax)
+            # add up any previous quantity (if any)
+            obj.quantity = prev_quantity + int(form.cleaned_data['quantity'])
+            
+            # Do not allow user to have more than 10 items per dish
+            if obj.quantity > 10:
+                context = {
+                    "cart_num": len(Item.objects.filter(created_by=request.user).filter(status__exact='p')),
+                    "error": "Maximum items per dish: 10",
+                }
+                
             else:
-                # Item is either a salad or pasta
-                new_item.price = float(price['na']) * int(new_item.quantity)
+
+                if obj.size == 'S':
+                    obj.price = obj.quantity * (float(price['small']) + subX_price_per_pax)
+                elif obj.size == 'L':
+                    obj.price = obj.quantity * (float(price['large']) + subX_price_per_pax)
+                else:
+                    # Item is either a salad or pasta
+                    obj.price = float(price['na']) * int(obj.quantity)
+                
+                obj.save()
+                
+                # Add topping and subx results into list
+                topping = list()
+                for item in form.cleaned_data['topping'].values_list('topping', flat=True):
+                    topping.append(item)
+            
+                subx = list()
+                for item in form.cleaned_data['subx'].values_list('name', flat=True):
+                    subx.append(item)
+                # Set new cart num value
+                cart_num = len(Item.objects.filter(created_by=request.user).filter(status__exact='p'))
+                success = True
+    
+                context = {
+                    "success": success,
+                    "dish": dish_name,
+                    "quantity": obj.quantity,
+                    "size": obj.size,
+                    "topping": topping,
+                    "subx": subx,
+                    "cart_num": cart_num,
+                }
+            return context
+            
+        if form.is_valid():
+        # Iterate through existing pending items, only create a new object if the same item does not exist
+            dish_name = dish['type'] + ": " + dish['name']
+            for item in pendingItems:
+                if (item.item == dish_name and 
+                    item.size == form.cleaned_data['size'].strip() and
+                    list(item.topping.all()) == list(form.cleaned_data['topping']) and
+                    list(item.subx.all()) == list(form.cleaned_data['subx'])):
+                   
+                    context = add_details(item, item.quantity, form)
+
+                    return render(request, "add_item_message.html", context)
+                    break
+         
+            #Else, create a new object in Item model
+            new_item = Item()
+            
+            # Add initial information to object
+            
+            new_item.item = dish['type'] + ": " + dish['name']
+            new_item.size = form.cleaned_data['size']
+            new_item.created_by = request.user
+            new_item.order_id = Order.objects.get(pk=pendingOrder_id)
+
+            # Add further details, then return context
+            context = add_details(new_item, 0, form)
 
             new_item.save()
-            
-
-
             # Add topping and subx
             new_item.topping.set(form.cleaned_data['topping'])
             new_item.subx.set(form.cleaned_data['subx'])
             
-            # Get the latest added item's value from database
-            latest_values = Item.objects.filter(created_by=request.user).order_by('-id').values_list('item', 'size', 'topping', 'subx')[0]
-            # print(latest)
-            # print(pendingItems.values_list('item', 'size', 'topping', 'subx'))
-            if latest_values in pendingItems.values_list('item', 'size', 'topping', 'subx'):
-                for item in pendingItems:
-                    if (item.item == dish_name and 
-                        item.size == form.cleaned_data['size'].strip() and
-                        list(item.topping.all()) == list(form.cleaned_data['topping']) and
-                        list(item.subx.all()) == list(form.cleaned_data['subx'])):
-                    
-                        item.quantity += new_item.quantity
-                        item.price += new_item.price
-                        item.save()
-                        # Delete the duplicate item
-                        dup = Item.objects.filter(created_by=request.user).order_by('-id')[0]
-                        dup.delete()
-
-                        break
-    
-           
-            
-            # return HttpResponseRedirect(reverse('cart'))
-        
-            # Add topping and subx results into list
-            topping = list()
-            for item in form.cleaned_data['topping'].values_list('topping', flat=True):
-                topping.append(item)
-        
-            subx = list()
-            for item in form.cleaned_data['subx'].values_list('name', flat=True):
-                subx.append(item)
-
-            # Set new cart num value
-            cart_num = len(Item.objects.filter(created_by=request.user).filter(status__exact='p'))
-            success = True
-            context = {
-                "success": success,
-                "dish": new_item.item,
-                "quantity": new_item.quantity,
-                "size": new_item.size,
-                "topping": topping,
-                "subx": subx,
-                "cart_num": cart_num,
-            }
             return render(request, "add_item_message.html", context)
             
-    
+            
     else:
         # Create form from Order Model
         form = ItemForm()
@@ -480,3 +466,16 @@ class AllOrdersListView(LoginRequiredMixin, generic.ListView):
         context['processing_orders'] = Order.objects.filter(status='pr').order_by('id')
         
         return context
+
+
+def remove_item(request):
+    if request.method == 'POST':
+        item_id = request.POST.get("item_id")
+        item = Item.objects.get(pk=item_id)
+        print(item)
+        if item: 
+            item.delete()
+            return HttpResponseRedirect(reverse('cart'))
+    return HttpResponse("Something went wrong.")
+
+

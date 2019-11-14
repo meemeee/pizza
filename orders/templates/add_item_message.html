@@ -30,7 +30,7 @@ Add to cart
     
     <div class=" text-center p-2 bd-highlight">
         <a href="{% url 'menu' %}">
-            <button class="btn btn-primary" type="submit">Continue shopping</button>
+            <button class="mr-2btn btn-primary" type="submit">Continue shopping</button>
         </a>   
         <a href="{% url 'cart' %}">
             <button class="btn btn-primary" type="submit">Go to cart</button>
@@ -39,9 +39,12 @@ Add to cart
 
     {% else %}
     <div class="alert alert-danger" role="alert">
-        Your cart must not have more than 10 items. Please edit cart before adding new items.
+        {{ error }}
     </div>
     <div class=" text-center p-2 bd-highlight">  
+        <a href="{% url 'menu' %}">
+            <button class="mr-2 btn btn-primary" type="submit">Continue shopping</button>
+        </a>
         <a href="{% url 'cart' %}">
             <button class="btn btn-primary" type="submit">Go to cart</button>
         </a> 

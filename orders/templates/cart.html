@@ -16,6 +16,7 @@ Shopping cart
                 <th scope="col">Size</th>
                 <th scope="col">Quantity</th>
                 <th scope="col">Price</th>
+                <th scope="col"></th>
             </tr>
         </thead>
         <tbody>
@@ -32,6 +33,16 @@ Shopping cart
                 <td>{{ item.get_size_display }}</td>
                 <td>{{ item.quantity }}</td>
                 <td>$ <span class="item-price">{{ item.price }}</span></td>
+                <td>
+                    <form id="remove_form_{{ item.id }}" action="cart/remove_item" method="POST">
+                        {% csrf_token %}
+                        <input name="item_id" value="{{ item.id }}" style="display: none">
+                        
+                    </form>
+                    <a href="#" class="remove" id="{{ item.id }}">    
+                        <i class="fa fa-times" style="color: grey"></i>
+                    </a>
+                </td>
             </tr>
             {% endfor %}
 
@@ -73,6 +84,18 @@ Shopping cart
     })
 
     document.querySelector('#total-price').innerHTML = total_price.toFixed(2);
+
+    document.querySelectorAll('.remove').forEach(item => {
+        item.onclick = event => {
+            event.preventDefault();
+            var result = confirm("Do you want to remove this item?");
+            if (result) {
+                var item_id = item.id
+                var form = document.querySelector('#remove_form_' + item_id)
+                form.submit()
+            };
+        };
+    });
     
 </script>
 {% endblock %}

@@ -371,7 +371,7 @@ class OrderListView(LoginRequiredMixin, generic.ListView):
 
     # Return list of orders, descending
     def get_queryset(self):
-        return Order.objects.filter(created_by=self.request.user).order_by('-id')
+        return Order.objects.filter(created_by=self.request.user).exclude(status='p').order_by('-id')
     
 
     # Add additional data

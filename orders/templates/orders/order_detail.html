@@ -41,9 +41,11 @@ Order #{{ order.id }}
 
     </tbody>
 </table>
-<div class="text-center py-3">
-    <a href="{% url 'change-order-status' order.pk %}">
-        <button class="btn btn-primary" type="submit">Change status</button>
-    </a>
-</div>
+{% if perms.orders.can_change_status %}
+    <div class="text-center py-3">
+        <a href="{% url 'change-order-status' order.pk %}">
+            <button class="btn btn-primary" type="submit">Change status</button>
+        </a>
+    </div>
+{% endif %}
 {% endblock %}

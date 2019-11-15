@@ -41,18 +41,21 @@
             <p style="color: red">{{ error }}</p>
         {% endfor %}
     </div>
-    <div id="size" class="form-group" style="display: none">
-        <label for="id_size">Size:</label>
-        <select class="form-control" name="size" id="id_size">
-            {% for item in form.size %}
-                {{ item }}
+    <fieldset>
+        <div id="size" class="form-group" style="display: none">
+            <label for="id_size">Size:</label>
+            <select class="form-control" name="size" id="id_size">
+                {% for item in form.size %}
+                    {{ item }}
+                {% endfor %}
+            </select> 
+    
+            {% for error in form.size.errors %}
+                <p style="color: red">{{ error }}</p>
             {% endfor %}
-        </select> 
-
-        {% for error in form.size.errors %}
-            <p style="color: red">{{ error }}</p>
-        {% endfor %}
-    </div>
+        </div>
+    </fieldset>
+    
     <div id="quantity" class="form-group">
         <label for="id_quantity">Quantity:</label>
         <select class="form-control" name="quantity" id="id_quantity">
@@ -70,6 +73,8 @@
         <b>Price: $
             {% if dish.type == 'Pasta' or dish.type == 'Salad' %}
             <span id="id_price" value="{{ price.na }}">{{ price.na }}</span>
+            {% elif dish.name == 'Sausage, Peppers & Onions' %}
+            <span id="id_price" value="{{ price.large }}">{{ price.large }}</span>
             {% else %}
             <span id="id_price" value="{{ price.small }}">{{ price.small }}</span>
             {% endif %}

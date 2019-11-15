@@ -139,7 +139,7 @@ class Item(models.Model):
     topping = models.ManyToManyField(Toppings, blank=True)
     def display_topping(self):
         """Create a string for the Topping. This is required to display topping in Admin."""
-        return ', '.join(topping.topping for topping in self.topping.all()[:3])
+        return ', '.join(topping.topping for topping in self.topping.all()[:5])
     display_topping.short_description = 'Topping'
 
     subx = models.ManyToManyField(SubsType, blank=True,

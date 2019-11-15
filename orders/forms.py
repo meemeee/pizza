@@ -27,6 +27,13 @@ class ItemForm(ModelForm):
             'topping': _('Hold ⇧ or ⌘ to select more toppings. '),
         }
 
+        def clean_size(self):
+            
+            size = self.cleaned_data['size']
+
+            # Check if size is valid
+            if 
+
        
 class OrderStatusForm(ModelForm):
     # status_choices = [

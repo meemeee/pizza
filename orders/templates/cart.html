@@ -8,46 +8,46 @@ Shopping cart
 <h1>Your cart</h1>
 <br>
 {% if item_list %}
-    <table class="table">
-        <thead>
-            <tr>
-                <th scope="col">Item</th>
-                <th scope="col">Notes</th>
-                <th scope="col">Size</th>
-                <th scope="col">Quantity</th>
-                <th scope="col">Price</th>
-                <th scope="col"></th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for item in item_list %}
-            <tr>
-                <td>{{ item.item }}</td>
-                {% if item.display_topping %}
-                <td>{{ item.display_topping }}</td>
-                {% elif item.display_subx %}
-                <td>{{ item.display_subx}}</td>
-                {% else %}
-                <td>N/A</td>
-                {% endif %}
-                <td>{{ item.get_size_display }}</td>
-                <td>{{ item.quantity }}</td>
-                <td>$ <span class="item-price">{{ item.price }}</span></td>
-                <td>
-                    <form id="remove_form_{{ item.id }}" action="cart/remove_item" method="POST">
-                        {% csrf_token %}
-                        <input name="item_id" value="{{ item.id }}" style="display: none">
-                        
-                    </form>
-                    <a href="#" class="remove" id="{{ item.id }}">    
-                        <i class="fa fa-times" style="color: grey"></i>
-                    </a>
-                </td>
-            </tr>
-            {% endfor %}
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Item</th>
+            <th scope="col">Notes</th>
+            <th scope="col">Size</th>
+            <th scope="col">Quantity</th>
+            <th scope="col">Price</th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in item_list %}
+        <tr>
+            <td>{{ item.item }}</td>
+            {% if item.display_topping %}
+            <td>{{ item.display_topping }}</td>
+            {% elif item.display_subx %}
+            <td>{{ item.display_subx}}</td>
+            {% else %}
+            <td>N/A</td>
+            {% endif %}
+            <td>{{ item.get_size_display }}</td>
+            <td>{{ item.quantity }}</td>
+            <td>$ <span class="item-price">{{ item.price }}</span></td>
+            <td>
+                <form id="remove_form_{{ item.id }}" action="cart/remove_item" method="POST">
+                    {% csrf_token %}
+                    <input name="item_id" value="{{ item.id }}" style="display: none">
 
-        </tbody>
-    </table>
+                </form>
+                <a href="#" class="remove" id="{{ item.id }}">
+                    <i class="fa fa-times" style="color: grey"></i>
+                </a>
+            </td>
+        </tr>
+        {% endfor %}
+
+    </tbody>
+</table>
 
 <div class="text-right">
     <h3>
@@ -57,24 +57,45 @@ Shopping cart
 
 <br>
 <div class="text-center p-2 bd-highlight">
-    <form action="{% url 'new_order' %}" method="post">
+    <form id="place_order_form" action="{% url 'new_order' %}" method="post">
         {% csrf_token %}
         <input name="order_id" value="{{ order_id }}" style="display: none">
-        <button class="btn btn-primary" type="submit">Place an order</button>
+        <button id="place_order_button" class="btn btn-primary" type="submit">Place an order</button>
     </form>
     <a href="{% url 'menu' %}">
         <p style="font-size: 0.75em;">Continue shopping</p>
-    </a>   
+    </a>
 </div>
 
-{% else %}
-    <p>Empty cart.</p>
-
-    <div class="text-center p-2 bd-highlight">
-        <a href="{% url 'menu' %}">
-            <p style="font-size: 0.75em;">Continue shopping</p>
-        </a>   
+<!-- Modal -->
+<div class="modal fade" id="confirmation" tabindex="-1" role="dialog" aria-labelledby="confirmationLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="">Order confirmation</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Please carefully check your order before submission. Press "I confirm" to submit your order.
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Check order</button>
+                <button id="confirmed" type="button" class="btn btn-primary">I confirm</button>
+            </div>
+        </div>
     </div>
+</div>
+{% else %}
+<p>Empty cart.</p>
+
+<div class="text-center p-2 bd-highlight">
+    <a href="{% url 'menu' %}">
+        <p style="font-size: 0.75em;">Continue shopping</p>
+    </a>
+</div>
 {% endif %}
 
 <script>
@@ -96,6 +117,16 @@ Shopping cart
             };
         };
     });
-    
+
+    document.querySelector('#place_order_button').onclick = event => {
+        event.preventDefault();
+        
+        // Activate confirmation modal
+        $('#confirmation').modal();
+        document.querySelector('#confirmed').onclick = () => {
+            document.querySelector('#place_order_form').submit();
+        }
+    }
+
 </script>
 {% endblock %}

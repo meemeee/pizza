@@ -131,7 +131,7 @@ class Item(models.Model):
         ('S', 'Small'),
         ('L', 'Large'),
     ]
-    size = models.CharField(choices=size_choices, max_length=1, blank=True, default='S')
+    size = models.CharField(choices=size_choices, max_length=1, default='S')
     
     quantity_choices = [(i, i) for i in range (1, 11)]
     quantity = models.IntegerField(choices=quantity_choices, default=1)

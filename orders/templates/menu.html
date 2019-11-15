@@ -5,166 +5,176 @@ Menu
 {% endblock %}
 
 {% block main %}
-<h2>PIZZA</h2>
-<h4>Regular</h4>
-<table class="table">
-    <thead>
-        <tr>
-            <th scope="col"></th>
-            <th scope="col">Type</th>
-            <th scope="col">Small</th>
-            <th scope="col">Large</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for item in r_pizzas %}
-        <tr>
-            <td>
-                <a href="/menu/regular_{{ item.id }}">
-                    <i id="regular_{{ item.id }}" class="fa fa-plus-circle"></i>
-                </a>
-            </td>
-            <td>{{ item.type }}</td>
-            <td>{{ item.small }}</td>
-            <td>{{ item.large }}</td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
-<br>
+<div class="row flex-xl-nowrap">
+    <div class="d-none d-lg-block col-lg-2 py-lg-3 bd-toc">
+        <nav id="toc" data-toggle="toc" class="sticky-top">
+        </nav>
+        
+    </div>
+    <div class="col-12 col-lg-10 py-lg-3 px-lg-5 bd-content">
+        <h2>PIZZA</h2>
+        <h3>Regular</h3>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col"></th>
+                    <th scope="col">Type</th>
+                    <th scope="col">Small</th>
+                    <th scope="col">Large</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in r_pizzas %}
+                <tr>
+                    <td>
+                        <a href="/menu/regular_{{ item.id }}">
+                            <i id="regular_{{ item.id }}" class="fa fa-plus-circle"></i>
+                        </a>
+                    </td>
+                    <td>{{ item.type }}</td>
+                    <td>{{ item.small }}</td>
+                    <td>{{ item.large }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <br>
+        
+        
+        <h3>Sicilian</h3>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col"></th>
+                    <th scope="col">Type</th>
+                    <th scope="col">Small</th>
+                    <th scope="col">Large</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in s_pizzas %}
+                <tr>
+                    <td>
+                        <a href="/menu/sicilian_{{ item.id }}">
+                            <i id="sicilian_{{ item.id }}" class="fa fa-plus-circle"></i>
+                        </a>
+                    </td>
+                    <td>{{ item.type }}</td>
+                    <td>{{ item.small }}</td>
+                    <td>{{ item.large }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <br>
+        
+        
+        <h2>SUBS</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col"></th>
+                    <th scope="col">Type</th>
+                    <th scope="col">Small</th>
+                    <th scope="col">Large</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in subs %}
+                <tr>
+                    <td>
+                        <a href="/menu/sub_{{ item.id }}">
+                            <i id="sub_{{ item.id }}" class="fa fa-plus-circle"></i>
+                        </a>
+                    </td>
+                    <td>{{ item.type }}</td>
+                    <td>{{ item.small }}</td>
+                    <td>{{ item.large }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <br>
+        
+        
+        <h2>PASTA</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col"></th>
+                    <th scope="col">Type</th>
+                    <th scope="col">Price</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in pastas %}
+                <tr>
+                    <td>
+                        <a href="/menu/pasta_{{ item.id }}">
+                            <i id="pasta_{{ item.id }}" class="fa fa-plus-circle"></i>
+                        </a>
+                    </td>
+                    <td>{{ item.name }}</td>
+                    <td>{{ item.price }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <br>
+        
+        
+        <h2>SALADS</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col"></th>
+                    <th scope="col">Type</th>
+                    <th scope="col">Price</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in salads %}
+                <tr>
+                    <td>
+                        <a href="/menu/salad_{{ item.id }}">
+                            <i id="salad_{{ item.id }}" class="fa fa-plus-circle"></i>
+                        </a>
+                    </td>
+                    <td>{{ item.name }}</td>
+                    <td>{{ item.price }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <br>
+        
+        
+        <h2>DINNER PLATTERS</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col"></th>
+                    <th scope="col">Type</th>
+                    <th scope="col">Small</th>
+                    <th scope="col">Large</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in dinnerplatters %}
+                <tr>
+                    <td>
+                        <a href="/menu/dp_{{ item.id }}">
+                            <i id="dp_{{ item.id }}" class="fa fa-plus-circle"></i>
+                        </a>
+                    </td>
+                    <td>{{ item.type }}</td>
+                    <td>{{ item.small }}</td>
+                    <td>{{ item.large }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
 
-
-<h4>Sicilian</h4>
-<table class="table">
-    <thead>
-        <tr>
-            <th scope="col"></th>
-            <th scope="col">Type</th>
-            <th scope="col">Small</th>
-            <th scope="col">Large</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for item in s_pizzas %}
-        <tr>
-            <td>
-                <a href="/menu/sicilian_{{ item.id }}">
-                    <i id="sicilian_{{ item.id }}" class="fa fa-plus-circle"></i>
-                </a>
-            </td>
-            <td>{{ item.type }}</td>
-            <td>{{ item.small }}</td>
-            <td>{{ item.large }}</td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
-<br>
-
-
-<h2>SUBS</h2>
-<table class="table">
-    <thead>
-        <tr>
-            <th scope="col"></th>
-            <th scope="col">Type</th>
-            <th scope="col">Small</th>
-            <th scope="col">Large</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for item in subs %}
-        <tr>
-            <td>
-                <a href="/menu/sub_{{ item.id }}">
-                    <i id="sub_{{ item.id }}" class="fa fa-plus-circle"></i>
-                </a>
-            </td>
-            <td>{{ item.type }}</td>
-            <td>{{ item.small }}</td>
-            <td>{{ item.large }}</td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
-<br>
-
-
-<h2>PASTA</h2>
-<table class="table">
-    <thead>
-        <tr>
-            <th scope="col"></th>
-            <th scope="col">Type</th>
-            <th scope="col">Price</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for item in pastas %}
-        <tr>
-            <td>
-                <a href="/menu/pasta_{{ item.id }}">
-                    <i id="pasta_{{ item.id }}" class="fa fa-plus-circle"></i>
-                </a>
-            </td>
-            <td>{{ item.name }}</td>
-            <td>{{ item.price }}</td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
-<br>
-
-
-<h2>SALADS</h2>
-<table class="table">
-    <thead>
-        <tr>
-            <th scope="col"></th>
-            <th scope="col">Type</th>
-            <th scope="col">Price</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for item in salads %}
-        <tr>
-            <td>
-                <a href="/menu/salad_{{ item.id }}">
-                    <i id="salad_{{ item.id }}" class="fa fa-plus-circle"></i>
-                </a>
-            </td>
-            <td>{{ item.name }}</td>
-            <td>{{ item.price }}</td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
-<br>
-
-
-<h2>Dinner Platters</h2>
-<table class="table">
-    <thead>
-        <tr>
-            <th scope="col"></th>
-            <th scope="col">Type</th>
-            <th scope="col">Small</th>
-            <th scope="col">Large</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for item in dinnerplatters %}
-        <tr>
-            <td>
-                <a href="/menu/dp_{{ item.id }}">
-                    <i id="dp_{{ item.id }}" class="fa fa-plus-circle"></i>
-                </a>
-            </td>
-            <td>{{ item.type }}</td>
-            <td>{{ item.small }}</td>
-            <td>{{ item.large }}</td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
 {% endblock %}

@@ -22,7 +22,7 @@ Your orders
         {% for order in order_list %}
         <tr>
             <td>#{{ order.id }}</td>
-            <td>{{ order.total_price }}</td>
+            <td>$ {{ order.total_price }}</td>
             <td>{{ order.get_status_display }}</td>
             <td>{{ order.time }}</td>
             <td><a href="{% url 'order-detail' order.pk %}">Details</a></td>

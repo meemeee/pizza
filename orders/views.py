@@ -13,7 +13,7 @@ from django.http import JsonResponse
 
 # Create your views here.
 def index(request):
-    return HttpResponse("Project 3: TODO")
+    return render(request, "index.html")
 
 
 def register(request):
@@ -70,7 +70,6 @@ def menu(request):
                 else:
                     p['large'] = format(item.price, '.2f')
         sicilian_menu.append(p)
-    
     
 
     subs = OrderSubs.objects.all()
@@ -202,6 +201,7 @@ def item(request, item_id):
                 "error": "Maximum dishes per cart: 10",
             }
             return render(request, "add_item_message.html", context)
+        
         # Create a form instance and populate it with data from the request
         form = ItemForm(request.POST)    
 
@@ -220,7 +220,6 @@ def item(request, item_id):
                 }
                 
             else:
-
                 if obj.size == 'S':
                     obj.price = obj.quantity * (float(price['small']) + subX_price_per_pax)
                 elif obj.size == 'L':
@@ -246,7 +245,7 @@ def item(request, item_id):
                 context = {
                     "success": success,
                     "dish": dish_name,
-                    "quantity": obj.quantity,
+                    "quantity": int(form.cleaned_data['quantity']),
                     "size": obj.size,
                     "topping": topping,
                     "subx": subx,
@@ -287,14 +286,13 @@ def item(request, item_id):
             new_item.subx.set(form.cleaned_data['subx'])
             
             return render(request, "add_item_message.html", context)
-            
-            
+                      
     else:
         # Create form from Order Model
         form = ItemForm()
         
-        # Set cart num value
-        cart_num = len(Item.objects.filter(created_by=request.user).filter(status__exact='p'))
+    # Set cart num value
+    cart_num = len(Item.objects.filter(created_by=request.user).filter(status__exact='p'))
 
     context = {
         "price": price,
@@ -302,20 +300,17 @@ def item(request, item_id):
         "form": form,
         'cart_num': cart_num,
     } 
-
-    return render(request, "single_item.html", context)
+    return render(request, "single_item.html", context) 
         
 
 class ItemListView(LoginRequiredMixin, generic.ListView):
     """Generic class-based view showing by current user."""
     model = Item
     template_name ='cart.html'
-    paginate_by = 10
 
     # Return list of items
     def get_queryset(self):
         return Item.objects.filter(created_by=self.request.user).filter(status__exact='p').order_by('id')
-    
 
     # Add additional data
     def get_context_data(self, **kwargs):
@@ -367,7 +362,6 @@ def submit_order(request):
 class OrderListView(LoginRequiredMixin, generic.ListView):
     model = Order
     template_name ='orders.html'
-    # paginate_by = 10
 
     # Return list of orders, descending
     def get_queryset(self):
@@ -423,10 +417,8 @@ def change_status_admin(request, pk):
             for item in items:
                 item.status = form.cleaned_data['status']
                 item.save()
-            # return HttpResponseRedirect(reverse('menu'))
             return HttpResponseRedirect(reverse('all-orders'))
-        # else:
-        #     return HttpResponse("Something's wrong")
+       
 
     else:
         form = OrderStatusForm()
@@ -472,7 +464,6 @@ def remove_item(request):
     if request.method == 'POST':
         item_id = request.POST.get("item_id")
         item = Item.objects.get(pk=item_id)
-        print(item)
         if item: 
             item.delete()
             return HttpResponseRedirect(reverse('cart'))

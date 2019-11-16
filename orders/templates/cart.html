@@ -73,13 +73,16 @@ Shopping cart
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="">Order confirmation</h5>
+                <h5 class="modal-title" id="">
+                    Order total: $<span id="total-price-modal"></span>
+                </h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                Please carefully check your order before submission. Press "I confirm" to submit your order.
+                <p>Please carefully check your order before submission.</p> 
+                <p>Press "I confirm" to submit your order.</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Check order</button>
@@ -99,13 +102,16 @@ Shopping cart
 {% endif %}
 
 <script>
+    // Calculate total price
     var total_price = 0;
     document.querySelectorAll('.item-price').forEach(price => {
         total_price += parseFloat(price.innerHTML);
     })
 
     document.querySelector('#total-price').innerHTML = total_price.toFixed(2);
+    document.querySelector('#total-price-modal').innerHTML = total_price.toFixed(2);
 
+    // Add remove button
     document.querySelectorAll('.remove').forEach(item => {
         item.onclick = event => {
             event.preventDefault();
@@ -117,7 +123,8 @@ Shopping cart
             };
         };
     });
-
+    
+    // Trigger modal
     document.querySelector('#place_order_button').onclick = event => {
         event.preventDefault();
         

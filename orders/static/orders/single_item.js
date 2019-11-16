@@ -34,12 +34,14 @@ if (dishtype === 'Pizza') {
         }
     }
     document.querySelector('#size').style.display = "block";
+    document.querySelector('#id_size').options[0].disabled = true;
 }
 
 
 else if (dishtype === 'Sub') {
     document.querySelector('#subX').style.display = "block";
     document.querySelector('#size').style.display = "block";
+    document.querySelector('#id_size').options[0].disabled = true;
 
     // If Steak, enable all subX for click. Else, only 'Extra Cheese'
     if (dishname != 'Steak') {
@@ -61,6 +63,7 @@ else if (dishtype === 'Sub') {
 
 else if (dishtype === 'Dinner Platter') {
     document.querySelector('#size').style.display = "block";
+    document.querySelector('#id_size').options[0].disabled = true;
 }
 else {
     // Deselect default size Small for Pasta and Salad

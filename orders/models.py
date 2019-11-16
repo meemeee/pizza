@@ -128,10 +128,11 @@ class Item(models.Model):
     item = models.CharField(max_length=64, null=False)
     
     size_choices = [
+        ("", "Please choose size"),
         ('S', 'Small'),
         ('L', 'Large'),
     ]
-    size = models.CharField(choices=size_choices, max_length=1, default='S')
+    size = models.CharField(choices=size_choices, max_length=1, blank=True, default='S')
     
     quantity_choices = [(i, i) for i in range (1, 11)]
     quantity = models.IntegerField(choices=quantity_choices, default=1)
@@ -150,11 +151,6 @@ class Item(models.Model):
     
     display_subx.short_description = 'Sub Extra'
 
-    # Merge Subx & Topping columns into Notes
-    # def notes(obj):
-    #     return f"{obj.display_topping} {obj.display_subx}"
-    # notes.short_description = 'Notes'
-
     price = models.FloatField()
 
     status_choices = [
@@ -167,7 +163,6 @@ class Item(models.Model):
 
     order_id = models.ForeignKey(Order, on_delete=models.SET_NULL, null=True, blank=True)
 
-    # created_by = models.ForeignKey(settings.AUTH_USER_MODEL)
     created_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
     
     def __str__(self):

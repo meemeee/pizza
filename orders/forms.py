@@ -1,6 +1,9 @@
 from django import forms
 from django.forms import ModelForm
 from django.contrib.auth.forms import UserCreationForm
+from django.core.exceptions import ValidationError
+from django.utils.translation import ugettext_lazy as _
+
 from django.contrib.auth.models import User
 from .models import Item, Order
 
@@ -17,7 +20,6 @@ class RegisterForm(UserCreationForm):
 
 
 class ItemForm(ModelForm):
-    # size = forms.ModelChoiceField(queryset=..., empty_label=None)
     class Meta:
         model = Item
         fields = ['subx', 'topping', 'size', 'quantity']
@@ -27,14 +29,19 @@ class ItemForm(ModelForm):
         help_texts = {
             'topping': _('Hold ⇧ or ⌘ to select more toppings. '),
         }
+    
+    def clean_renewal_date(self):
+        data = self.cleaned_data['size']
+        
+        # Check if size has been selected. 
+        if data == "":
+            raise ValidationError(_('You must choose size'))
+
+        # Remember to always return the cleaned data.
+        return data
 
        
 class OrderStatusForm(ModelForm):
-    # status_choices = [
-    #     ('pr', 'Processing'),
-    #     ('c', 'Completed'),
-    # ]
-    # new_status = forms.ChoiceField(choices=status_choices, required=True)
 
     class Meta:
         model = Order

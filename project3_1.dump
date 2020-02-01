@@ -1,0 +1,2843 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 12.1
+-- Dumped by pg_dump version 12.1
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+SET default_tablespace = '';
+
+SET default_table_access_method = heap;
+
+--
+-- Name: auth_group; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.auth_group (
+    id bigint NOT NULL,
+    name text
+);
+
+
+--
+-- Name: auth_group_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.auth_group_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: auth_group_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.auth_group_id_seq OWNED BY public.auth_group.id;
+
+
+--
+-- Name: auth_group_permissions; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.auth_group_permissions (
+    id bigint NOT NULL,
+    group_id bigint,
+    permission_id bigint
+);
+
+
+--
+-- Name: auth_group_permissions_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.auth_group_permissions_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: auth_group_permissions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.auth_group_permissions_id_seq OWNED BY public.auth_group_permissions.id;
+
+
+--
+-- Name: auth_permission; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.auth_permission (
+    id bigint NOT NULL,
+    content_type_id bigint,
+    codename text,
+    name text
+);
+
+
+--
+-- Name: auth_permission_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.auth_permission_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: auth_permission_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.auth_permission_id_seq OWNED BY public.auth_permission.id;
+
+
+--
+-- Name: auth_user; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.auth_user (
+    id bigint NOT NULL,
+    password text,
+    last_login timestamp with time zone,
+    is_superuser boolean,
+    username text,
+    first_name text,
+    email text,
+    is_staff boolean,
+    is_active boolean,
+    date_joined timestamp with time zone,
+    last_name text
+);
+
+
+--
+-- Name: auth_user_groups; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.auth_user_groups (
+    id bigint NOT NULL,
+    user_id bigint,
+    group_id bigint
+);
+
+
+--
+-- Name: auth_user_groups_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.auth_user_groups_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: auth_user_groups_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.auth_user_groups_id_seq OWNED BY public.auth_user_groups.id;
+
+
+--
+-- Name: auth_user_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.auth_user_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: auth_user_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.auth_user_id_seq OWNED BY public.auth_user.id;
+
+
+--
+-- Name: auth_user_user_permissions; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.auth_user_user_permissions (
+    id bigint NOT NULL,
+    user_id bigint,
+    permission_id bigint
+);
+
+
+--
+-- Name: auth_user_user_permissions_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.auth_user_user_permissions_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: auth_user_user_permissions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.auth_user_user_permissions_id_seq OWNED BY public.auth_user_user_permissions.id;
+
+
+--
+-- Name: django_admin_log; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.django_admin_log (
+    id bigint NOT NULL,
+    action_time timestamp with time zone,
+    object_id text,
+    object_repr text,
+    change_message text,
+    content_type_id bigint,
+    user_id bigint,
+    action_flag smallint
+);
+
+
+--
+-- Name: django_admin_log_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.django_admin_log_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: django_admin_log_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.django_admin_log_id_seq OWNED BY public.django_admin_log.id;
+
+
+--
+-- Name: django_content_type; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.django_content_type (
+    id bigint NOT NULL,
+    app_label text,
+    model text
+);
+
+
+--
+-- Name: django_content_type_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.django_content_type_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: django_content_type_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.django_content_type_id_seq OWNED BY public.django_content_type.id;
+
+
+--
+-- Name: django_migrations; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.django_migrations (
+    id bigint NOT NULL,
+    app text,
+    name text,
+    applied timestamp with time zone
+);
+
+
+--
+-- Name: django_migrations_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.django_migrations_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: django_migrations_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.django_migrations_id_seq OWNED BY public.django_migrations.id;
+
+
+--
+-- Name: django_session; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.django_session (
+    session_key text NOT NULL,
+    session_data text,
+    expire_date timestamp with time zone
+);
+
+
+--
+-- Name: orders_dinnerplatterstype; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.orders_dinnerplatterstype (
+    id bigint NOT NULL,
+    name text
+);
+
+
+--
+-- Name: orders_dinnerplatterstype_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.orders_dinnerplatterstype_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: orders_dinnerplatterstype_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.orders_dinnerplatterstype_id_seq OWNED BY public.orders_dinnerplatterstype.id;
+
+
+--
+-- Name: orders_item; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.orders_item (
+    id bigint NOT NULL,
+    item text,
+    quantity bigint,
+    price real,
+    order_id_id bigint,
+    created_by_id bigint,
+    status text,
+    size text
+);
+
+
+--
+-- Name: orders_item_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.orders_item_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: orders_item_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.orders_item_id_seq OWNED BY public.orders_item.id;
+
+
+--
+-- Name: orders_item_subx; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.orders_item_subx (
+    id bigint NOT NULL,
+    item_id bigint,
+    substype_id bigint
+);
+
+
+--
+-- Name: orders_item_subx_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.orders_item_subx_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: orders_item_subx_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.orders_item_subx_id_seq OWNED BY public.orders_item_subx.id;
+
+
+--
+-- Name: orders_item_topping; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.orders_item_topping (
+    id bigint NOT NULL,
+    item_id bigint,
+    toppings_id bigint
+);
+
+
+--
+-- Name: orders_item_topping_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.orders_item_topping_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: orders_item_topping_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.orders_item_topping_id_seq OWNED BY public.orders_item_topping.id;
+
+
+--
+-- Name: orders_order; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.orders_order (
+    id bigint NOT NULL,
+    created_by_id bigint,
+    "time" timestamp with time zone,
+    total_price real,
+    status text
+);
+
+
+--
+-- Name: orders_order_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.orders_order_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: orders_order_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.orders_order_id_seq OWNED BY public.orders_order.id;
+
+
+--
+-- Name: orders_orderdp; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.orders_orderdp (
+    id bigint NOT NULL,
+    price real,
+    name_id bigint,
+    size_id bigint,
+    ref text
+);
+
+
+--
+-- Name: orders_orderdp_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.orders_orderdp_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: orders_orderdp_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.orders_orderdp_id_seq OWNED BY public.orders_orderdp.id;
+
+
+--
+-- Name: orders_orderpasta; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.orders_orderpasta (
+    id bigint NOT NULL,
+    price real,
+    name text,
+    ref text
+);
+
+
+--
+-- Name: orders_orderpasta_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.orders_orderpasta_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: orders_orderpasta_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.orders_orderpasta_id_seq OWNED BY public.orders_orderpasta.id;
+
+
+--
+-- Name: orders_orderpizza; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.orders_orderpizza (
+    id bigint NOT NULL,
+    price real,
+    name_id bigint,
+    size_id bigint,
+    topping_choice_id bigint,
+    ref text
+);
+
+
+--
+-- Name: orders_orderpizza_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.orders_orderpizza_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: orders_orderpizza_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.orders_orderpizza_id_seq OWNED BY public.orders_orderpizza.id;
+
+
+--
+-- Name: orders_ordersalads; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.orders_ordersalads (
+    id bigint NOT NULL,
+    price real,
+    name text,
+    ref text
+);
+
+
+--
+-- Name: orders_ordersalads_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.orders_ordersalads_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: orders_ordersalads_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.orders_ordersalads_id_seq OWNED BY public.orders_ordersalads.id;
+
+
+--
+-- Name: orders_ordersubs; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.orders_ordersubs (
+    id bigint NOT NULL,
+    price real,
+    name_id bigint,
+    size_id bigint,
+    ref text
+);
+
+
+--
+-- Name: orders_ordersubs_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.orders_ordersubs_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: orders_ordersubs_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.orders_ordersubs_id_seq OWNED BY public.orders_ordersubs.id;
+
+
+--
+-- Name: orders_ordersubsx; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.orders_ordersubsx (
+    id bigint NOT NULL,
+    price real,
+    ref text,
+    name_id bigint
+);
+
+
+--
+-- Name: orders_ordersubsx_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.orders_ordersubsx_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: orders_ordersubsx_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.orders_ordersubsx_id_seq OWNED BY public.orders_ordersubsx.id;
+
+
+--
+-- Name: orders_pizzatype; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.orders_pizzatype (
+    id bigint NOT NULL,
+    name text
+);
+
+
+--
+-- Name: orders_pizzatype_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.orders_pizzatype_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: orders_pizzatype_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.orders_pizzatype_id_seq OWNED BY public.orders_pizzatype.id;
+
+
+--
+-- Name: orders_size; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.orders_size (
+    id bigint NOT NULL,
+    size text
+);
+
+
+--
+-- Name: orders_size_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.orders_size_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: orders_size_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.orders_size_id_seq OWNED BY public.orders_size.id;
+
+
+--
+-- Name: orders_substype; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.orders_substype (
+    id bigint NOT NULL,
+    name text,
+    steak_subs_extra boolean,
+    subs_extra boolean
+);
+
+
+--
+-- Name: orders_substype_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.orders_substype_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: orders_substype_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.orders_substype_id_seq OWNED BY public.orders_substype.id;
+
+
+--
+-- Name: orders_toppingchoice; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.orders_toppingchoice (
+    id bigint NOT NULL,
+    topping text
+);
+
+
+--
+-- Name: orders_toppingchoice_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.orders_toppingchoice_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: orders_toppingchoice_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.orders_toppingchoice_id_seq OWNED BY public.orders_toppingchoice.id;
+
+
+--
+-- Name: orders_toppings; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.orders_toppings (
+    id bigint NOT NULL,
+    topping text
+);
+
+
+--
+-- Name: orders_toppings_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.orders_toppings_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: orders_toppings_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.orders_toppings_id_seq OWNED BY public.orders_toppings.id;
+
+
+--
+-- Name: auth_group id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.auth_group ALTER COLUMN id SET DEFAULT nextval('public.auth_group_id_seq'::regclass);
+
+
+--
+-- Name: auth_group_permissions id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.auth_group_permissions ALTER COLUMN id SET DEFAULT nextval('public.auth_group_permissions_id_seq'::regclass);
+
+
+--
+-- Name: auth_permission id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.auth_permission ALTER COLUMN id SET DEFAULT nextval('public.auth_permission_id_seq'::regclass);
+
+
+--
+-- Name: auth_user id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.auth_user ALTER COLUMN id SET DEFAULT nextval('public.auth_user_id_seq'::regclass);
+
+
+--
+-- Name: auth_user_groups id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.auth_user_groups ALTER COLUMN id SET DEFAULT nextval('public.auth_user_groups_id_seq'::regclass);
+
+
+--
+-- Name: auth_user_user_permissions id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.auth_user_user_permissions ALTER COLUMN id SET DEFAULT nextval('public.auth_user_user_permissions_id_seq'::regclass);
+
+
+--
+-- Name: django_admin_log id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.django_admin_log ALTER COLUMN id SET DEFAULT nextval('public.django_admin_log_id_seq'::regclass);
+
+
+--
+-- Name: django_content_type id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.django_content_type ALTER COLUMN id SET DEFAULT nextval('public.django_content_type_id_seq'::regclass);
+
+
+--
+-- Name: django_migrations id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.django_migrations ALTER COLUMN id SET DEFAULT nextval('public.django_migrations_id_seq'::regclass);
+
+
+--
+-- Name: orders_dinnerplatterstype id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.orders_dinnerplatterstype ALTER COLUMN id SET DEFAULT nextval('public.orders_dinnerplatterstype_id_seq'::regclass);
+
+
+--
+-- Name: orders_item id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.orders_item ALTER COLUMN id SET DEFAULT nextval('public.orders_item_id_seq'::regclass);
+
+
+--
+-- Name: orders_item_subx id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.orders_item_subx ALTER COLUMN id SET DEFAULT nextval('public.orders_item_subx_id_seq'::regclass);
+
+
+--
+-- Name: orders_item_topping id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.orders_item_topping ALTER COLUMN id SET DEFAULT nextval('public.orders_item_topping_id_seq'::regclass);
+
+
+--
+-- Name: orders_order id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.orders_order ALTER COLUMN id SET DEFAULT nextval('public.orders_order_id_seq'::regclass);
+
+
+--
+-- Name: orders_orderdp id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.orders_orderdp ALTER COLUMN id SET DEFAULT nextval('public.orders_orderdp_id_seq'::regclass);
+
+
+--
+-- Name: orders_orderpasta id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.orders_orderpasta ALTER COLUMN id SET DEFAULT nextval('public.orders_orderpasta_id_seq'::regclass);
+
+
+--
+-- Name: orders_orderpizza id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.orders_orderpizza ALTER COLUMN id SET DEFAULT nextval('public.orders_orderpizza_id_seq'::regclass);
+
+
+--
+-- Name: orders_ordersalads id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.orders_ordersalads ALTER COLUMN id SET DEFAULT nextval('public.orders_ordersalads_id_seq'::regclass);
+
+
+--
+-- Name: orders_ordersubs id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.orders_ordersubs ALTER COLUMN id SET DEFAULT nextval('public.orders_ordersubs_id_seq'::regclass);
+
+
+--
+-- Name: orders_ordersubsx id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.orders_ordersubsx ALTER COLUMN id SET DEFAULT nextval('public.orders_ordersubsx_id_seq'::regclass);
+
+
+--
+-- Name: orders_pizzatype id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.orders_pizzatype ALTER COLUMN id SET DEFAULT nextval('public.orders_pizzatype_id_seq'::regclass);
+
+
+--
+-- Name: orders_size id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.orders_size ALTER COLUMN id SET DEFAULT nextval('public.orders_size_id_seq'::regclass);
+
+
+--
+-- Name: orders_substype id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.orders_substype ALTER COLUMN id SET DEFAULT nextval('public.orders_substype_id_seq'::regclass);
+
+
+--
+-- Name: orders_toppingchoice id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.orders_toppingchoice ALTER COLUMN id SET DEFAULT nextval('public.orders_toppingchoice_id_seq'::regclass);
+
+
+--
+-- Name: orders_toppings id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.orders_toppings ALTER COLUMN id SET DEFAULT nextval('public.orders_toppings_id_seq'::regclass);
+
+
+--
+-- Data for Name: auth_group; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+COPY public.auth_group (id, name) FROM stdin;
+1	Customers
+\.
+
+
+--
+-- Data for Name: auth_group_permissions; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+COPY public.auth_group_permissions (id, group_id, permission_id) FROM stdin;
+\.
+
+
+--
+-- Data for Name: auth_permission; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+COPY public.auth_permission (id, content_type_id, codename, name) FROM stdin;
+102	24	add_orderpasta	Can add order pasta
+103	24	change_orderpasta	Can change order pasta
+104	24	delete_orderpasta	Can delete order pasta
+105	24	view_orderpasta	Can view order pasta
+106	25	add_orderpizza	Can add order pizza
+107	25	change_orderpizza	Can change order pizza
+108	25	delete_orderpizza	Can delete order pizza
+109	25	view_orderpizza	Can view order pizza
+110	26	add_ordersalads	Can add order salads
+111	26	change_ordersalads	Can change order salads
+112	26	delete_ordersalads	Can delete order salads
+113	26	view_ordersalads	Can view order salads
+114	27	add_pizzatype	Can add pizza type
+115	27	change_pizzatype	Can change pizza type
+116	27	delete_pizzatype	Can delete pizza type
+117	27	view_pizzatype	Can view pizza type
+118	28	add_size	Can add size
+119	28	change_size	Can change size
+120	28	delete_size	Can delete size
+121	28	view_size	Can view size
+122	29	add_toppingchoice	Can add topping choice
+123	29	change_toppingchoice	Can change topping choice
+124	29	delete_toppingchoice	Can delete topping choice
+125	29	view_toppingchoice	Can view topping choice
+126	30	add_toppings	Can add toppings
+127	30	change_toppings	Can change toppings
+128	30	delete_toppings	Can delete toppings
+129	30	view_toppings	Can view toppings
+130	31	add_ordersubs	Can add order subs
+131	31	change_ordersubs	Can change order subs
+132	31	delete_ordersubs	Can delete order subs
+133	31	view_ordersubs	Can view order subs
+134	32	add_substype	Can add subs type
+135	32	change_substype	Can change subs type
+136	32	delete_substype	Can delete subs type
+137	32	view_substype	Can view subs type
+138	33	add_dinnerplatterstype	Can add dinner platters type
+139	33	change_dinnerplatterstype	Can change dinner platters type
+140	33	delete_dinnerplatterstype	Can delete dinner platters type
+141	33	view_dinnerplatterstype	Can view dinner platters type
+142	34	add_order	Can add order
+143	34	change_order	Can change order
+144	34	delete_order	Can delete order
+145	34	view_order	Can view order
+146	34	can_change_status	Change order status
+147	35	add_item	Can add item
+148	35	change_item	Can change item
+149	35	delete_item	Can delete item
+150	35	view_item	Can view item
+151	36	add_orderdp	Can add order dp
+152	36	change_orderdp	Can change order dp
+153	36	delete_orderdp	Can delete order dp
+154	36	view_orderdp	Can view order dp
+155	37	add_ordersubsx	Can add order subs x
+156	37	change_ordersubsx	Can change order subs x
+157	37	delete_ordersubsx	Can delete order subs x
+158	37	view_ordersubsx	Can view order subs x
+159	38	add_logentry	Can add log entry
+160	38	change_logentry	Can change log entry
+161	38	delete_logentry	Can delete log entry
+162	38	view_logentry	Can view log entry
+163	39	add_permission	Can add permission
+164	39	change_permission	Can change permission
+165	39	delete_permission	Can delete permission
+166	39	view_permission	Can view permission
+167	40	add_group	Can add group
+168	40	change_group	Can change group
+169	40	delete_group	Can delete group
+170	40	view_group	Can view group
+171	41	add_user	Can add user
+172	41	change_user	Can change user
+173	41	delete_user	Can delete user
+174	41	view_user	Can view user
+175	42	add_contenttype	Can add content type
+176	42	change_contenttype	Can change content type
+177	42	delete_contenttype	Can delete content type
+178	42	view_contenttype	Can view content type
+179	43	add_session	Can add session
+180	43	change_session	Can change session
+181	43	delete_session	Can delete session
+182	43	view_session	Can view session
+\.
+
+
+--
+-- Data for Name: auth_user; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+COPY public.auth_user (id, password, last_login, is_superuser, username, first_name, email, is_staff, is_active, date_joined, last_name) FROM stdin;
+1	pbkdf2_sha256$150000$Hj20liwqWNl7$VsrLZRS55Y8q8zTygJ+h8h0zl8L7mZfC+fBEhsKBKQw=	2019-11-16 08:52:08.955358+07	t	tramy		lethitramy27@gmail.com	t	t	2019-10-30 16:08:45+07	
+2	pbkdf2_sha256$120000$P1wuZXqQzNSW$MxVcsobZs7w83Wj5dv+uXa1uOhb+fgYZsdXG5DaviOA=	2019-10-31 05:45:01.196417+07	f	my	My	lethitramy27@gmail.com	f	t	2019-10-31 05:12:33+07	Le
+3	pbkdf2_sha256$120000$rpSUHQsoZuHU$PKItzV2wb3nzOVBSeKjJ7s2tKhrHvWTt1u814VIKSSg=	\N	f	meemee	Na	lethitramy27@gmail.com	f	t	2019-10-31 07:35:07.786671+07	Le
+4	pbkdf2_sha256$120000$aFEHmzuD7MHK$zklR2Q2K3s9FMW9hMBqFMJlToDYUQ8g7I+6N+epEbKg=	\N	f	meemeee	Na	lethitramy27@gmail.com	f	t	2019-10-31 07:37:18.700866+07	Le
+5	pbkdf2_sha256$120000$qSH2ut5dFtRs$MPQx7Kr4V4iIUXmuvMbH+vZabbMw4gx1PZe0HO7CnQ4=	2019-11-15 08:32:01.033052+07	f	mee	Na	lethitramy27@gmail.com	f	t	2019-10-31 07:39:37.778269+07	Le
+6	pbkdf2_sha256$150000$uhcTsC4j3kTE$6YpmKTujjh7nACwwrkBenUgG51X6110CxqrUXUHEUWw=	2019-11-09 14:50:12.05597+07	f	thien	thien	dvkndn@gmail.com	f	t	2019-11-09 14:50:11.864607+07	do
+7	pbkdf2_sha256$150000$PALknOo5y8PF$hR6+j2io+52zPyJ87Tn0RdQ/6DXhx6XPkD5KtZxKmdU=	2019-11-16 09:05:34.57803+07	f	mee2	My	lethitramy27@gmail.com	f	t	2019-11-16 08:54:20.701821+07	Le
+8	pbkdf2_sha256$150000$s5FdYdWUG8lj$doi4N803xNgPhsZDMvZee+Ma8fxPduPOwtg87C4gKMA=	2019-11-16 09:58:05.218316+07	f	new_user	My	lethitramy@gmail.com	f	t	2019-11-16 09:58:04.950647+07	Le
+9	pbkdf2_sha256$150000$utpB1wvP23QH$ro2JPAV3RX88T/MqMukzXVHV8N1lBRYthA6PY4zH8Gc=	2019-11-16 10:03:02.698811+07	f	new_user2	Le	lethitramy27@gmail.com	f	t	2019-11-16 10:03:02.440038+07	My
+10	pbkdf2_sha256$150000$CnqwSLxe6RvA$/dJuAVrg0BCmxI6wjcU+qnGlfg7Emh1b9u9k7ALI8wo=	2020-02-01 22:47:41.997396+07	f	tramy1	Le Thi	lethitramy27@gmail.com	f	t	2020-02-01 22:47:41.788995+07	My
+\.
+
+
+--
+-- Data for Name: auth_user_groups; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+COPY public.auth_user_groups (id, user_id, group_id) FROM stdin;
+1	2	1
+\.
+
+
+--
+-- Data for Name: auth_user_user_permissions; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+COPY public.auth_user_user_permissions (id, user_id, permission_id) FROM stdin;
+\.
+
+
+--
+-- Data for Name: django_admin_log; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+COPY public.django_admin_log (id, action_time, object_id, object_repr, change_message, content_type_id, user_id, action_flag) FROM stdin;
+1	2019-10-30 16:10:06.207345+07	1	Size object (1)	[{"added": {}}]	\N	1	1
+2	2019-10-30 16:10:10.598032+07	2	Size object (2)	[{"added": {}}]	\N	1	1
+3	2019-10-30 16:10:32.28269+07	1	ToppingChoice object (1)	[{"added": {}}]	\N	1	1
+4	2019-10-30 16:10:42.721672+07	2	ToppingChoice object (2)	[{"added": {}}]	\N	1	1
+5	2019-10-30 16:10:47.218564+07	3	ToppingChoice object (3)	[{"added": {}}]	\N	1	1
+6	2019-10-30 16:10:51.942161+07	4	ToppingChoice object (4)	[{"added": {}}]	\N	1	1
+7	2019-10-30 16:10:56.655963+07	5	ToppingChoice object (5)	[{"added": {}}]	\N	1	1
+8	2019-10-30 16:11:02.978483+07	6	ToppingChoice object (6)	[{"added": {}}]	\N	1	1
+9	2019-10-30 16:11:32.522402+07	6	ToppingChoice object (6)		\N	1	3
+10	2019-10-30 16:12:03.773574+07	1	Toppings object (1)	[{"added": {}}]	\N	1	1
+11	2019-10-30 16:12:09.407407+07	2	Toppings object (2)	[{"added": {}}]	\N	1	1
+12	2019-10-30 16:12:14.514376+07	3	Toppings object (3)	[{"added": {}}]	\N	1	1
+13	2019-10-30 16:12:23.292806+07	4	Toppings object (4)	[{"added": {}}]	\N	1	1
+14	2019-10-30 16:12:27.153298+07	5	Toppings object (5)	[{"added": {}}]	\N	1	1
+15	2019-10-30 16:12:33.669259+07	6	Toppings object (6)	[{"added": {}}]	\N	1	1
+16	2019-10-30 16:12:53.033224+07	7	Toppings object (7)	[{"added": {}}]	\N	1	1
+17	2019-10-30 16:12:58.626004+07	8	Toppings object (8)	[{"added": {}}]	\N	1	1
+18	2019-10-30 16:13:09.517605+07	9	Toppings object (9)	[{"added": {}}]	\N	1	1
+19	2019-10-30 16:13:18.074405+07	10	Toppings object (10)	[{"added": {}}]	\N	1	1
+20	2019-10-30 16:13:23.249184+07	11	Toppings object (11)	[{"added": {}}]	\N	1	1
+21	2019-10-30 16:13:30.877274+07	12	Toppings object (12)	[{"added": {}}]	\N	1	1
+22	2019-10-30 16:13:36.009117+07	13	Toppings object (13)	[{"added": {}}]	\N	1	1
+23	2019-10-30 16:17:38.677859+07	14	Toppings object (14)	[{"added": {}}]	\N	1	1
+24	2019-10-30 16:17:49.920839+07	15	Toppings object (15)	[{"added": {}}]	\N	1	1
+25	2019-10-30 16:17:55.732553+07	16	Toppings object (16)	[{"added": {}}]	\N	1	1
+26	2019-10-30 16:18:01.766856+07	17	Toppings object (17)	[{"added": {}}]	\N	1	1
+27	2019-10-30 16:18:10.119824+07	18	Toppings object (18)	[{"added": {}}]	\N	1	1
+28	2019-10-30 16:18:16.826228+07	19	Toppings object (19)	[{"added": {}}]	\N	1	1
+29	2019-10-30 16:20:57.538345+07	1	SubType object (1)	[{"added": {}}]	\N	1	1
+30	2019-10-30 16:21:02.633902+07	2	SubType object (2)	[{"added": {}}]	\N	1	1
+31	2019-10-30 16:21:10.717624+07	3	SubType object (3)	[{"added": {}}]	\N	1	1
+32	2019-10-30 16:21:16.328348+07	4	SubType object (4)	[{"added": {}}]	\N	1	1
+33	2019-10-30 16:21:19.006234+07	5	SubType object (5)	[{"added": {}}]	\N	1	1
+34	2019-10-30 16:21:23.120124+07	6	SubType object (6)	[{"added": {}}]	\N	1	1
+35	2019-10-30 16:21:37.188767+07	7	SubType object (7)	[{"added": {}}]	\N	1	1
+36	2019-10-30 16:21:51.220776+07	8	SubType object (8)	[{"added": {}}]	\N	1	1
+37	2019-10-30 16:21:55.612257+07	9	SubType object (9)	[{"added": {}}]	\N	1	1
+38	2019-10-30 16:22:07.189135+07	10	SubType object (10)	[{"added": {}}]	\N	1	1
+39	2019-10-30 16:22:52.631003+07	11	SubType object (11)	[{"added": {}}]	\N	1	1
+40	2019-10-30 16:22:58.633716+07	12	SubType object (12)	[{"added": {}}]	\N	1	1
+41	2019-10-30 16:23:04.321565+07	13	SubType object (13)	[{"added": {}}]	\N	1	1
+42	2019-10-30 16:23:12.902129+07	14	SubType object (14)	[{"added": {}}]	\N	1	1
+43	2019-10-30 16:23:16.739867+07	15	SubType object (15)	[{"added": {}}]	\N	1	1
+44	2019-10-30 16:28:19.659072+07	2	Size object (2)	[]	\N	1	2
+45	2019-10-30 16:49:48.886623+07	20	Cheese	[{"added": {}}]	\N	1	1
+46	2019-10-30 16:50:14.48522+07	3	Mushrooms	[]	\N	1	2
+47	2019-10-30 16:57:40.330916+07	13	Artichoke	[{"changed": {"fields": ["subs_extra", "steak_subs_extra"]}}]	\N	1	2
+48	2019-10-30 16:57:54.191882+07	13	Artichoke	[{"changed": {"fields": ["subs_extra"]}}]	\N	1	2
+49	2019-10-30 17:05:54.11666+07	18	Fresh Garlic	[]	\N	1	2
+50	2019-10-30 17:06:00.018021+07	21	djfkaj	[{"added": {}}]	\N	1	1
+51	2019-10-30 17:06:15.838333+07	21	djfkaj		\N	1	3
+52	2019-10-30 17:08:30.156056+07	12	Spinach	[]	\N	1	2
+53	2019-10-30 17:09:32.349374+07	19	Zucchini	[{"changed": {"fields": ["steak_subs_extra"]}}]	\N	1	2
+54	2019-10-30 17:09:37.151966+07	19	Zucchini	[]	\N	1	2
+55	2019-10-30 17:09:48.749286+07	18	Fresh Garlic	[{"changed": {"fields": ["steak_subs_extra"]}}]	\N	1	2
+56	2019-10-30 17:09:53.365585+07	17	Black Olives	[{"changed": {"fields": ["steak_subs_extra"]}}]	\N	1	2
+57	2019-10-30 17:09:58.182764+07	16	Anchovies	[{"changed": {"fields": ["steak_subs_extra"]}}]	\N	1	2
+58	2019-10-30 17:10:02.918326+07	15	Barbecue Chicken	[{"changed": {"fields": ["steak_subs_extra"]}}]	\N	1	2
+59	2019-10-30 17:10:18.461064+07	14	Buffalo Chicken	[{"changed": {"fields": ["steak_subs_extra"]}}]	\N	1	2
+60	2019-10-30 17:10:27.822673+07	12	Spinach	[{"changed": {"fields": ["steak_subs_extra"]}}]	\N	1	2
+61	2019-10-30 17:10:36.921249+07	11	Hamburger	[{"changed": {"fields": ["steak_subs_extra"]}}]	\N	1	2
+62	2019-10-30 17:10:48.536709+07	9	Tomato & Basil	[{"changed": {"fields": ["steak_subs_extra"]}}]	\N	1	2
+63	2019-10-30 17:10:54.384545+07	8	Eggplant	[{"changed": {"fields": ["steak_subs_extra"]}}]	\N	1	2
+64	2019-10-30 17:11:04.052816+07	7	Pineapple	[{"changed": {"fields": ["steak_subs_extra"]}}]	\N	1	2
+65	2019-10-30 17:11:12.232999+07	6	Canadian Bacon	[{"changed": {"fields": ["steak_subs_extra"]}}]	\N	1	2
+66	2019-10-30 17:11:18.493915+07	5	Ham	[{"changed": {"fields": ["steak_subs_extra"]}}]	\N	1	2
+67	2019-10-30 17:11:24.2882+07	2	Sausage	[{"changed": {"fields": ["steak_subs_extra"]}}]	\N	1	2
+68	2019-10-30 17:11:29.499082+07	1	Pepperoni	[{"changed": {"fields": ["steak_subs_extra"]}}]	\N	1	2
+69	2019-10-30 17:12:21.350101+07	1	Regular	[{"added": {}}]	\N	1	1
+70	2019-10-30 17:12:25.832557+07	2	Sicilian	[{"added": {}}]	\N	1	1
+71	2019-10-30 17:15:14.301134+07	1	OrderPizza object (1)	[{"added": {}}]	\N	1	1
+72	2019-10-30 17:15:41.906394+07	2	OrderPizza object (2)	[{"added": {}}]	\N	1	1
+73	2019-10-30 17:16:07.041829+07	3	OrderPizza object (3)	[{"added": {}}]	\N	1	1
+74	2019-10-30 17:16:23.466059+07	4	OrderPizza object (4)	[{"added": {}}]	\N	1	1
+75	2019-10-30 17:16:36.054988+07	5	OrderPizza object (5)	[{"added": {}}]	\N	1	1
+76	2019-10-30 17:16:54.455302+07	6	OrderPizza object (6)	[{"added": {}}]	\N	1	1
+77	2019-10-30 17:17:13.609753+07	7	OrderPizza object (7)	[{"added": {}}]	\N	1	1
+78	2019-10-30 17:17:27.259524+07	8	OrderPizza object (8)	[{"added": {}}]	\N	1	1
+79	2019-10-30 17:17:42.197712+07	9	OrderPizza object (9)	[{"added": {}}]	\N	1	1
+80	2019-10-30 17:17:56.971023+07	10	OrderPizza object (10)	[{"added": {}}]	\N	1	1
+81	2019-10-30 17:34:09.507495+07	16	+ Mushrooms	[{"added": {}}]	\N	1	1
+82	2019-10-30 17:34:21.087734+07	17	+ Green Peppers	[{"added": {}}]	\N	1	1
+83	2019-10-30 17:34:29.996749+07	18	+ Onions	[{"added": {}}]	\N	1	1
+84	2019-10-30 17:34:50.622202+07	19	Extra Cheese	[{"added": {}}]	\N	1	1
+85	2019-10-31 03:31:01.62478+07	11	Small Sicilian, Cheese, at 24.45	[{"added": {}}]	\N	1	1
+86	2019-10-31 03:31:13.565536+07	12	Large Sicilian, Cheese, at 38.7	[{"added": {}}]	\N	1	1
+87	2019-10-31 03:31:32.172019+07	13	Small Sicilian, 1 topping, at 26.45	[{"added": {}}]	\N	1	1
+88	2019-10-31 03:31:46.658422+07	14	Large Sicilian, 1 topping, at 40.7	[{"added": {}}]	\N	1	1
+89	2019-10-31 03:32:01.050095+07	15	Small Sicilian, 2 toppings, at 28.45	[{"added": {}}]	\N	1	1
+90	2019-10-31 03:32:18.542111+07	16	Large Sicilian, 2 toppings, at 42.7	[{"added": {}}]	\N	1	1
+91	2019-10-31 03:32:32.805787+07	17	Small Sicilian, 3 toppings, at 29.45	[{"added": {}}]	\N	1	1
+92	2019-10-31 03:32:44.859064+07	18	Large Sicilian, 3 toppings, at 44.7	[{"added": {}}]	\N	1	1
+93	2019-10-31 03:32:58.652168+07	19	Small Sicilian, Special, at 30.45	[{"added": {}}]	\N	1	1
+94	2019-10-31 03:33:18.568762+07	20	Large Sicilian, Special, at 45.7	[{"added": {}}]	\N	1	1
+95	2019-10-31 03:34:02.930828+07	1	Small Cheese at 6.5	[{"added": {}}]	\N	1	1
+96	2019-10-31 03:34:11.817249+07	2	Large Cheese at 7.95	[{"added": {}}]	\N	1	1
+97	2019-10-31 03:34:20.802273+07	3	Small Italian at 6.5	[{"added": {}}]	\N	1	1
+98	2019-10-31 03:34:51.90362+07	4	Large Italian at 7.95	[{"added": {}}]	\N	1	1
+99	2019-10-31 03:34:51.920373+07	5	Large Italian at 7.95	[{"added": {}}]	\N	1	1
+100	2019-10-31 03:35:00.143388+07	6	Large Ham + Cheese at 7.95	[{"added": {}}]	\N	1	1
+101	2019-10-31 03:35:09.031367+07	7	Large Meatball at 7.95	[{"added": {}}]	\N	1	1
+102	2019-10-31 03:35:15.532587+07	8	Large Tuna at 7.95	[{"added": {}}]	\N	1	1
+103	2019-10-31 03:35:33.034867+07	9	Large Turkey at 8.5	[{"added": {}}]	\N	1	1
+104	2019-10-31 03:35:42.601391+07	10	Large Chicken Parmigiana at 8.5	[{"added": {}}]	\N	1	1
+105	2019-10-31 03:35:49.283936+07	11	Large Eggplant Parmigiana at 7.95	[{"added": {}}]	\N	1	1
+106	2019-10-31 03:35:57.343234+07	12	Large Steak at 7.95	[{"added": {}}]	\N	1	1
+107	2019-10-31 03:36:24.367824+07	13	Large Steak + Cheese at 8.5	[{"added": {}}]	\N	1	1
+108	2019-10-31 03:37:01.782336+07	14	Large Sausage, Peppers & Onions at 8.5	[{"added": {}}]	\N	1	1
+109	2019-10-31 03:37:18.49908+07	15	Large Hamburger at 6.95	[{"added": {}}]	\N	1	1
+110	2019-10-31 03:37:45.443936+07	16	Large Cheeseburger at 7.45	[{"added": {}}]	\N	1	1
+111	2019-10-31 03:37:55.224602+07	17	Large Fried Chicken at 8.5	[{"added": {}}]	\N	1	1
+112	2019-10-31 03:38:03.229223+07	18	Large Veggie at 8.5	[{"added": {}}]	\N	1	1
+113	2019-10-31 03:38:49.330696+07	19	Large Ham + Cheese at 6.5	[{"added": {}}]	\N	1	1
+114	2019-10-31 03:39:02.451915+07	19	Small Ham + Cheese at 6.5	[{"changed": {"fields": ["size"]}}]	\N	1	2
+115	2019-10-31 03:39:14.379128+07	20	Small Meatball at 6.5	[{"added": {}}]	\N	1	1
+116	2019-10-31 03:39:20.738789+07	21	Small Tuna at 6.5	[{"added": {}}]	\N	1	1
+117	2019-10-31 03:39:28.828375+07	22	Small Turkey at 7.5	[{"added": {}}]	\N	1	1
+118	2019-10-31 03:39:36.447099+07	23	Small Chicken Parmigiana at 6.5	[{"added": {}}]	\N	1	1
+119	2019-10-31 03:40:48.325782+07	23	Small Chicken Parmigiana at 7.5	[{"changed": {"fields": ["price"]}}]	\N	1	2
+120	2019-10-31 03:40:59.198519+07	24	Small Eggplant Parmigiana at 6.5	[{"added": {}}]	\N	1	1
+121	2019-10-31 03:41:19.484642+07	25	Small Steak at 6.5	[{"added": {}}]	\N	1	1
+122	2019-10-31 03:41:31.362822+07	26	Small Steak + Cheese at 6.95	[{"added": {}}]	\N	1	1
+123	2019-10-31 03:41:53.896957+07	27	Small Hamburger at 4.6	[{"added": {}}]	\N	1	1
+124	2019-10-31 03:42:13.961179+07	28	Small Cheeseburger at 5.1	[{"added": {}}]	\N	1	1
+125	2019-10-31 03:42:25.712181+07	29	Small Fried Chicken at 6.95	[{"added": {}}]	\N	1	1
+126	2019-10-31 03:42:34.755871+07	30	Small Veggie at 6.95	[{"added": {}}]	\N	1	1
+127	2019-10-31 03:42:56.339132+07	31	Small + Mushrooms at 0.5	[{"added": {}}]	\N	1	1
+128	2019-10-31 03:43:03.104562+07	32	Large + Mushrooms at 0.5	[{"added": {}}]	\N	1	1
+129	2019-10-31 03:43:09.284954+07	33	Large + Green Peppers at 0.5	[{"added": {}}]	\N	1	1
+130	2019-10-31 03:43:16.927652+07	34	Small + Green Peppers at 0.5	[{"added": {}}]	\N	1	1
+131	2019-10-31 03:43:27.580033+07	35	Small + Onions at 0.5	[{"added": {}}]	\N	1	1
+132	2019-10-31 03:43:35.20763+07	36	Large + Onions at 0.5	[{"added": {}}]	\N	1	1
+133	2019-10-31 03:43:41.124627+07	37	Small Extra Cheese at 0.5	[{"added": {}}]	\N	1	1
+134	2019-10-31 03:43:52.300398+07	38	Large Extra Cheese at 0.5	[{"added": {}}]	\N	1	1
+135	2019-10-31 03:44:47.46984+07	5	Large Italian at 7.95		\N	1	3
+136	2019-10-31 03:45:31.530769+07	1	Baked Ziti w/Mozzarella at 6.5	[{"added": {}}]	\N	1	1
+137	2019-10-31 03:46:03.082475+07	2	Baked Ziti w/Meatballs at 8.75	[{"added": {}}]	\N	1	1
+138	2019-10-31 03:46:16.508505+07	3	"Baked Ziti w/Chicken at 9.75	[{"added": {}}]	\N	1	1
+139	2019-10-31 03:46:27.954979+07	3	Baked Ziti w/Chicken at 9.75	[{"changed": {"fields": ["name"]}}]	\N	1	2
+140	2019-10-31 03:46:47.163884+07	1	Garden Salad at 6.25	[{"added": {}}]	\N	1	1
+141	2019-10-31 03:47:00.316136+07	2	Greek Salad at 8.25	[{"added": {}}]	\N	1	1
+142	2019-10-31 03:47:10.576147+07	3	Antipasto at 8.25	[{"added": {}}]	\N	1	1
+143	2019-10-31 03:47:21.807181+07	4	Salad w/Tuna at 8.25	[{"added": {}}]	\N	1	1
+144	2019-10-31 03:48:55.368392+07	1	Garden Salad at 35.0	[{"added": {}}]	\N	1	1
+145	2019-10-31 03:49:05.124639+07	2	Garden Salad at 60.0	[{"added": {}}]	\N	1	1
+146	2019-10-31 03:49:17.38102+07	3	Greek Salad at 45.0	[{"added": {}}]	\N	1	1
+147	2019-10-31 03:49:25.873735+07	4	Greek Salad at 70.0	[{"added": {}}]	\N	1	1
+148	2019-10-31 03:50:45.034224+07	5	Antipasto at 45.0	[{"added": {}}]	\N	1	1
+149	2019-10-31 03:50:53.75638+07	6	Antipasto at 70.0	[{"added": {}}]	\N	1	1
+150	2019-10-31 03:51:36.092605+07	7	Baked Ziti at 35.0	[{"added": {}}]	\N	1	1
+151	2019-10-31 03:51:44.749978+07	8	Baked Ziti at 60.0	[{"added": {}}]	\N	1	1
+152	2019-10-31 03:51:57.899847+07	9	Meatball Parm at 45.0	[{"added": {}}]	\N	1	1
+153	2019-10-31 03:52:08.713097+07	10	Meatball Parm at 70.0	[{"added": {}}]	\N	1	1
+154	2019-10-31 03:52:24.914004+07	11	Chicken Parm at 45.0	[{"added": {}}]	\N	1	1
+155	2019-10-31 03:52:33.588292+07	12	Chicken Parm at 80.0	[{"added": {}}]	\N	1	1
+156	2019-10-31 05:11:45.478126+07	1	Customers	[{"added": {}}]	\N	1	1
+157	2019-10-31 05:12:33.814225+07	2	my	[{"added": {}}]	\N	1	1
+158	2019-10-31 05:13:53.168153+07	2	my	[{"changed": {"fields": ["first_name", "last_name", "email", "groups", "last_login"]}}]	\N	1	2
+159	2019-10-31 17:16:10.366794+07	2	Large Regular, Cheese, at 17.95	[{"changed": {"fields": ["topping_choice"]}}]	\N	1	2
+160	2019-11-01 05:46:46.339112+07	1	DinnerPlattersType object (1)	[{"added": {}}]	\N	1	1
+161	2019-11-01 05:46:49.741622+07	2	DinnerPlattersType object (2)	[{"added": {}}]	\N	1	1
+162	2019-11-01 05:46:53.028995+07	3	DinnerPlattersType object (3)	[{"added": {}}]	\N	1	1
+163	2019-11-01 05:47:02.047957+07	4	DinnerPlattersType object (4)	[{"added": {}}]	\N	1	1
+164	2019-11-01 05:47:05.715675+07	5	DinnerPlattersType object (5)	[{"added": {}}]	\N	1	1
+165	2019-11-01 05:47:12.989333+07	6	DinnerPlattersType object (6)	[{"added": {}}]	\N	1	1
+166	2019-11-01 05:58:35.261726+07	13	Small Garden Salad at 35.0	[{"added": {}}]	\N	1	1
+167	2019-11-01 05:58:45.24928+07	14	Large Garden Salad at 60.0	[{"added": {}}]	\N	1	1
+168	2019-11-01 05:58:52.328652+07	15	Small Greek Salad at 45.0	[{"added": {}}]	\N	1	1
+169	2019-11-01 05:59:01.010129+07	16	Large Greek Salad at 70.0	[{"added": {}}]	\N	1	1
+170	2019-11-01 05:59:08.340187+07	17	Small Antipasto at 45.0	[{"added": {}}]	\N	1	1
+171	2019-11-01 05:59:15.377295+07	18	Large Antipasto at 70.0	[{"added": {}}]	\N	1	1
+172	2019-11-01 05:59:21.50877+07	19	Small Baked Ziti at 35.0	[{"added": {}}]	\N	1	1
+173	2019-11-01 05:59:27.207705+07	20	Large Baked Ziti at 60.0	[{"added": {}}]	\N	1	1
+174	2019-11-01 05:59:34.43244+07	21	Small Meatball Parm at 45.0	[{"added": {}}]	\N	1	1
+175	2019-11-01 05:59:40.695397+07	22	Large Meatball Parm at 70.0	[{"added": {}}]	\N	1	1
+176	2019-11-01 05:59:52.633744+07	23	Small Chicken Parm at 45.0	[{"added": {}}]	\N	1	1
+177	2019-11-01 06:00:00.31336+07	24	Large Chicken Parm at 80.0	[{"added": {}}]	\N	1	1
+178	2019-11-03 17:19:04.364212+07	1	Regular, Small, Cheese, 12.7	[{"changed": {"fields": ["ref"]}}]	\N	1	2
+179	2019-11-03 17:19:27.642274+07	2	Regular, Large, Cheese, 17.95	[{"changed": {"fields": ["ref"]}}]	\N	1	2
+180	2019-11-03 17:19:40.914417+07	3	Regular, Small, 1 topping, 13.7	[{"changed": {"fields": ["ref"]}}]	\N	1	2
+181	2019-11-03 17:19:49.328741+07	4	Regular, Large, 1 topping, 19.95	[{"changed": {"fields": ["ref"]}}]	\N	1	2
+182	2019-11-03 17:19:59.88655+07	5	Regular, Small, 2 toppings, 15.2	[{"changed": {"fields": ["ref"]}}]	\N	1	2
+183	2019-11-03 17:20:07.54538+07	6	Regular, Large, 2 toppings, 21.95	[{"changed": {"fields": ["ref"]}}]	\N	1	2
+184	2019-11-03 17:20:16.161144+07	7	Regular, Small, 3 toppings, 16.2	[{"changed": {"fields": ["ref"]}}]	\N	1	2
+185	2019-11-03 17:20:25.318966+07	8	Regular, Large, 3 toppings, 23.95	[{"changed": {"fields": ["ref"]}}]	\N	1	2
+186	2019-11-03 17:20:36.029614+07	9	Regular, Small, Special, 17.75	[{"changed": {"fields": ["ref"]}}]	\N	1	2
+187	2019-11-03 17:20:43.996595+07	10	Regular, Large, Special, 25.95	[{"changed": {"fields": ["ref"]}}]	\N	1	2
+188	2019-11-03 17:20:59.227089+07	11	Sicilian, Small, Cheese, 24.45	[{"changed": {"fields": ["ref"]}}]	\N	1	2
+189	2019-11-03 17:21:08.185169+07	12	Sicilian, Large, Cheese, 38.7	[{"changed": {"fields": ["ref"]}}]	\N	1	2
+190	2019-11-03 17:21:15.754042+07	13	Sicilian, Small, 1 topping, 26.45	[{"changed": {"fields": ["ref"]}}]	\N	1	2
+191	2019-11-03 17:21:23.041583+07	14	Sicilian, Large, 1 topping, 40.7	[{"changed": {"fields": ["ref"]}}]	\N	1	2
+192	2019-11-03 17:21:36.58261+07	15	Sicilian, Small, 2 toppings, 28.45	[{"changed": {"fields": ["ref"]}}]	\N	1	2
+193	2019-11-03 17:21:46.563695+07	16	Sicilian, Large, 2 toppings, 42.7	[{"changed": {"fields": ["ref"]}}]	\N	1	2
+194	2019-11-03 17:21:54.930236+07	17	Sicilian, Small, 3 toppings, 29.45	[{"changed": {"fields": ["ref"]}}]	\N	1	2
+195	2019-11-03 17:22:04.006134+07	18	Sicilian, Large, 3 toppings, 44.7	[{"changed": {"fields": ["ref"]}}]	\N	1	2
+196	2019-11-03 17:22:12.660274+07	19	Sicilian, Small, Special, 30.45	[{"changed": {"fields": ["ref"]}}]	\N	1	2
+197	2019-11-03 17:22:19.942883+07	20	Sicilian, Large, Special, 45.7	[{"changed": {"fields": ["ref"]}}]	\N	1	2
+198	2019-11-03 17:24:15.103361+07	1	Baked Ziti w/Mozzarella, 6.5	[{"changed": {"fields": ["ref"]}}]	\N	1	2
+199	2019-11-03 17:24:22.743247+07	2	Baked Ziti w/Meatballs, 8.75	[{"changed": {"fields": ["ref"]}}]	\N	1	2
+200	2019-11-03 17:24:29.719863+07	3	Baked Ziti w/Chicken, 9.75	[{"changed": {"fields": ["ref"]}}]	\N	1	2
+201	2019-11-03 17:24:58.435743+07	1	Garden Salad, 6.25	[{"changed": {"fields": ["ref"]}}]	\N	1	2
+202	2019-11-03 17:25:07.118116+07	2	Greek Salad, 8.25	[{"changed": {"fields": ["ref"]}}]	\N	1	2
+203	2019-11-03 17:25:14.686023+07	3	Antipasto, 8.25	[{"changed": {"fields": ["ref"]}}]	\N	1	2
+204	2019-11-03 17:25:22.084704+07	4	Salad w/Tuna, 8.25	[{"changed": {"fields": ["ref"]}}]	\N	1	2
+205	2019-11-03 17:25:46.901774+07	13	Garden Salad, Small, 35.0	[{"changed": {"fields": ["ref"]}}]	\N	1	2
+206	2019-11-03 17:25:55.864731+07	14	Garden Salad, Large, 60.0	[{"changed": {"fields": ["ref"]}}]	\N	1	2
+207	2019-11-03 17:26:03.550271+07	15	Greek Salad, Small, 45.0	[{"changed": {"fields": ["ref"]}}]	\N	1	2
+208	2019-11-03 17:26:10.327239+07	16	Greek Salad, Large, 70.0	[{"changed": {"fields": ["ref"]}}]	\N	1	2
+209	2019-11-03 17:26:17.820786+07	17	Antipasto, Small, 45.0	[{"changed": {"fields": ["ref"]}}]	\N	1	2
+210	2019-11-03 17:26:27.26053+07	18	Antipasto, Large, 70.0	[{"changed": {"fields": ["ref"]}}]	\N	1	2
+211	2019-11-03 17:26:35.109903+07	19	Baked Ziti, Small, 35.0	[{"changed": {"fields": ["ref"]}}]	\N	1	2
+212	2019-11-03 17:26:42.350716+07	20	Baked Ziti, Large, 60.0	[{"changed": {"fields": ["ref"]}}]	\N	1	2
+213	2019-11-03 17:26:51.884803+07	21	Meatball Parm, Small, 45.0	[{"changed": {"fields": ["ref"]}}]	\N	1	2
+214	2019-11-03 17:27:01.271814+07	22	Meatball Parm, Large, 70.0	[{"changed": {"fields": ["ref"]}}]	\N	1	2
+215	2019-11-03 17:27:11.427487+07	23	Chicken Parm, Small, 45.0	[{"changed": {"fields": ["ref"]}}]	\N	1	2
+216	2019-11-03 17:27:17.999159+07	24	Chicken Parm, Large, 80.0	[{"changed": {"fields": ["ref"]}}]	\N	1	2
+217	2019-11-03 17:27:58.074807+07	1	Cheese, Small, 6.5	[{"changed": {"fields": ["ref"]}}]	\N	1	2
+218	2019-11-03 17:28:39.229453+07	2	Cheese, Large, 7.95	[{"changed": {"fields": ["ref"]}}]	\N	1	2
+219	2019-11-03 17:28:48.684901+07	3	Italian, Small, 6.5	[{"changed": {"fields": ["ref"]}}]	\N	1	2
+220	2019-11-03 17:29:00.39032+07	4	Italian, Large, 7.95	[{"changed": {"fields": ["ref"]}}]	\N	1	2
+221	2019-11-03 17:29:12.781953+07	6	Ham + Cheese, Large, 7.95	[{"changed": {"fields": ["ref"]}}]	\N	1	2
+222	2019-11-03 17:29:24.709981+07	19	Ham + Cheese, Small, 6.5	[{"changed": {"fields": ["ref"]}}]	\N	1	2
+223	2019-11-03 17:29:41.411754+07	7	Meatball, Large, 7.95	[{"changed": {"fields": ["ref"]}}]	\N	1	2
+224	2019-11-03 17:29:51.176272+07	20	Meatball, Small, 6.5	[{"changed": {"fields": ["ref"]}}]	\N	1	2
+225	2019-11-03 17:30:01.481474+07	8	Tuna, Large, 7.95	[{"changed": {"fields": ["ref"]}}]	\N	1	2
+226	2019-11-03 17:30:08.877269+07	21	Tuna, Small, 6.5	[{"changed": {"fields": ["ref"]}}]	\N	1	2
+227	2019-11-03 17:30:17.938604+07	9	Turkey, Large, 8.5	[{"changed": {"fields": ["ref"]}}]	\N	1	2
+228	2019-11-03 17:30:29.688114+07	22	Turkey, Small, 7.5	[{"changed": {"fields": ["ref"]}}]	\N	1	2
+229	2019-11-03 17:30:44.439435+07	10	Chicken Parmigiana, Large, 8.5	[{"changed": {"fields": ["ref"]}}]	\N	1	2
+230	2019-11-03 17:31:10.065122+07	23	Chicken Parmigiana, Small, 7.5	[{"changed": {"fields": ["ref"]}}]	\N	1	2
+231	2019-11-03 17:31:22.694503+07	11	Eggplant Parmigiana, Large, 7.95	[{"changed": {"fields": ["ref"]}}]	\N	1	2
+232	2019-11-03 17:31:35.442421+07	24	Eggplant Parmigiana, Small, 6.5	[{"changed": {"fields": ["ref"]}}]	\N	1	2
+233	2019-11-03 17:31:49.151145+07	12	Steak, Large, 7.95	[{"changed": {"fields": ["ref"]}}]	\N	1	2
+234	2019-11-03 17:31:57.402996+07	25	Steak, Small, 6.5	[{"changed": {"fields": ["ref"]}}]	\N	1	2
+235	2019-11-03 17:32:16.443767+07	13	Steak + Cheese, Large, 8.5	[{"changed": {"fields": ["ref"]}}]	\N	1	2
+236	2019-11-03 17:32:25.957748+07	26	Steak + Cheese, Small, 6.95	[{"changed": {"fields": ["ref"]}}]	\N	1	2
+237	2019-11-03 17:32:43.327075+07	14	Sausage, Peppers & Onions, Large, 8.5	[{"changed": {"fields": ["ref"]}}]	\N	1	2
+238	2019-11-03 17:32:58.143925+07	15	Hamburger, Large, 6.95	[{"changed": {"fields": ["ref"]}}]	\N	1	2
+239	2019-11-03 17:33:35.82606+07	27	Hamburger, Small, 4.6	[{"changed": {"fields": ["ref"]}}]	\N	1	2
+240	2019-11-03 17:33:47.531137+07	16	Cheeseburger, Large, 7.45	[{"changed": {"fields": ["ref"]}}]	\N	1	2
+241	2019-11-03 17:33:54.538595+07	28	Cheeseburger, Small, 5.1	[{"changed": {"fields": ["ref"]}}]	\N	1	2
+242	2019-11-03 17:34:03.64555+07	17	Fried Chicken, Large, 8.5	[{"changed": {"fields": ["ref"]}}]	\N	1	2
+243	2019-11-03 17:34:13.505727+07	29	Fried Chicken, Small, 6.95	[{"changed": {"fields": ["ref"]}}]	\N	1	2
+244	2019-11-03 17:34:26.237153+07	18	Veggie, Large, 8.5	[{"changed": {"fields": ["ref"]}}]	\N	1	2
+245	2019-11-03 17:34:39.376236+07	30	Veggie, Small, 6.95	[{"changed": {"fields": ["ref"]}}]	\N	1	2
+246	2019-11-04 07:11:19.378816+07	1	OrderSubsX object (1)	[{"added": {}}]	\N	1	1
+247	2019-11-04 07:11:28.647805+07	2	OrderSubsX object (2)	[{"added": {}}]	\N	1	1
+248	2019-11-04 07:11:34.34067+07	3	OrderSubsX object (3)	[{"added": {}}]	\N	1	1
+249	2019-11-04 07:11:40.710676+07	4	OrderSubsX object (4)	[{"added": {}}]	\N	1	1
+250	2019-11-04 07:15:41.362722+07	1	OrderSubsX object (1)	[{"changed": {"fields": ["ref"]}}]	\N	1	2
+251	2019-11-04 07:15:53.274418+07	2	OrderSubsX object (2)	[{"changed": {"fields": ["ref"]}}]	\N	1	2
+252	2019-11-04 07:16:01.071834+07	3	OrderSubsX object (3)	[{"changed": {"fields": ["ref"]}}]	\N	1	2
+253	2019-11-04 07:16:10.943387+07	4	OrderSubsX object (4)	[{"changed": {"fields": ["ref"]}}]	\N	1	2
+254	2019-11-04 18:12:58.065368+07	1	Order object (1)	[{"added": {}}]	\N	1	1
+255	2019-11-04 18:13:12.961191+07	1	Item object (1)	[{"added": {}}]	\N	1	1
+256	2019-11-06 10:44:25.856052+07	10	Item object (10)	[{"added": {}}]	\N	1	1
+257	2019-11-08 08:28:44.015744+07	67	Item object (67)		\N	1	3
+258	2019-11-08 08:28:44.090727+07	66	Item object (66)		\N	1	3
+259	2019-11-08 08:28:44.093147+07	65	Item object (65)		\N	1	3
+260	2019-11-08 08:28:44.095772+07	64	Item object (64)		\N	1	3
+261	2019-11-08 08:28:44.098431+07	63	Item object (63)		\N	1	3
+262	2019-11-08 08:28:44.101089+07	62	Item object (62)		\N	1	3
+263	2019-11-08 08:28:44.104023+07	61	Item object (61)		\N	1	3
+264	2019-11-08 08:28:44.106995+07	60	Item object (60)		\N	1	3
+265	2019-11-08 08:28:44.109417+07	59	Item object (59)		\N	1	3
+266	2019-11-08 08:28:44.111862+07	58	Item object (58)		\N	1	3
+267	2019-11-08 08:28:44.114812+07	57	Item object (57)		\N	1	3
+268	2019-11-08 08:28:44.117575+07	56	Item object (56)		\N	1	3
+269	2019-11-08 08:28:44.120101+07	55	Item object (55)		\N	1	3
+270	2019-11-08 08:28:44.123091+07	54	Item object (54)		\N	1	3
+271	2019-11-08 08:28:44.12593+07	53	Item object (53)		\N	1	3
+272	2019-11-08 08:28:44.128854+07	52	Item object (52)		\N	1	3
+273	2019-11-08 08:28:44.132545+07	51	Item object (51)		\N	1	3
+274	2019-11-08 08:28:44.135534+07	50	Item object (50)		\N	1	3
+275	2019-11-08 08:28:44.138281+07	49	Item object (49)		\N	1	3
+276	2019-11-08 08:28:44.141068+07	48	Item object (48)		\N	1	3
+277	2019-11-08 08:28:44.144438+07	47	Item object (47)		\N	1	3
+278	2019-11-08 08:28:44.14799+07	46	Item object (46)		\N	1	3
+279	2019-11-08 08:28:44.15053+07	45	Item object (45)		\N	1	3
+280	2019-11-08 08:28:44.153439+07	44	Item object (44)		\N	1	3
+281	2019-11-08 08:28:44.156427+07	43	Item object (43)		\N	1	3
+282	2019-11-08 08:28:44.159093+07	42	Item object (42)		\N	1	3
+283	2019-11-08 08:28:44.161614+07	41	Item object (41)		\N	1	3
+284	2019-11-08 08:28:44.164126+07	40	Item object (40)		\N	1	3
+285	2019-11-08 08:28:44.166817+07	39	Item object (39)		\N	1	3
+286	2019-11-08 08:28:44.169454+07	38	Item object (38)		\N	1	3
+287	2019-11-08 08:28:44.172262+07	37	Item object (37)		\N	1	3
+288	2019-11-08 08:28:44.175307+07	36	Item object (36)		\N	1	3
+289	2019-11-08 08:28:44.177861+07	35	Item object (35)		\N	1	3
+290	2019-11-08 08:28:44.180478+07	34	Item object (34)		\N	1	3
+291	2019-11-08 08:28:44.193777+07	33	Item object (33)		\N	1	3
+292	2019-11-08 08:28:44.196402+07	32	Item object (32)		\N	1	3
+293	2019-11-08 08:28:44.199125+07	31	Item object (31)		\N	1	3
+294	2019-11-08 08:28:44.201734+07	30	Item object (30)		\N	1	3
+295	2019-11-08 08:28:59.536803+07	73	Item object (73)		\N	1	3
+296	2019-11-08 08:28:59.539441+07	72	Item object (72)		\N	1	3
+297	2019-11-08 08:28:59.542819+07	71	Item object (71)		\N	1	3
+298	2019-11-08 08:28:59.54498+07	70	Item object (70)		\N	1	3
+299	2019-11-08 08:28:59.547357+07	69	Item object (69)		\N	1	3
+300	2019-11-08 08:29:12.723847+07	68	Item object (68)		\N	1	3
+301	2019-11-08 11:17:16.448556+07	81	Id: 81 (p)		\N	1	3
+302	2019-11-08 11:17:16.550944+07	80	Id: 80 (p)		\N	1	3
+303	2019-11-08 11:17:16.553444+07	79	Id: 79 (p)		\N	1	3
+304	2019-11-08 11:17:16.555992+07	78	Id: 78 (p)		\N	1	3
+305	2019-11-08 11:17:16.558588+07	77	Id: 77 (p)		\N	1	3
+306	2019-11-08 11:17:16.561593+07	76	Id: 76 (p)		\N	1	3
+307	2019-11-08 11:17:16.564205+07	75	Id: 75 (p)		\N	1	3
+308	2019-11-08 11:17:16.566787+07	74	Id: 74 (p)		\N	1	3
+309	2019-11-08 11:17:27.243936+07	83	Id: 83 (p)		\N	1	3
+310	2019-11-08 11:17:27.246548+07	82	Id: 82 (p)		\N	1	3
+311	2019-11-08 11:17:27.249142+07	29	Id: 29 (p)		\N	1	3
+312	2019-11-12 08:09:47.495039+07	1	tramy	[{"changed": {"fields": ["user_permissions"]}}]	\N	1	2
+313	2019-11-13 08:12:22.876368+07	13	13		\N	1	3
+314	2019-11-13 08:12:23.098666+07	9	9		\N	1	3
+315	2019-11-13 08:12:23.103302+07	8	8		\N	1	3
+316	2019-11-13 08:12:23.22011+07	3	3		\N	1	3
+317	2019-11-13 08:12:23.225738+07	2	2		\N	1	3
+318	2019-11-13 09:29:16.608534+07	61	Id: 61 (p)		\N	1	3
+319	2019-11-13 09:29:16.646024+07	60	Id: 60 (p)		\N	1	3
+320	2019-11-13 09:29:16.648461+07	58	Id: 58 (p)		\N	1	3
+321	2019-11-13 09:29:16.651494+07	56	Id: 56 (p)		\N	1	3
+322	2019-11-13 09:29:16.662925+07	55	Id: 55 (p)		\N	1	3
+323	2019-11-13 09:53:47.378367+07	67	Id: 67 (p)		\N	1	3
+324	2019-11-13 09:53:47.398145+07	66	Id: 66 (p)		\N	1	3
+325	2019-11-13 09:53:47.400693+07	65	Id: 65 (p)		\N	1	3
+326	2019-11-13 09:53:47.40365+07	63	Id: 63 (p)		\N	1	3
+327	2019-11-13 09:53:47.590228+07	62	Id: 62 (p)		\N	1	3
+328	2019-11-13 09:53:47.593348+07	59	Id: 59 (p)		\N	1	3
+329	2019-11-13 10:01:24.485342+07	70	Id: 70 (p)		\N	1	3
+330	2019-11-13 10:01:24.521263+07	69	Id: 69 (p)		\N	1	3
+331	2019-11-13 10:01:37.769153+07	57	Id: 57 (p)		\N	1	3
+332	2019-11-13 11:06:11.421683+07	76	Id: 76 (p)		\N	1	3
+333	2019-11-13 11:06:11.471628+07	75	Id: 75 (p)		\N	1	3
+334	2019-11-13 11:06:11.474171+07	73	Id: 73 (p)		\N	1	3
+335	2019-11-13 11:06:11.476752+07	68	Id: 68 (p)		\N	1	3
+336	2019-11-14 08:13:12.713617+07	85	Id: 85 (p)		\N	1	3
+337	2019-11-14 08:13:12.716773+07	84	Id: 84 (p)		\N	1	3
+338	2019-11-14 08:13:12.719665+07	80	Id: 80 (p)		\N	1	3
+339	2019-11-14 08:13:12.727933+07	79	Id: 79 (p)		\N	1	3
+340	2019-11-14 08:13:12.730774+07	78	Id: 78 (p)		\N	1	3
+341	2019-11-14 08:13:12.733734+07	77	Id: 77 (p)		\N	1	3
+342	2019-11-14 08:13:12.736366+07	72	Id: 72 (p)		\N	1	3
+343	2019-11-14 08:27:39.428491+07	86	Id: 86 (p)	[{"changed": {"fields": ["quantity"]}}]	\N	1	2
+\.
+
+
+--
+-- Data for Name: django_content_type; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+COPY public.django_content_type (id, app_label, model) FROM stdin;
+24	orders	orderpasta
+25	orders	orderpizza
+26	orders	ordersalads
+27	orders	pizzatype
+28	orders	size
+29	orders	toppingchoice
+30	orders	toppings
+31	orders	ordersubs
+32	orders	substype
+33	orders	dinnerplatterstype
+34	orders	order
+35	orders	item
+36	orders	orderdp
+37	orders	ordersubsx
+38	admin	logentry
+39	auth	permission
+40	auth	group
+41	auth	user
+42	contenttypes	contenttype
+43	sessions	session
+\.
+
+
+--
+-- Data for Name: django_migrations; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+COPY public.django_migrations (id, app, name, applied) FROM stdin;
+1	contenttypes	0001_initial	2019-10-30 16:07:08.721264+07
+2	auth	0001_initial	2019-10-30 16:07:08.745284+07
+3	admin	0001_initial	2019-10-30 16:07:08.763161+07
+4	admin	0002_logentry_remove_auto_add	2019-10-30 16:07:08.786287+07
+5	admin	0003_logentry_add_action_flag_choices	2019-10-30 16:07:08.80525+07
+6	contenttypes	0002_remove_content_type_name	2019-10-30 16:07:08.839562+07
+7	auth	0002_alter_permission_name_max_length	2019-10-30 16:07:08.851938+07
+8	auth	0003_alter_user_email_max_length	2019-10-30 16:07:08.868175+07
+9	auth	0004_alter_user_username_opts	2019-10-30 16:07:08.887644+07
+10	auth	0005_alter_user_last_login_null	2019-10-30 16:07:08.905612+07
+11	auth	0006_require_contenttypes_0002	2019-10-30 16:07:08.908675+07
+12	auth	0007_alter_validators_add_error_messages	2019-10-30 16:07:08.92717+07
+13	auth	0008_alter_user_username_max_length	2019-10-30 16:07:08.944237+07
+14	auth	0009_alter_user_last_name_max_length	2019-10-30 16:07:08.961912+07
+15	auth	0010_alter_group_name_max_length	2019-10-30 16:07:08.979864+07
+16	auth	0011_update_proxy_permissions	2019-10-30 16:07:08.994272+07
+17	orders	0001_initial	2019-10-30 16:07:09.12373+07
+18	orders	0002_auto_20191030_1023	2019-10-30 16:07:09.141921+07
+19	orders	0003_auto_20191030_1026	2019-10-30 16:07:09.175212+07
+20	sessions	0001_initial	2019-10-30 16:07:09.179802+07
+21	orders	0004_auto_20191030_1646	2019-10-30 16:47:03.622109+07
+22	orders	0005_auto_20191030_1651	2019-10-30 16:51:47.608299+07
+23	orders	0006_auto_20191030_1654	2019-10-30 16:54:27.372403+07
+24	orders	0007_auto_20191030_1658	2019-10-30 16:58:29.940057+07
+25	orders	0008_auto_20191030_1705	2019-10-30 17:05:06.569028+07
+26	orders	0009_auto_20191030_1707	2019-10-30 17:07:57.180941+07
+27	orders	0010_auto_20191030_1709	2019-10-30 17:09:05.770148+07
+28	orders	0011_auto_20191030_1714	2019-10-30 17:14:44.340095+07
+29	orders	0012_auto_20191030_1731	2019-10-30 17:31:45.259531+07
+30	orders	0013_auto_20191030_1733	2019-10-30 17:33:39.933645+07
+31	orders	0014_auto_20191101_0542	2019-11-01 05:43:08.272162+07
+32	orders	0015_order_test	2019-11-03 16:40:51.146201+07
+33	orders	0016_test_dish	2019-11-03 16:45:27.869669+07
+34	orders	0017_auto_20191103_1718	2019-11-03 17:18:11.678135+07
+35	orders	0018_auto_20191103_1723	2019-11-03 17:23:24.157076+07
+36	orders	0019_auto_20191104_0502	2019-11-04 05:02:48.44363+07
+37	orders	0020_auto_20191104_0556	2019-11-04 05:56:42.998504+07
+38	orders	0021_ordersubsx	2019-11-04 07:07:18.038558+07
+39	orders	0022_auto_20191104_0715	2019-11-04 07:15:14.879033+07
+40	orders	0023_auto_20191104_1811	2019-11-04 18:11:32.177888+07
+41	orders	0024_auto_20191104_1834	2019-11-04 18:34:23.011904+07
+42	orders	0025_auto_20191105_1126	2019-11-05 11:27:00.729947+07
+43	orders	0026_auto_20191105_1127	2019-11-05 11:27:45.9618+07
+44	orders	0027_auto_20191106_0930	2019-11-06 09:31:01.280541+07
+45	orders	0028_auto_20191106_0938	2019-11-06 09:39:00.425269+07
+46	orders	0029_auto_20191106_1035	2019-11-06 10:35:46.889512+07
+47	orders	0030_auto_20191106_1040	2019-11-06 10:40:28.152007+07
+48	orders	0031_auto_20191106_1638	2019-11-06 16:38:42.699006+07
+49	orders	0032_auto_20191106_1641	2019-11-06 16:41:59.441792+07
+50	orders	0033_auto_20191107_0712	2019-11-07 07:12:23.605702+07
+51	orders	0034_auto_20191107_0941	2019-11-07 09:41:46.126446+07
+52	orders	0035_auto_20191108_0839	2019-11-08 08:39:59.518007+07
+53	orders	0036_auto_20191108_1030	2019-11-08 10:30:27.702419+07
+54	orders	0037_auto_20191108_1103	2019-11-08 11:03:55.081809+07
+55	orders	0038_auto_20191108_1615	2019-11-08 16:15:22.93799+07
+56	orders	0039_auto_20191109_1431	2019-11-09 14:31:16.149876+07
+57	orders	0040_auto_20191112_0808	2019-11-12 08:08:08.38843+07
+58	orders	0041_auto_20200201_1323	2020-02-01 13:23:32.962121+07
+\.
+
+
+--
+-- Data for Name: django_session; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+COPY public.django_session (session_key, session_data, expire_date) FROM stdin;
+3s309po70e0hiwiiph568kv42jtefh3f	NWJkZTQzYTM1ZTRjZTM2ZTNlYjJlYjllMDA5Y2M2ZjVkOThiNTEyNTp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiI0ZDNkMzQ3MzQ3YTkyOTlmOTEzYmFhNjJkMTZjYzdlNGY4NTI5ZDExIn0=	2019-11-29 10:58:13.986354+07
+fpi58npe8y6kwgb4ruz1323l8m8t2l2n	NDFjMzVhYjNhMmE2MmQ3OTY2MDFjNjQyMzUwNGU1ZmY2MjYyMGY5Mzp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiI0NjEyYjM1ZWU0NTgxOWFlNjk4MzU1ZDllNDQxMWZiYjc2ZTI2NmZjIn0=	2019-11-30 08:52:08.958544+07
+2x820t90vrnywtb3y9kahux04fzndclt	YzQwOTc4NjkyMWNlYzJmYjFmNDM5OTdlN2I1MDM2YmQ0ODgyNzhiZTp7Il9hdXRoX3VzZXJfaWQiOiI5IiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiI0MTkyZGMwMGQxZWJmODQ5OTczN2VlOTQ1NmVlM2MxOTljYzExNjMxIn0=	2019-11-30 10:03:02.702373+07
+85clq3zs36dikhglxkglfmvoojqdhh2g	NTQxOGI0ZWU5MzU2OTkyMTllMmNmOTk1YzRiMWVmOTI2ZTQxZjk5MDp7Il9hdXRoX3VzZXJfaWQiOiIxMCIsIl9hdXRoX3VzZXJfYmFja2VuZCI6ImRqYW5nby5jb250cmliLmF1dGguYmFja2VuZHMuTW9kZWxCYWNrZW5kIiwiX2F1dGhfdXNlcl9oYXNoIjoiMTJmMjEwNTU4ZjhkYzliNDRjMzljZTUyODBlZDVhYTRlMjViNGUwZCJ9	2020-02-15 22:47:41.999776+07
+\.
+
+
+--
+-- Data for Name: orders_dinnerplatterstype; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+COPY public.orders_dinnerplatterstype (id, name) FROM stdin;
+1	Garden Salad
+2	Greek Salad
+3	Antipasto
+4	Baked Ziti
+5	Meatball Parm
+6	Chicken Parm
+\.
+
+
+--
+-- Data for Name: orders_item; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+COPY public.orders_item (id, item, quantity, price, order_id_id, created_by_id, status, size) FROM stdin;
+1	regular_1	1	12	1	\N	c	s
+2	Pizza: Regular 1 topping	2	27.4	\N	\N	p	s
+3	Pizza: Regular 2 toppings	1	21.95	\N	\N	p	l
+4	Pasta: Baked Ziti w/Mozzarella	1	6.5	\N	\N	p	
+5	Salad: Garden Salad	1	6.25	\N	\N	p	
+6	Pasta: Baked Ziti w/Meatballs	1	8.75	\N	\N	p	
+7	Pasta: Baked Ziti w/Chicken	1	9.75	\N	\N	p	
+8	Pasta: Baked Ziti w/Chicken	1	9.75	\N	\N	p	
+9	Pizza: Regular Special	3	53.25	\N	\N	p	s
+10	pasta_3	1	11	1	\N	c	s
+11	Pizza: Regular 3 toppings	1	16.2	\N	\N	p	s
+12	Pizza: Regular 2 toppings	1	15.2	\N	\N	p	s
+13	Pizza: Regular Special	1	17.75	\N	\N	p	s
+14	Pizza: Regular 2 toppings	1	15.2	\N	\N	p	s
+15	Pizza: Regular 2 toppings	1	15.2	\N	\N	p	s
+16	Sub: Tuna	1	6.5	\N	\N	p	s
+17	Pizza: Regular 2 toppings	1	15.2	\N	\N	p	s
+18	Sub: Italian	1	7.95	\N	\N	p	l
+19	Sub: Steak	1	6.5	\N	\N	p	s
+20	Sub: Steak	1	6.5	\N	\N	p	s
+21	Sub: Tuna	1	6.5	\N	\N	p	s
+22	Sub: Steak	3	19.5	\N	\N	p	s
+23	Sub: Tuna	1	6.5	\N	\N	p	s
+24	Sub: Steak	2	14	\N	\N	p	s
+25	Sub: Steak	2	14	\N	\N	p	s
+26	Sub: Steak	1	7.5	\N	\N	p	s
+27	Sub: Steak	3	24	\N	\N	p	s
+28	Sub: Italian	1	7	\N	\N	p	s
+29	Pizza: Regular Cheese	1	12.7	\N	1	pr	S
+30	Pizza: Regular 1 topping	1	19.95	\N	1	s	L
+31	Pizza: Regular Cheese	1	12.7	\N	1	s	S
+32	Pizza: Regular Cheese	1	12.7	4	1	c	S
+33	Pizza: Sicilian Cheese	1	24.45	4	1	c	S
+34	Pizza: Regular Cheese	1	12.7	5	1	pr	S
+35	Pizza: Regular 3 toppings	1	23.95	5	1	pr	L
+36	Pizza: Regular Cheese	1	12.7	6	1	pr	S
+37	Sub: Veggie	1	9	7	1	s	L
+38	Pizza: Regular 1 topping	1	13.7	\N	1	s	S
+39	Sub: Italian	2	16.9	\N	1	s	L
+40	Pizza: Regular 1 topping	1	13.7	\N	1	s	S
+41	Sub: Italian	1	8.45	\N	1	s	L
+42	Sub: Italian	1	8.45	\N	1	s	L
+43	Pizza: Sicilian 1 topping	1	26.45	10	1	pr	S
+44	Sub: Italian	2	16.9	10	1	pr	L
+45	Sub: Cheeseburger	1	5.1	11	1	s	S
+46	Salad: Antipasto	4	33	11	1	s	
+47	Pizza: Regular Cheese	1	12.7	11	1	s	S
+48	Pizza: Regular 2 toppings	2	43.9	12	6	s	L
+50	Pizza: Regular Cheese	1	12.7	14	5	s	S
+51	Sub: Italian	1	7.95	14	5	s	L
+52	Sub: Italian	2	15.9	14	5	s	L
+53	Sub: Italian	2	15.9	14	5	s	L
+54	Pizza: Regular 2 toppings	1	15.2	14	5	s	S
+94	Pizza: Regular 1 topping	2	27.4	15	1	s	S
+96	Pizza: Regular Special	1	17.75	16	5	s	S
+97	Pizza: Regular Special	1	17.75	16	5	s	S
+98	Sub: Sausage, Peppers & Onions	2	17	16	5	s	L
+99	Pizza: Regular 2 toppings	1	21.95	16	5	s	L
+100	Sub: Tuna	2	13	16	5	s	S
+101	Pizza: Regular Special	1	17.75	17	5	s	S
+103	Pizza: Sicilian Cheese	1	24.45	18	1	s	S
+105	Pizza: Sicilian 1 topping	1	26.45	19	1	p	S
+106	Pizza: Sicilian 1 topping	1	26.45	19	1	p	S
+107	Pizza: Regular 3 toppings	2	47.9	20	7	s	L
+108	Pizza: Regular 2 toppings	1	15.2	19	1	p	S
+110	Pizza: Regular 1 topping	2	27.4	19	1	p	S
+111	Sub: Italian	2	14	21	7	s	S
+113	Sub: Steak	1	9.45	21	7	s	L
+114	Pasta: Baked Ziti w/Meatballs	2	17.5	21	7	s	
+115	Pizza: Regular 2 toppings	2	43.9	22	8	p	L
+117	Sub: Steak	2	16	22	8	p	S
+119	Pizza: Regular 2 toppings	2	43.9	23	9	c	L
+121	Sub: Steak	3	24	23	9	c	S
+122	Pizza: Regular Cheese	1	12.7	24	10	s	S
+\.
+
+
+--
+-- Data for Name: orders_item_subx; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+COPY public.orders_item_subx (id, item_id, substype_id) FROM stdin;
+1	19	2
+2	19	4
+3	20	16
+4	20	17
+5	21	18
+6	21	19
+7	22	17
+8	22	18
+9	22	19
+10	24	16
+11	24	17
+12	25	18
+13	25	19
+14	26	18
+15	26	19
+16	27	17
+17	27	18
+18	27	19
+19	28	19
+44	37	19
+45	39	19
+46	41	19
+47	42	19
+48	44	19
+57	111	19
+58	113	16
+59	113	17
+60	113	18
+62	117	16
+63	117	17
+64	117	18
+67	121	16
+68	121	17
+69	121	18
+\.
+
+
+--
+-- Data for Name: orders_item_topping; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+COPY public.orders_item_topping (id, item_id, toppings_id) FROM stdin;
+1	1	2
+2	1	3
+3	1	4
+4	2	17
+5	3	2
+6	3	4
+7	9	1
+8	9	3
+9	9	4
+10	10	2
+11	11	3
+12	12	2
+13	12	3
+14	14	2
+15	14	3
+16	15	2
+17	15	3
+18	17	2
+19	17	3
+67	30	4
+68	35	1
+69	35	2
+70	35	3
+71	38	3
+72	40	4
+73	43	3
+74	48	2
+75	48	3
+76	54	2
+77	54	3
+94	94	4
+96	97	2
+97	97	3
+98	97	4
+99	97	5
+100	97	7
+101	99	2
+102	99	3
+103	101	1
+104	101	2
+105	101	3
+106	101	4
+107	105	2
+108	106	3
+109	107	2
+110	107	3
+111	107	4
+112	108	2
+113	108	4
+114	110	2
+117	115	2
+118	115	7
+119	119	4
+120	119	6
+\.
+
+
+--
+-- Data for Name: orders_order; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+COPY public.orders_order (id, created_by_id, "time", total_price, status) FROM stdin;
+1	1	2019-11-12 11:26:49.455993+07	12.7	c
+4	1	2019-11-16 09:55:15.36936+07	37.15	c
+5	1	2019-11-13 08:09:32.529052+07	36.65	pr
+6	1	2019-11-16 09:55:04.040139+07	12.7	pr
+7	1	2019-11-09 13:11:12.483807+07	9	s
+10	1	2019-11-15 10:58:30.829648+07	43.35	pr
+11	1	2019-11-09 14:47:49.347899+07	50.8	s
+12	6	2019-11-09 14:51:24.591668+07	43.9	s
+14	5	2019-11-15 08:32:34.863819+07	67.65	s
+15	1	2019-11-15 08:28:41.180214+07	27.4	s
+16	5	2019-11-15 10:56:11.281437+07	87.45	s
+17	5	2019-11-15 10:57:37.489147+07	17.75	s
+18	1	2019-11-16 07:14:26.215182+07	24.45	s
+19	1	2019-11-16 07:17:59.196649+07	\N	p
+20	7	2019-11-16 08:56:40.138021+07	47.9	s
+21	7	2019-11-16 09:51:58.463263+07	40.95	s
+22	8	2019-11-16 09:58:51.801643+07	\N	p
+23	9	2019-11-16 10:08:17.651822+07	67.9	c
+24	10	2020-02-01 22:47:57.661815+07	12.7	s
+\.
+
+
+--
+-- Data for Name: orders_orderdp; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+COPY public.orders_orderdp (id, price, name_id, size_id, ref) FROM stdin;
+13	35	1	1	dp_1
+14	60	1	2	dp_1
+15	45	2	1	dp_2
+16	70	2	2	dp_2
+17	45	3	1	dp_3
+18	70	3	2	dp_3
+19	35	4	1	dp_4
+20	60	4	2	dp_4
+21	45	5	1	dp_5
+22	70	5	2	dp_5
+23	45	6	1	dp_6
+24	80	6	2	dp_6
+\.
+
+
+--
+-- Data for Name: orders_orderpasta; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+COPY public.orders_orderpasta (id, price, name, ref) FROM stdin;
+1	6.5	Baked Ziti w/Mozzarella	pasta_1
+2	8.75	Baked Ziti w/Meatballs	pasta_2
+3	9.75	Baked Ziti w/Chicken	pasta_3
+\.
+
+
+--
+-- Data for Name: orders_orderpizza; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+COPY public.orders_orderpizza (id, price, name_id, size_id, topping_choice_id, ref) FROM stdin;
+1	12.7	1	1	1	regular_1
+2	17.95	1	2	1	regular_1
+3	13.7	1	1	2	regular_2
+4	19.95	1	2	2	regular_2
+5	15.2	1	1	3	regular_3
+6	21.95	1	2	3	regular_3
+7	16.2	1	1	4	regular_4
+8	23.95	1	2	4	regular_4
+9	17.75	1	1	5	regular_5
+10	25.95	1	2	5	regular_5
+11	24.45	2	1	1	sicilian_1
+12	38.7	2	2	1	sicilian_1
+13	26.45	2	1	2	sicilian_2
+14	40.7	2	2	2	sicilian_2
+15	28.45	2	1	3	sicilian_3
+16	42.7	2	2	3	sicilian_3
+17	29.45	2	1	4	sicilian_4
+18	44.7	2	2	4	sicilian_4
+19	30.45	2	1	5	sicilian_5
+20	45.7	2	2	5	sicilian_5
+\.
+
+
+--
+-- Data for Name: orders_ordersalads; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+COPY public.orders_ordersalads (id, price, name, ref) FROM stdin;
+1	6.25	Garden Salad	salad_1
+2	8.25	Greek Salad	salad_2
+3	8.25	Antipasto	salad_3
+4	8.25	Salad w/Tuna	salad_4
+\.
+
+
+--
+-- Data for Name: orders_ordersubs; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+COPY public.orders_ordersubs (id, price, name_id, size_id, ref) FROM stdin;
+1	6.5	1	1	sub_1
+2	7.95	1	2	sub_1
+3	6.5	2	1	sub_2
+4	7.95	2	2	sub_2
+6	7.95	3	2	sub_3
+7	7.95	4	2	sub_4
+8	7.95	5	2	sub_5
+9	8.5	6	2	sub_6
+10	8.5	7	2	sub_7
+11	7.95	8	2	sub_8
+12	7.95	9	2	sub_9
+13	8.5	10	2	sub_10
+14	8.5	11	2	sub_11
+15	6.95	12	2	sub_12
+16	7.45	13	2	sub_13
+17	8.5	14	2	sub_14
+18	8.5	15	2	sub_15
+19	6.5	3	1	sub_3
+20	6.5	4	1	sub_4
+21	6.5	5	1	sub_5
+22	7.5	6	1	sub_6
+23	7.5	7	1	sub_7
+24	6.5	8	1	sub_8
+25	6.5	9	1	sub_9
+26	6.95	10	1	sub_10
+27	4.6	12	1	sub_12
+28	5.1	13	1	sub_13
+29	6.95	14	1	sub_14
+30	6.95	15	1	sub_15
+31	0.5	16	1	na
+32	0.5	16	2	na
+33	0.5	17	2	na
+34	0.5	17	1	na
+35	0.5	18	1	na
+36	0.5	18	2	na
+37	0.5	19	1	na
+38	0.5	19	2	na
+\.
+
+
+--
+-- Data for Name: orders_ordersubsx; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+COPY public.orders_ordersubsx (id, price, ref, name_id) FROM stdin;
+1	0.5	subx_1	19
+2	0.5	subx_2	16
+3	0.5	subx_3	17
+4	0.5	subx_4	18
+\.
+
+
+--
+-- Data for Name: orders_pizzatype; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+COPY public.orders_pizzatype (id, name) FROM stdin;
+1	Regular
+2	Sicilian
+\.
+
+
+--
+-- Data for Name: orders_size; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+COPY public.orders_size (id, size) FROM stdin;
+1	Small
+2	Large
+\.
+
+
+--
+-- Data for Name: orders_substype; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+COPY public.orders_substype (id, name, steak_subs_extra, subs_extra) FROM stdin;
+1	Cheese	f	f
+2	Italian	f	f
+3	Ham + Cheese	f	f
+4	Meatball	f	f
+5	Tuna	f	f
+6	Turkey	f	f
+7	Chicken Parmigiana	f	f
+8	Eggplant Parmigiana	f	f
+9	Steak	f	f
+10	Steak + Cheese	f	f
+11	Sausage, Peppers & Onions	f	f
+12	Hamburger	f	f
+13	Cheeseburger	f	f
+14	Fried Chicken	f	f
+15	Veggie	f	f
+16	+ Mushrooms	t	f
+17	+ Green Peppers	t	f
+18	+ Onions	t	f
+19	Extra Cheese	f	t
+\.
+
+
+--
+-- Data for Name: orders_toppingchoice; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+COPY public.orders_toppingchoice (id, topping) FROM stdin;
+1	Cheese
+2	1 topping
+3	2 toppings
+4	3 toppings
+5	Special
+\.
+
+
+--
+-- Data for Name: orders_toppings; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+COPY public.orders_toppings (id, topping) FROM stdin;
+1	Pepperoni
+2	Sausage
+3	Mushrooms
+4	Onions
+5	Ham
+6	Canadian Bacon
+7	Pineapple
+8	Eggplant
+9	Tomato & Basil
+10	Green Peppers
+11	Hamburger
+12	Spinach
+13	Artichoke
+14	Buffalo Chicken
+15	Barbecue Chicken
+16	Anchovies
+17	Black Olives
+18	Fresh Garlic
+19	Zucchini
+20	Cheese
+\.
+
+
+--
+-- Name: auth_group_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('public.auth_group_id_seq', 1, true);
+
+
+--
+-- Name: auth_group_permissions_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('public.auth_group_permissions_id_seq', 1, true);
+
+
+--
+-- Name: auth_permission_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('public.auth_permission_id_seq', 182, true);
+
+
+--
+-- Name: auth_user_groups_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('public.auth_user_groups_id_seq', 1, true);
+
+
+--
+-- Name: auth_user_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('public.auth_user_id_seq', 10, true);
+
+
+--
+-- Name: auth_user_user_permissions_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('public.auth_user_user_permissions_id_seq', 1, true);
+
+
+--
+-- Name: django_admin_log_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('public.django_admin_log_id_seq', 343, true);
+
+
+--
+-- Name: django_content_type_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('public.django_content_type_id_seq', 43, true);
+
+
+--
+-- Name: django_migrations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('public.django_migrations_id_seq', 58, true);
+
+
+--
+-- Name: orders_dinnerplatterstype_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('public.orders_dinnerplatterstype_id_seq', 6, true);
+
+
+--
+-- Name: orders_item_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('public.orders_item_id_seq', 122, true);
+
+
+--
+-- Name: orders_item_subx_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('public.orders_item_subx_id_seq', 69, true);
+
+
+--
+-- Name: orders_item_topping_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('public.orders_item_topping_id_seq', 120, true);
+
+
+--
+-- Name: orders_order_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('public.orders_order_id_seq', 24, true);
+
+
+--
+-- Name: orders_orderdp_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('public.orders_orderdp_id_seq', 24, true);
+
+
+--
+-- Name: orders_orderpasta_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('public.orders_orderpasta_id_seq', 3, true);
+
+
+--
+-- Name: orders_orderpizza_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('public.orders_orderpizza_id_seq', 20, true);
+
+
+--
+-- Name: orders_ordersalads_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('public.orders_ordersalads_id_seq', 4, true);
+
+
+--
+-- Name: orders_ordersubs_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('public.orders_ordersubs_id_seq', 38, true);
+
+
+--
+-- Name: orders_ordersubsx_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('public.orders_ordersubsx_id_seq', 4, true);
+
+
+--
+-- Name: orders_pizzatype_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('public.orders_pizzatype_id_seq', 2, true);
+
+
+--
+-- Name: orders_size_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('public.orders_size_id_seq', 2, true);
+
+
+--
+-- Name: orders_substype_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('public.orders_substype_id_seq', 19, true);
+
+
+--
+-- Name: orders_toppingchoice_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('public.orders_toppingchoice_id_seq', 5, true);
+
+
+--
+-- Name: orders_toppings_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('public.orders_toppings_id_seq', 20, true);
+
+
+--
+-- Name: django_migrations idx_16392_django_migrations_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.django_migrations
+    ADD CONSTRAINT idx_16392_django_migrations_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: auth_group_permissions idx_16401_auth_group_permissions_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.auth_group_permissions
+    ADD CONSTRAINT idx_16401_auth_group_permissions_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: auth_user_groups idx_16407_auth_user_groups_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.auth_user_groups
+    ADD CONSTRAINT idx_16407_auth_user_groups_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: auth_user_user_permissions idx_16413_auth_user_user_permissions_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.auth_user_user_permissions
+    ADD CONSTRAINT idx_16413_auth_user_user_permissions_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: django_admin_log idx_16419_django_admin_log_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.django_admin_log
+    ADD CONSTRAINT idx_16419_django_admin_log_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: django_content_type idx_16428_django_content_type_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.django_content_type
+    ADD CONSTRAINT idx_16428_django_content_type_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: auth_permission idx_16437_auth_permission_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.auth_permission
+    ADD CONSTRAINT idx_16437_auth_permission_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: auth_user idx_16446_auth_user_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.auth_user
+    ADD CONSTRAINT idx_16446_auth_user_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: auth_group idx_16455_auth_group_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.auth_group
+    ADD CONSTRAINT idx_16455_auth_group_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: orders_pizzatype idx_16464_orders_pizzatype_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.orders_pizzatype
+    ADD CONSTRAINT idx_16464_orders_pizzatype_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: orders_size idx_16473_orders_size_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.orders_size
+    ADD CONSTRAINT idx_16473_orders_size_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: orders_toppingchoice idx_16482_orders_toppingchoice_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.orders_toppingchoice
+    ADD CONSTRAINT idx_16482_orders_toppingchoice_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: django_session idx_16489_sqlite_autoindex_django_session_1; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.django_session
+    ADD CONSTRAINT idx_16489_sqlite_autoindex_django_session_1 PRIMARY KEY (session_key);
+
+
+--
+-- Name: orders_toppings idx_16497_orders_toppings_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.orders_toppings
+    ADD CONSTRAINT idx_16497_orders_toppings_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: orders_substype idx_16506_orders_substype_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.orders_substype
+    ADD CONSTRAINT idx_16506_orders_substype_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: orders_dinnerplatterstype idx_16515_orders_dinnerplatterstype_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.orders_dinnerplatterstype
+    ADD CONSTRAINT idx_16515_orders_dinnerplatterstype_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: orders_orderpizza idx_16524_orders_orderpizza_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.orders_orderpizza
+    ADD CONSTRAINT idx_16524_orders_orderpizza_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: orders_orderdp idx_16533_orders_orderdp_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.orders_orderdp
+    ADD CONSTRAINT idx_16533_orders_orderdp_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: orders_orderpasta idx_16542_orders_orderpasta_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.orders_orderpasta
+    ADD CONSTRAINT idx_16542_orders_orderpasta_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: orders_ordersalads idx_16551_orders_ordersalads_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.orders_ordersalads
+    ADD CONSTRAINT idx_16551_orders_ordersalads_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: orders_ordersubs idx_16560_orders_ordersubs_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.orders_ordersubs
+    ADD CONSTRAINT idx_16560_orders_ordersubs_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: orders_item_topping idx_16569_orders_item_topping_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.orders_item_topping
+    ADD CONSTRAINT idx_16569_orders_item_topping_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: orders_ordersubsx idx_16575_orders_ordersubsx_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.orders_ordersubsx
+    ADD CONSTRAINT idx_16575_orders_ordersubsx_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: orders_item_subx idx_16584_orders_item_subx_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.orders_item_subx
+    ADD CONSTRAINT idx_16584_orders_item_subx_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: orders_order idx_16590_orders_order_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.orders_order
+    ADD CONSTRAINT idx_16590_orders_order_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: orders_item idx_16599_orders_item_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.orders_item
+    ADD CONSTRAINT idx_16599_orders_item_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: idx_16401_auth_group_permissions_group_id_b120cbf9; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_16401_auth_group_permissions_group_id_b120cbf9 ON public.auth_group_permissions USING btree (group_id);
+
+
+--
+-- Name: idx_16401_auth_group_permissions_group_id_permission_id_0cd325b; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX idx_16401_auth_group_permissions_group_id_permission_id_0cd325b ON public.auth_group_permissions USING btree (group_id, permission_id);
+
+
+--
+-- Name: idx_16401_auth_group_permissions_permission_id_84c5c92e; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_16401_auth_group_permissions_permission_id_84c5c92e ON public.auth_group_permissions USING btree (permission_id);
+
+
+--
+-- Name: idx_16407_auth_user_groups_group_id_97559544; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_16407_auth_user_groups_group_id_97559544 ON public.auth_user_groups USING btree (group_id);
+
+
+--
+-- Name: idx_16407_auth_user_groups_user_id_6a12ed8b; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_16407_auth_user_groups_user_id_6a12ed8b ON public.auth_user_groups USING btree (user_id);
+
+
+--
+-- Name: idx_16407_auth_user_groups_user_id_group_id_94350c0c_uniq; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX idx_16407_auth_user_groups_user_id_group_id_94350c0c_uniq ON public.auth_user_groups USING btree (user_id, group_id);
+
+
+--
+-- Name: idx_16413_auth_user_user_permissions_permission_id_1fbb5f2c; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_16413_auth_user_user_permissions_permission_id_1fbb5f2c ON public.auth_user_user_permissions USING btree (permission_id);
+
+
+--
+-- Name: idx_16413_auth_user_user_permissions_user_id_a95ead1b; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_16413_auth_user_user_permissions_user_id_a95ead1b ON public.auth_user_user_permissions USING btree (user_id);
+
+
+--
+-- Name: idx_16413_auth_user_user_permissions_user_id_permission_id_14a6; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX idx_16413_auth_user_user_permissions_user_id_permission_id_14a6 ON public.auth_user_user_permissions USING btree (user_id, permission_id);
+
+
+--
+-- Name: idx_16419_django_admin_log_content_type_id_c4bce8eb; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_16419_django_admin_log_content_type_id_c4bce8eb ON public.django_admin_log USING btree (content_type_id);
+
+
+--
+-- Name: idx_16419_django_admin_log_user_id_c564eba6; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_16419_django_admin_log_user_id_c564eba6 ON public.django_admin_log USING btree (user_id);
+
+
+--
+-- Name: idx_16428_django_content_type_app_label_model_76bd3d3b_uniq; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX idx_16428_django_content_type_app_label_model_76bd3d3b_uniq ON public.django_content_type USING btree (app_label, model);
+
+
+--
+-- Name: idx_16437_auth_permission_content_type_id_2f476e4b; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_16437_auth_permission_content_type_id_2f476e4b ON public.auth_permission USING btree (content_type_id);
+
+
+--
+-- Name: idx_16437_auth_permission_content_type_id_codename_01ab375a_uni; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX idx_16437_auth_permission_content_type_id_codename_01ab375a_uni ON public.auth_permission USING btree (content_type_id, codename);
+
+
+--
+-- Name: idx_16446_sqlite_autoindex_auth_user_1; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX idx_16446_sqlite_autoindex_auth_user_1 ON public.auth_user USING btree (username);
+
+
+--
+-- Name: idx_16455_sqlite_autoindex_auth_group_1; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX idx_16455_sqlite_autoindex_auth_group_1 ON public.auth_group USING btree (name);
+
+
+--
+-- Name: idx_16489_django_session_expire_date_a5c62663; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_16489_django_session_expire_date_a5c62663 ON public.django_session USING btree (expire_date);
+
+
+--
+-- Name: idx_16524_orders_orderpizza_name_id_646f7e32; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_16524_orders_orderpizza_name_id_646f7e32 ON public.orders_orderpizza USING btree (name_id);
+
+
+--
+-- Name: idx_16524_orders_orderpizza_size_id_df25b774; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_16524_orders_orderpizza_size_id_df25b774 ON public.orders_orderpizza USING btree (size_id);
+
+
+--
+-- Name: idx_16524_orders_orderpizza_topping_choice_id_576024ca; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_16524_orders_orderpizza_topping_choice_id_576024ca ON public.orders_orderpizza USING btree (topping_choice_id);
+
+
+--
+-- Name: idx_16533_orders_orderdinnerplatters_name_id_23711738; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_16533_orders_orderdinnerplatters_name_id_23711738 ON public.orders_orderdp USING btree (name_id);
+
+
+--
+-- Name: idx_16533_orders_orderdinnerplatters_size_id_685569d8; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_16533_orders_orderdinnerplatters_size_id_685569d8 ON public.orders_orderdp USING btree (size_id);
+
+
+--
+-- Name: idx_16560_orders_ordersubs_name_id_80ab75f9; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_16560_orders_ordersubs_name_id_80ab75f9 ON public.orders_ordersubs USING btree (name_id);
+
+
+--
+-- Name: idx_16560_orders_ordersubs_size_id_96bb708c; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_16560_orders_ordersubs_size_id_96bb708c ON public.orders_ordersubs USING btree (size_id);
+
+
+--
+-- Name: idx_16569_orders_item_topping_item_id_372d4da6; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_16569_orders_item_topping_item_id_372d4da6 ON public.orders_item_topping USING btree (item_id);
+
+
+--
+-- Name: idx_16569_orders_item_topping_item_id_toppings_id_91875acf_uniq; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX idx_16569_orders_item_topping_item_id_toppings_id_91875acf_uniq ON public.orders_item_topping USING btree (item_id, toppings_id);
+
+
+--
+-- Name: idx_16569_orders_item_topping_toppings_id_f871cea8; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_16569_orders_item_topping_toppings_id_f871cea8 ON public.orders_item_topping USING btree (toppings_id);
+
+
+--
+-- Name: idx_16575_orders_ordersubsx_name_id_4e34fcfd; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_16575_orders_ordersubsx_name_id_4e34fcfd ON public.orders_ordersubsx USING btree (name_id);
+
+
+--
+-- Name: idx_16584_orders_item_subx_item_id_09717d26; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_16584_orders_item_subx_item_id_09717d26 ON public.orders_item_subx USING btree (item_id);
+
+
+--
+-- Name: idx_16584_orders_item_subx_item_id_substype_id_c75c57ec_uniq; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX idx_16584_orders_item_subx_item_id_substype_id_c75c57ec_uniq ON public.orders_item_subx USING btree (item_id, substype_id);
+
+
+--
+-- Name: idx_16584_orders_item_subx_substype_id_5fd08b87; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_16584_orders_item_subx_substype_id_5fd08b87 ON public.orders_item_subx USING btree (substype_id);
+
+
+--
+-- Name: idx_16590_orders_order_created_by_id_d5f5e69c; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_16590_orders_order_created_by_id_d5f5e69c ON public.orders_order USING btree (created_by_id);
+
+
+--
+-- Name: idx_16599_orders_item_created_by_id_c8c47277; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_16599_orders_item_created_by_id_c8c47277 ON public.orders_item USING btree (created_by_id);
+
+
+--
+-- Name: idx_16599_orders_item_order_id_id_165f4bcc; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX idx_16599_orders_item_order_id_id_165f4bcc ON public.orders_item USING btree (order_id_id);
+
+
+--
+-- Name: auth_group_permissions auth_group_permissions_group_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.auth_group_permissions
+    ADD CONSTRAINT auth_group_permissions_group_id_fkey FOREIGN KEY (group_id) REFERENCES public.auth_group(id);
+
+
+--
+-- Name: auth_group_permissions auth_group_permissions_permission_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.auth_group_permissions
+    ADD CONSTRAINT auth_group_permissions_permission_id_fkey FOREIGN KEY (permission_id) REFERENCES public.auth_permission(id);
+
+
+--
+-- Name: auth_permission auth_permission_content_type_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.auth_permission
+    ADD CONSTRAINT auth_permission_content_type_id_fkey FOREIGN KEY (content_type_id) REFERENCES public.django_content_type(id);
+
+
+--
+-- Name: auth_user_groups auth_user_groups_group_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.auth_user_groups
+    ADD CONSTRAINT auth_user_groups_group_id_fkey FOREIGN KEY (group_id) REFERENCES public.auth_group(id);
+
+
+--
+-- Name: auth_user_groups auth_user_groups_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.auth_user_groups
+    ADD CONSTRAINT auth_user_groups_user_id_fkey FOREIGN KEY (user_id) REFERENCES public.auth_user(id);
+
+
+--
+-- Name: auth_user_user_permissions auth_user_user_permissions_permission_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.auth_user_user_permissions
+    ADD CONSTRAINT auth_user_user_permissions_permission_id_fkey FOREIGN KEY (permission_id) REFERENCES public.auth_permission(id);
+
+
+--
+-- Name: auth_user_user_permissions auth_user_user_permissions_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.auth_user_user_permissions
+    ADD CONSTRAINT auth_user_user_permissions_user_id_fkey FOREIGN KEY (user_id) REFERENCES public.auth_user(id);
+
+
+--
+-- Name: django_admin_log django_admin_log_content_type_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.django_admin_log
+    ADD CONSTRAINT django_admin_log_content_type_id_fkey FOREIGN KEY (content_type_id) REFERENCES public.django_content_type(id);
+
+
+--
+-- Name: django_admin_log django_admin_log_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.django_admin_log
+    ADD CONSTRAINT django_admin_log_user_id_fkey FOREIGN KEY (user_id) REFERENCES public.auth_user(id);
+
+
+--
+-- Name: orders_item orders_item_created_by_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.orders_item
+    ADD CONSTRAINT orders_item_created_by_id_fkey FOREIGN KEY (created_by_id) REFERENCES public.auth_user(id);
+
+
+--
+-- Name: orders_item orders_item_order_id_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.orders_item
+    ADD CONSTRAINT orders_item_order_id_id_fkey FOREIGN KEY (order_id_id) REFERENCES public.orders_order(id);
+
+
+--
+-- Name: orders_item_subx orders_item_subx_item_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.orders_item_subx
+    ADD CONSTRAINT orders_item_subx_item_id_fkey FOREIGN KEY (item_id) REFERENCES public.orders_item(id);
+
+
+--
+-- Name: orders_item_subx orders_item_subx_substype_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.orders_item_subx
+    ADD CONSTRAINT orders_item_subx_substype_id_fkey FOREIGN KEY (substype_id) REFERENCES public.orders_substype(id);
+
+
+--
+-- Name: orders_item_topping orders_item_topping_item_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.orders_item_topping
+    ADD CONSTRAINT orders_item_topping_item_id_fkey FOREIGN KEY (item_id) REFERENCES public.orders_item(id);
+
+
+--
+-- Name: orders_item_topping orders_item_topping_toppings_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.orders_item_topping
+    ADD CONSTRAINT orders_item_topping_toppings_id_fkey FOREIGN KEY (toppings_id) REFERENCES public.orders_toppings(id);
+
+
+--
+-- Name: orders_order orders_order_created_by_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.orders_order
+    ADD CONSTRAINT orders_order_created_by_id_fkey FOREIGN KEY (created_by_id) REFERENCES public.auth_user(id);
+
+
+--
+-- Name: orders_orderdp orders_orderdp_name_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.orders_orderdp
+    ADD CONSTRAINT orders_orderdp_name_id_fkey FOREIGN KEY (name_id) REFERENCES public.orders_dinnerplatterstype(id);
+
+
+--
+-- Name: orders_orderdp orders_orderdp_size_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.orders_orderdp
+    ADD CONSTRAINT orders_orderdp_size_id_fkey FOREIGN KEY (size_id) REFERENCES public.orders_size(id);
+
+
+--
+-- Name: orders_orderpizza orders_orderpizza_name_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.orders_orderpizza
+    ADD CONSTRAINT orders_orderpizza_name_id_fkey FOREIGN KEY (name_id) REFERENCES public.orders_pizzatype(id);
+
+
+--
+-- Name: orders_orderpizza orders_orderpizza_size_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.orders_orderpizza
+    ADD CONSTRAINT orders_orderpizza_size_id_fkey FOREIGN KEY (size_id) REFERENCES public.orders_size(id);
+
+
+--
+-- Name: orders_orderpizza orders_orderpizza_topping_choice_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.orders_orderpizza
+    ADD CONSTRAINT orders_orderpizza_topping_choice_id_fkey FOREIGN KEY (topping_choice_id) REFERENCES public.orders_toppingchoice(id);
+
+
+--
+-- Name: orders_ordersubs orders_ordersubs_name_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.orders_ordersubs
+    ADD CONSTRAINT orders_ordersubs_name_id_fkey FOREIGN KEY (name_id) REFERENCES public.orders_substype(id);
+
+
+--
+-- Name: orders_ordersubs orders_ordersubs_size_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.orders_ordersubs
+    ADD CONSTRAINT orders_ordersubs_size_id_fkey FOREIGN KEY (size_id) REFERENCES public.orders_size(id);
+
+
+--
+-- Name: orders_ordersubsx orders_ordersubsx_name_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.orders_ordersubsx
+    ADD CONSTRAINT orders_ordersubsx_name_id_fkey FOREIGN KEY (name_id) REFERENCES public.orders_substype(id);
+
+
+--
+-- PostgreSQL database dump complete
+--
+

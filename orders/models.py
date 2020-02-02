@@ -68,7 +68,7 @@ class OrderSubsX(models.Model):
     name = models.ForeignKey(
         SubsType, 
         on_delete=models.CASCADE,
-        limit_choices_to=Q(subs_extra=True) | Q(steak_subs_extra=True),
+        limit_choices_to=Q(subs_extra=0) | Q(steak_subs_extra=0),
     )
     price = models.FloatField()
 
@@ -144,7 +144,7 @@ class Item(models.Model):
     display_topping.short_description = 'Topping'
 
     subx = models.ManyToManyField(SubsType, blank=True,
-        limit_choices_to=Q(subs_extra=True) | Q(steak_subs_extra=True))
+        limit_choices_to=Q(subs_extra=0) | Q(steak_subs_extra=0))
     def display_subx(self):
         """Create a string for the Sub Extra. This is required to display SubX in Admin."""
         return ', '.join(subx.name for subx in self.subx.all()[:4])

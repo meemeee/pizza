@@ -74,7 +74,7 @@ def menu(request):
 
     subs = OrderSubs.objects.all()
     subs_menu = []
-    subs_choice = SubsType.objects.exclude(steak_subs_extra2=True).values('id', 'name')
+    subs_choice = SubsType.objects.exclude(steak_subs_extra=True).values('id', 'name')
     
     for option in subs_choice:
         p = {'id': option['id'], 'type': option['name']}

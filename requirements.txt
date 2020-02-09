@@ -1,4 +1,4 @@
 django
 # gunicorn
 # django-heroku
-# django-modeladmin-reorder
+django-modeladmin-reorder

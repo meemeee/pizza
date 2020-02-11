@@ -33,8 +33,6 @@ class SubsType(models.Model):
     name = models.CharField(max_length=64)  
     subs_extra = models.BooleanField(default=False) # Extra toppings for subs
     steak_subs_extra = models.BooleanField(default=False) # limited to Steak subs
-    subs_extra2 = models.BooleanField(default=True)
-    steak_subs_extra2 = models.BooleanField(default=False)
 
     def __str__(self):
         return f"{self.name}"  

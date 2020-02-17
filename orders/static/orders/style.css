@@ -93,8 +93,8 @@ h1, h2, h3, h4, h5 {
 }
 
 .item-dishes::before {
-    padding-right: 15px;
-    padding-left: 15px;
+    /* padding-right: 15px;
+    padding-left: 15px; */
     position: absolute;
     content: "";
     left: 0;

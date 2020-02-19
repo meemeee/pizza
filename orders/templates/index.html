@@ -44,7 +44,7 @@
                         <div class="">
                             <h1 class="slide-text"><b>Exquisite Italian food</b></h1>
                             <h1 class="slide-text"><b>at Pinocchio</h1></b>
-                            <p class="mt-4"><a href="#" class="btn btn-outline-light">Today's Menu</a></p>
+                            <p class="mt-4"><a href="{% url 'menu' %}" class="btn btn-outline-light">Today's Menu</a></p>
                         </div>
                     </div>
                 </div>
@@ -56,7 +56,7 @@
                         <div class="">
                             <h1 class="slide-text"><b>Our pizzas & subs are</b></h1>
                             <h1 class="slide-text"><b><i>best in town</i></b></h1>
-                            <p class="mt-4"><a href="#" class="btn btn-outline-light">Today's Menu</a></p>
+                            <p class="mt-4"><a href="{% url 'menu' %}" class="btn btn-outline-light">Today's Menu</a></p>
                         </div>
                     </div>
                 </div>
@@ -120,7 +120,7 @@
         <div class="row align-items-center justify-content-center">
             <div class="col-lg-4 col-md-4 col-sm-10 mb-5">
                 <div class="img-zoom">
-                    <a href="#" class="item-dishes" style="display: block">
+                    <a href="/menu/sicilian_3" class="item-dishes" style="display: block">
                         <div class="text">
                             <h3 class="dishes-price">$28.45</p>
                                 <h2 class="dishes-heading">Sicilian Pizza w Tomato & Basil</h2>
@@ -131,7 +131,7 @@
             </div>
             <div class="col-lg-4 col-md-4 col-sm-10 mb-5">
                 <div class="img-zoom">
-                    <a href="#" class="item-dishes" style="display: block">
+                    <a href="/menu/salad_1" class="item-dishes" style="display: block">
                         <div class="text">
                             <h3 class="dishes-price">$6.25</p>
                                 <h2 class="dishes-heading">Fresh Garden Salad</h2>
@@ -142,7 +142,7 @@
             </div>
             <div class="col-lg-4 col-md-4 col-sm-10 mb-5">
                 <div class="img-zoom">
-                    <a href="#" class="item-dishes" style="display: block">
+                    <a href="/menu/sub_10" class="item-dishes" style="display: block">
                         <div class="text">
                             <h3 class="dishes-price">$6.95</p>
                                 <h2 class="dishes-heading">Steak and Cheese Sub</h2>
@@ -154,7 +154,7 @@
         </div>
 
         <div class="text-center mb-5 pb-5">
-            <a href="#" class="btn btn-primary">View Full Menu</a>
+            <a href="{% url 'menu' %}" class="btn btn-primary">View Full Menu</a>
         </div>
     </div>
 

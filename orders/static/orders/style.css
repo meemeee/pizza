@@ -144,6 +144,9 @@ h3[class="about-heading"], .heading-wrap h3 {
     .dishes-heading, .dishes-price {
         font-size: 2rem;
     }
+    .img-single-item img {
+        max-width: 300px;
+    }
 }
 
 /* Hover to zoom */
@@ -177,16 +180,17 @@ h3[class="about-heading"], .heading-wrap h3 {
 }
 
 .btn-primary {
-    color: #ff7404;
+    color: white;
     border-color: #ff7404;
-    background-color: transparent;
+    background-color: #ff7404;
 }
 
 .btn-primary:hover,
 .btn-primary:focus,
 .btn-primary:active {
-  background-color: #ff7404;
-  border-color: #ff7404;
+    color: white;
+    background-color: #e66a05;
+    border-color: #e66a05;
 }
 
 a {
@@ -232,5 +236,9 @@ a:hover {
 }
 
 .single-item-body {
-    max-width: 800px;
+    max-width: 950px;
+}
+
+input[type="checkbox"]:checked {
+    background-color: #ff7404
 }

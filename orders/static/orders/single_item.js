@@ -10,7 +10,7 @@ if (dishtype === 'Pizza') {
     var topping = document.querySelector('#id_topping');
 
     if (!dishsplit.includes("Cheese")) {
-        document.querySelector('#topping').style.display = "block";
+        document.querySelector('#topping').style.display = "flex";
         // Allow a certain number of selected options for Topping
         document.querySelector('#form').onsubmit = event => {
             event.preventDefault();
@@ -33,16 +33,16 @@ if (dishtype === 'Pizza') {
             }            
         }
     }
-    document.querySelector('#img-pizza').style.display = "block";
-    document.querySelector('#size').style.display = "block";
+    document.querySelector('#img-pizza').style.display = "flex";
+    document.querySelector('#size').style.display = "flex";
     document.querySelector('#id_size').options[0].disabled = true;
 }
 
 
 else if (dishtype === 'Sub') {
-    document.querySelector('#img-sub').style.display = "block";
-    document.querySelector('#subX').style.display = "block";
-    document.querySelector('#size').style.display = "block";
+    document.querySelector('#img-sub').style.display = "flex";
+    document.querySelector('#subX').style.display = "flex";
+    document.querySelector('#size').style.display = "flex";
     document.querySelector('#id_size').options[0].disabled = true;
 
     // If Steak, enable all subX for click. Else, only 'Extra Cheese'
@@ -64,18 +64,18 @@ else if (dishtype === 'Sub') {
 }
 
 else if (dishtype === 'Dinner Platter') {
-    document.querySelector('#img-dp').style.display = "block";
-    document.querySelector('#size').style.display = "block";
+    document.querySelector('#img-dp').style.display = "flex";
+    document.querySelector('#size').style.display = "flex";
     document.querySelector('#id_size').options[0].disabled = true;
 }
 else if (dishtype === 'Salad') {
-    document.querySelector('#img-salad').style.display = "block";
+    document.querySelector('#img-salad').style.display = "flex";
     // Deselect default size Small for Pasta and Salad
     document.querySelector('#id_size').selectedIndex = -1;
     
 }
 else {
-    document.querySelector('#img-pasta').style.display = "block";
+    document.querySelector('#img-pasta').style.display = "flex";
     // Deselect default size Small for Pasta and Salad
     document.querySelector('#id_size').selectedIndex = -1;
 }

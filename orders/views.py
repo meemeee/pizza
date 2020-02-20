@@ -15,7 +15,6 @@ from django.http import JsonResponse
 def index(request):
     return render(request, "index.html")
 
-
 def register(request):
     if request.method == "POST":
         form = RegisterForm(request.POST)

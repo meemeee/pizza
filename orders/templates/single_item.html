@@ -5,90 +5,110 @@
 {% endblock %}
 
 {% block main %}
-<h3>Order 
-    <span id="dish-type">{{ dish.type }}</span>:
-</h3> 
-<h4>
-    <span id="dish-name">{{ dish.name }}</span>
-</h4>
-
-<br>
-
-<form id="form" action="" method="post">
-    {% csrf_token %}
-    <div id="subX" class="form-group" style="display: none">
-        <label>Sub Extra(s):</label>
-        {% for item in form.subx %}
-        <div class="form-check">
-            {{ item }}
+<div class="container">
+    <!-- <div class="row my-5 justify-content-center">
+        <div class="col-md-7 text-center heading-wrap single-item-body">
+            <h3><span id="dish-name">{{ dish.name }}</span> 
+                <span id="dish-type">{{ dish.type }}</span>:
+            </h3> 
         </div>
-        {% endfor %} 
-
-        {% for error in form.subx.errors %}
-            <p style="color: red">{{ error }}</p>
-        {% endfor %}
-    </div>
-    <div id ="topping" class="form-group" style="display: none">
-        <label for="id_topping">Topping(s)</label>
-        <select multiple class="form-control" name="topping" id="id_topping">
-            {% for item in form.topping %}
-                {{ item }}
-            {% endfor %}      
-        </select>
-
-        <small style="color: grey">{{ form.topping.help_text }}</small>
-        {% for error in form.topping.errors %}
-            <p style="color: red">{{ error }}</p>
-        {% endfor %}
-    </div>
-    <fieldset>
-        <div id="size" class="form-group" style="display: none">
-            <label for="id_size">Size:</label>
-            <select class="form-control" name="size" id="id_size">
-                {% for item in form.size %}
-                    {{ item }}
-                {% endfor %}
-            </select> 
-    
-            {% for error in form.size.errors %}
-                <p style="color: red">{{ error }}</p>
-            {% endfor %}
+    </div> -->
+    <div class="row pb-5 mb-5 mx-auto single-item-body">
+        <div class="col-12 my-5 heading-wrap single-item-body">
+            <h3><span id="dish-name">{{ dish.name }}</span> 
+                <span id="dish-type">{{ dish.type }}</span>
+            </h3> 
         </div>
-    </fieldset>
-    
-    <div id="quantity" class="form-group">
-        <label for="id_quantity">Quantity:</label>
-        <select class="form-control" name="quantity" id="id_quantity">
-            {% for item in form.quantity %}
-                {{ item }}
-            {% endfor %}
-        </select>
+        <div class="col-lg-4">
+            <form id="form" action="" method="post">
+                {% csrf_token %}
+                <div id="subX" class="form-group" style="display: none">
+                    <label>Sub Extra(s):</label>
+                    {% for item in form.subx %}
+                    <div class="form-check">
+                        {{ item }}
+                    </div>
+                    {% endfor %} 
 
-        {% for error in form.quantity.errors %}
-            <p style="color: red">{{ error }}</p>
-        {% endfor %}
-    </div>
-    ====================
-    <div>
-        <b>Price: $
-            {% if dish.type == 'Pasta' or dish.type == 'Salad' %}
-            <span id="id_price" value="{{ price.na }}">{{ price.na }}</span>
-            {% elif dish.name == 'Sausage, Peppers & Onions' %}
-            <span id="id_price" value="{{ price.large }}">{{ price.large }}</span>
-            {% else %}
-            <span id="id_price" value="{{ price.small }}">{{ price.small }}</span>
-            {% endif %}
-        </b>
-    </div>
+                    {% for error in form.subx.errors %}
+                        <p style="color: red">{{ error }}</p>
+                    {% endfor %}
+                </div>
+                <div id ="topping" class="form-group" style="display: none">
+                    <label for="id_topping">Topping(s)</label>
+                    <select multiple class="form-control" name="topping" id="id_topping">
+                        {% for item in form.topping %}
+                            {{ item }}
+                        {% endfor %}      
+                    </select>
 
-    <br>
-    <div class="p-2 bd-highlight">
-        <button class="btn btn-primary" type="submit">Add to cart</button>
-        <a href="{% url 'menu' %}">
-            <p style="font-size: 0.75em;">Continue shopping</p>
-        </a>   
+                    <small style="color: grey">{{ form.topping.help_text }}</small>
+                    {% for error in form.topping.errors %}
+                        <p style="color: red">{{ error }}</p>
+                    {% endfor %}
+                </div>
+                <fieldset>
+                    <div id="size" class="form-group" style="display: none">
+                        <label for="id_size">Size:</label>
+                        <select class="form-control" name="size" id="id_size">
+                            {% for item in form.size %}
+                                {{ item }}
+                            {% endfor %}
+                        </select> 
+                
+                        {% for error in form.size.errors %}
+                            <p style="color: red">{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                </fieldset>
+                
+                <div id="quantity" class="form-group">
+                    <label for="id_quantity">Quantity:</label>
+                    <select class="form-control" name="quantity" id="id_quantity">
+                        {% for item in form.quantity %}
+                            {{ item }}
+                        {% endfor %}
+                    </select>
+
+                    {% for error in form.quantity.errors %}
+                        <p style="color: red">{{ error }}</p>
+                    {% endfor %}
+                </div>
+                ====================
+                <div class="">
+                    <b>Price: $
+                        {% if dish.type == 'Pasta' or dish.type == 'Salad' %}
+                        <span id="id_price" value="{{ price.na }}">{{ price.na }}</span>
+                        {% elif dish.name == 'Sausage, Peppers & Onions' %}
+                        <span id="id_price" value="{{ price.large }}">{{ price.large }}</span>
+                        {% else %}
+                        <span id="id_price" value="{{ price.small }}">{{ price.small }}</span>
+                        {% endif %}
+                    </b>
+                    <br>
+                    <div class="mt-3 bd-highlight">
+                        <button class="btn btn-primary" type="submit">Add to cart</button>  
+                    </div>
+                </div>
+
+                
+            </form>
+        </div>
+        <div class="col-lg-5 ml-auto">
+            <img id="img-pizza" src="../static/media/single-item-pizza.png"
+                alt="pizza" class="img-fluid mx-auto" style="display: none;">
+            <img id="img-sub" src="../static/media/single-item-sub4.png"  
+                alt="subs" class="img-fluid mx-auto" style="display: none;">
+            <img id="img-pasta" src="../static/media/single-item-pasta.png"  
+                alt="pasta plate" class="img-fluid mx-auto" style="display: none;">
+            <img id="img-salad" src="../static/media/single-item-salad.png"  
+                alt="salad plate" class="img-fluid mx-auto" style="display: none;">
+            <img id="img-dp" src="../static/media/single-item-dp 3.png"  
+                alt="dinner platter" class="img-fluid mx-auto" style="display: none;">
+        </div>        
     </div>
-</form>
+        
+</div>
 
 
 {% load static %}

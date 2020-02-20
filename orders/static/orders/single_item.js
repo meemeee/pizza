@@ -33,12 +33,14 @@ if (dishtype === 'Pizza') {
             }            
         }
     }
+    document.querySelector('#img-pizza').style.display = "block";
     document.querySelector('#size').style.display = "block";
     document.querySelector('#id_size').options[0].disabled = true;
 }
 
 
 else if (dishtype === 'Sub') {
+    document.querySelector('#img-sub').style.display = "block";
     document.querySelector('#subX').style.display = "block";
     document.querySelector('#size').style.display = "block";
     document.querySelector('#id_size').options[0].disabled = true;
@@ -62,10 +64,18 @@ else if (dishtype === 'Sub') {
 }
 
 else if (dishtype === 'Dinner Platter') {
+    document.querySelector('#img-dp').style.display = "block";
     document.querySelector('#size').style.display = "block";
     document.querySelector('#id_size').options[0].disabled = true;
 }
+else if (dishtype === 'Salad') {
+    document.querySelector('#img-salad').style.display = "block";
+    // Deselect default size Small for Pasta and Salad
+    document.querySelector('#id_size').selectedIndex = -1;
+    
+}
 else {
+    document.querySelector('#img-pasta').style.display = "block";
     // Deselect default size Small for Pasta and Salad
     document.querySelector('#id_size').selectedIndex = -1;
 }

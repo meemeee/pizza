@@ -5,21 +5,22 @@ Order #{{ order.id }}
 {% endblock %}
 
 {% block main %}
-<div class="container my-5">
-    <h1>Order #{{ order.id }}</h1>
-
-    <p><b>Status: </b>{{ order.get_status_display }}</p> 
-    <p><b>Total price: </b>$ {{ order.total_price }}</p> 
-    <br>
-    <h4>Items</h4>
+<div class="container">
+    <div class="my-5 single-order-heading">
+        <h2>Order #{{ order.id }}</h2>
+        <p><b>Status: </b>{{ order.get_status_display }}</p> 
+        <p><b>Total price: </b>${{ order.total_price }}</p>
+    </div>
+     
+  
 
     <table class="table">
         <thead>
             <tr>
-                <th scope="col">Item</th>
+                <th scope="col">Product</th>
+                <th scope="col">Quantity</th>
                 <th scope="col">Notes</th>
                 <th scope="col">Size</th>
-                <th scope="col">Quantity</th>
                 <th scope="col">Price</th>
             </tr>
         </thead>
@@ -27,16 +28,23 @@ Order #{{ order.id }}
             {% for item in order.item_set.all %}
             <tr>
                 <td>{{ item.item }}</td>
+                <td>{{ item.quantity }}</td>
+
                 {% if item.display_topping %}
                 <td>{{ item.display_topping }}</td>
                 {% elif item.display_subx %}
                 <td>{{ item.display_subx}}</td>
                 {% else %}
-                <td>N/A</td>
+                <td></td>
                 {% endif %}
+                
+                {% if item.get_size_display == 'Please choose size' %}
+                <td></td>
+                {% else %}
                 <td>{{ item.get_size_display }}</td>
-                <td>{{ item.quantity }}</td>
-                <td>$ <span class="item-price">{{ item.price }}</span></td>
+                {% endif %}
+
+                <td>$<span class="item-price">{{ item.price }}</span></td>
             </tr>
             {% endfor %}
 

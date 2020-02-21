@@ -5,42 +5,46 @@ Your orders
 {% endblock %}
 
 {% block main %}
-<h1>Your orders</h1>
-<br>
-{% if order_list %}
-<table class="table">
-    <thead>
-        <tr>
-            <th scope="col">ID</th>
-            <th scope="col">Total price</th>
-            <th scope="col">Status</th>
-            <th scope="col">Created at</th>
-            <th scope="col"></th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for order in order_list %}
-        <tr>
-            <td>#{{ order.id }}</td>
-            <td>$ {{ order.total_price }}</td>
-            <td>{{ order.get_status_display }}</td>
-            <td>{{ order.time }}</td>
-            <td><a href="{% url 'order-detail' order.pk %}">Details</a></td>
-        </tr>
-        {% endfor %}
+<div class="container">
+    <div class="row mx-0">
+        <div class="my-5 orders-heading">
+            <h2>Your orders</h2>
+        </div>
+    </div>
+    {% if order_list %}
+    <table class="table mb-5">
+        <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Total Price</th>
+                <th scope="col">Status</th>
+                <th scope="col">Created At</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for order in order_list %}
+            <tr>
+                <td>#{{ order.id }}</td>
+                <td>${{ order.total_price }}</td>
+                <td>{{ order.get_status_display }}</td>
+                <td>{{ order.time }}</td>
+                <td><a href="{% url 'order-detail' order.pk %}">Details</a></td>
+            </tr>
+            {% endfor %}
 
-    </tbody>
-</table>
+        </tbody>
+    </table>
 
-<br>
+    {% else %}
+    <p>You have no orders with us yet!</p>
 
-{% else %}
-<p><i>No orders yet</i></p>
-
-<div class="text-center p-2 bd-highlight">
-    <a href="{% url 'menu' %}">
-        <p style="font-size: 0.75em;">Start shopping</p>
-    </a>   
+    <div class="my-4 bd-highlight">
+        <a href="{% url 'menu' %}">
+            <button class="btn btn-primary">View Menu</button>
+        </a>   
+    </div>
+    {% endif %}
 </div>
-{% endif %}
+
 {% endblock %}

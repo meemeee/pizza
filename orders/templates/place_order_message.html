@@ -5,9 +5,12 @@ Order submitted
 {% endblock %}
 
 {% block main %}
-<div class="mx-5">
-    <div class="alert alert-success" role="alert">
-        Congrats! Order <b>#{{ order_id }}</b> will be ready in a few minutes.
+<div class="container my-5">
+    <div class="alert" role="alert">
+        Congrats! Order 
+        <a href="{% url 'order-detail' order_id %}" style="color: #ff7404;">
+            <b>#{{ order_id }}</b>
+        </a> will be ready in a few minutes.
         <ul>
             {% for item in items %}
                 <li>{{ item.quantity }} piece(s) of {{ item.item}}</li>

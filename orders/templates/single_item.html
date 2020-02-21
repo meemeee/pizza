@@ -131,14 +131,14 @@
                 <!-- Price and button -->
                 <div class>
                     <h4 style="color: #ff7404"><b>$
-                            {% if dish.type == 'Pasta' or dish.type == 'Salad' %}
-                            <span id="id_price" value="{{ price.na }}">{{ price.na }}</span>
-                            {% elif dish.name == 'Sausage, Peppers & Onions' %}
-                            <span id="id_price" value="{{ price.large }}">{{ price.large }}</span>
-                            {% else %}
-                            <span id="id_price" value="{{ price.small }}">{{ price.small }}</span>
-                            {% endif %}
-                        </b></h4>
+                        {% if dish.type == 'Pasta' or dish.type == 'Salad' %}
+                        <span id="id_price" value="{{ price.na }}">{{ price.na }}</span>
+                        {% elif dish.name == 'Sausage, Peppers & Onions' %}
+                        <span id="id_price" value="{{ price.large }}">{{ price.large }}</span>
+                        {% else %}
+                        <span id="id_price" value="{{ price.small }}">{{ price.small }}</span>
+                        {% endif %}
+                    </b></h4>
 
                     <div class="mt-3 bd-highlight">
                         <button class="btn btn-primary" type="submit">Add to cart</button>

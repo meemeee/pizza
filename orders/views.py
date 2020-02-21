@@ -199,7 +199,7 @@ def item(request, item_id):
         if len(pendingItems) > 9:
             context = {
                 "cart_num": len(Item.objects.filter(created_by=request.user).filter(status__exact='p')),
-                "error": "Cannot add more than 10 dishes per cart.",
+                "error": "Cannot add more than 10 products per cart.",
                 "form": form2,
                 "price": price,
                 "dish": dish,
@@ -220,7 +220,7 @@ def item(request, item_id):
             if obj.quantity > 10:
                 context = {
                     "cart_num": len(Item.objects.filter(created_by=request.user).filter(status__exact='p')),
-                    "error": "Cannot add more than 10 items per dish.",
+                    "error": "Cannot add more than 10 items per product.",
                     "form": form2,
                     "price": price,
                     "dish": dish,

@@ -179,7 +179,9 @@ def item(request, item_id):
             break
 
     if request.method == "POST":
-        
+        # Create form from Order Model
+        form2 = ItemForm()
+
         # Get order ID
         # Check if user have an existing pending order: 
         if len(Order.objects.filter(created_by=request.user).filter(status__exact='p')) == 0:
@@ -197,10 +199,13 @@ def item(request, item_id):
         if len(pendingItems) > 9:
             context = {
                 "cart_num": len(Item.objects.filter(created_by=request.user).filter(status__exact='p')),
-                "error": "Maximum dishes per cart: 10",
+                "error": "Cannot add more than 10 dishes per cart.",
+                "form": form2,
+                "price": price,
+                "dish": dish,
             }
-            return render(request, "add_item_message.html", context)
-        
+            # return render(request, "add_item_message.html", context)
+            return render(request, "single_item.html", context)
         # Create a form instance and populate it with data from the request
         form = ItemForm(request.POST)    
 
@@ -215,7 +220,10 @@ def item(request, item_id):
             if obj.quantity > 10:
                 context = {
                     "cart_num": len(Item.objects.filter(created_by=request.user).filter(status__exact='p')),
-                    "error": "Maximum items per dish: 10",
+                    "error": "Cannot add more than 10 items per dish.",
+                    "form": form2,
+                    "price": price,
+                    "dish": dish,
                 }
                 
             else:
@@ -243,18 +251,20 @@ def item(request, item_id):
     
                 context = {
                     "success": success,
-                    "dish": dish_name,
+                    "dish": dish,
+                    "price": price,
                     "quantity": int(form.cleaned_data['quantity']),
                     "size": obj.size,
                     "topping": topping,
                     "subx": subx,
                     "cart_num": cart_num,
+                    "form": form2,
                 }
             return context
             
         if form.is_valid():
         # Iterate through existing pending items, only create a new object if the same item does not exist
-            dish_name = dish['type'] + ": " + dish['name']
+            dish_name = dish['name'] + " " + dish['type']
             for item in pendingItems:
                 if (item.item == dish_name and 
                     item.size == form.cleaned_data['size'].strip() and
@@ -263,7 +273,8 @@ def item(request, item_id):
                    
                     context = add_details(item, item.quantity, form)
 
-                    return render(request, "add_item_message.html", context)
+                    # return render(request, "add_item_message.html", context)
+                    return render(request, "single_item.html", context)
                     break
          
             #Else, create a new object in Item model
@@ -271,7 +282,7 @@ def item(request, item_id):
             
             # Add initial information to object
             
-            new_item.item = dish['type'] + ": " + dish['name']
+            new_item.item = dish['name'] + " " + dish['type']
             new_item.size = form.cleaned_data['size']
             new_item.created_by = request.user
             new_item.order_id = Order.objects.get(pk=pendingOrder_id)
@@ -284,7 +295,8 @@ def item(request, item_id):
             new_item.topping.set(form.cleaned_data['topping'])
             new_item.subx.set(form.cleaned_data['subx'])
             
-            return render(request, "add_item_message.html", context)
+            # return render(request, "add_item_message.html", context)
+            return render(request, "single_item.html", context)
                       
     else:
         # Create form from Order Model

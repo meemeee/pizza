@@ -11,7 +11,7 @@ urlpatterns = [
     # Add path for Menu
     path('menu/', views.menu, name="menu"),
     # Path for placing an order
-    path('menu/<str:item_id>', views.item),
+    path('menu/<str:item_id>', views.item, name="item"),
     # Path for shopping cart
     path('cart', views.ItemListView.as_view(), name="cart"),
     # Path for removing item from shopping cart

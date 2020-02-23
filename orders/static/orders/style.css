@@ -1,10 +1,10 @@
 /* $font-heading: 'DM Serif Display', serif; */
 
 header {
-    /* position: absolute;
+    position: absolute;
     top: 0;
     left: 0;
-    width: 100%; */
+    width: 100%;
     z-index: 4;
     padding: 0 0;
 }

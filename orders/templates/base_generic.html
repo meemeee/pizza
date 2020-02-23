@@ -30,11 +30,7 @@
         {% load static %}
         <link rel="stylesheet" href="{% static 'orders/style.css' %}">
         <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-        <!-- Stylesheet for Table of Contents -->
-        <link
-        rel="stylesheet"
-        href="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.css"
-        />
+        <link rel="shortcut icon" type="image/png" href="{% static 'favicon.ico' %}"/>
     </head>
 
     <body data-spy="scroll" data-target="#toc">
@@ -106,18 +102,16 @@
                     </div>
                     <div class="col-md-4 mt-5 mb-3">
                         <h3>Opening Hours</h3>
-                        <p><strong class="d-block font-weight-normal text-black">Monday-Wednesday</strong>11:00 AM – 1:00 AM</p>
-                        <p><strong class="d-block font-weight-normal text-black">Thursday-Sunday</strong>11:00 AM – 2:00 AM</p>
+                        <p><strong class="d-block font-weight-normal text-black">Monday - Wednesday</strong>11:00 AM – 1:00 AM</p>
+                        <p><strong class="d-block font-weight-normal text-black">Thursday - Sunday</strong>11:00 AM – 2:00 AM</p>
                     </div>
                     <div class="col-md-4 mt-5 mb-3">
                         <h3>Contact Info</h3>
                         <ul class="list-unstyled footer-link">
                             <li class="d-block">
-                                <span class="d-block text-black">Address:</span>
-                                <span>74 Winthrop St, Cambridge, MA 02138</span></li>
+                                <p>Address: 74 Winthrop St, Cambridge, MA 02138</p></li>
                             <li class="d-block">
-                                <span class="d-block text-black">Phone:</span>
-                                <span>(617) 876-4897</span>
+                                <p>Phone: (617) 876-4897</p>
                             </li>
                         </ul>
                     </div>
@@ -130,6 +124,7 @@
         <script>
             AOS.init({
                 duration: 1000,
+                once: true,
             });
         </script>
     </body>

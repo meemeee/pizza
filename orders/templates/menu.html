@@ -6,15 +6,16 @@ Menu
 
 {% block main %}
 
-<div class="container">
-    <div class="row mb-5 justify-content-center">
-        <div class="my-5 col-12 text-center heading-wrap"
+<div class="container pb-5">
+    <div class="row mx-0 mt-5 justify-content-center">
+        <div class="my-5 col-7 text-center heading-wrap"
             data-aos="fade" data-aos-delay="200">
             <h2>Menu</h2>
             <p>Our menu is based on local products and passionate cooking.
-                Our menu is based on local products and passionate cooking.</p>
+                We are excited to bring memorable Italian flavors to your plate every time.</p>
         </div>
-
+    </div>
+    <div class="row mx-0 mb-5 justify-content-center">
         <ul class="nav" id="menu" role="tablist" 
             data-aos="fade" data-aos-delay="400" data-aos-duration="1000">
             <li class="nav-item tab-item">
@@ -45,7 +46,7 @@ Menu
                         <div class="food-menu-header mb-4">
                             <h4>Regular</h4>
                             <div class="food-menu-subtitle">
-                                <p>Maecenas faucibus mollis interdum. Sed posuere consectetur est at lobortis.</p>
+                                <p>Your choice of toppings tossed in our house-made bolognese sauce with pecorino & pancetta.</p>
                             </div>
                         </div>
                         {% for item in r_pizzas %}
@@ -60,7 +61,7 @@ Menu
                             </div>
                             <div class="row mx-0">
                                 <p class="food-menu-desc">
-                                    small - large
+                                    Choose among 13 toppings available
                                 </p>
                                 <p class="food-menu-cart ml-auto">
                                     <a href="/menu/regular_{{ item.id }}">
@@ -74,7 +75,7 @@ Menu
                         
                     </div>
                     <div class="col-lg-4 ml-auto mt-5 sticky">
-                        <img src="../static/media/best2.jpg" alt="Image" class="img-fluid img-menu" style="animation-delay: 0.5s;">
+                        <img src="../static/media/menu-regular.jpg" alt="Image" class="img-fluid img-menu" style="animation-delay: 0.5s;">
                     </div>
                 </div>
 
@@ -83,13 +84,12 @@ Menu
                         <div class="food-menu-header mb-4">
                             <h4>Sicilian</h4>
                             <div class="food-menu-subtitle">
-                                <p>Maecenas faucibus mollis interdum. Sed posuere consectetur est at lobortis.</p>
+                                <p>Sicilian-style dough tossed in our house-made bolognese sauce with pecorino & pancetta.</p>
                             </div>
                         </div> 
                         {% for item in s_pizzas %}
                         <div class="food-menu-item">
                             <div class="row mx-0 food-menu-item-header">
-
                                 <p class="food-menu-title">
                                     {{ item.type }}
                                 </p>
@@ -99,7 +99,7 @@ Menu
                             </div>
                             <div class="row mx-0">
                                 <p class="food-menu-desc">
-                                    small - large
+                                    Choose among 13 toppings available
                                 </p>
                                 <p class="food-menu-cart ml-auto">
                                     <a href="/menu/sicilian_{{ item.id }}">
@@ -112,7 +112,7 @@ Menu
                         {% endfor %}                        
                     </div>
                     <div class="col-lg-4 ml-auto mt-5 sticky">
-                        <img src="../static/media/best2.jpg" alt="Image" class="img-fluid img-menu">
+                        <img src="../static/media/menu-sicilian.jpg" alt="Image" class="img-fluid img-menu">
                     </div>
                 </div>
             </div>
@@ -122,7 +122,9 @@ Menu
                     <div class="col-lg-6 items-menu">
                         <div class="food-menu-header mb-4">
                             <div class="food-menu-subtitle">
-                                <p>Maecenas faucibus mollis interdum. Sed posuere consectetur est at lobortis.</p>
+                                <p>Not your average meatball! Stirato loaded with our house-made
+                                    spicy marinara sauce, Italian cheese blend and grated
+                                    parmesan.</p>
                             </div>
                         </div>
                         {% for item in subs %}
@@ -150,7 +152,7 @@ Menu
                         {% endfor %}
                     </div>
                     <div class="col-lg-4 ml-auto mt-5 sticky">
-                        <img src="../static/media/best2.jpg" alt="Image" class="img-fluid img-menu">
+                        <img src="../static/media/menu-sub4.jpg" alt="Image" class="img-fluid img-menu">
                     </div>
                 </div>
             </div>
@@ -159,7 +161,9 @@ Menu
                     <div class="col-lg-6 items-menu">
                         <div class="food-menu-header mb-4">
                             <div class="food-menu-subtitle">
-                                <p>Maecenas faucibus mollis interdum. Sed posuere consectetur est at lobortis.</p>
+                                <p>Made by carbonara certified chefs! In creamy sauce
+                                    made with pecorino, parmesan and black pepper; topped with
+                                    crispy pancetta.</p>
                             </div>
                         </div>
                         {% for item in pastas %}
@@ -187,7 +191,7 @@ Menu
                         {% endfor %}
                     </div>
                     <div class="col-lg-4 ml-auto mt-5 sticky">
-                        <img src="../static/media/best2.jpg" alt="Image" class="img-fluid img-menu">
+                        <img src="../static/media/menu-pasta.jpg" alt="Image" class="img-fluid img-menu">
                     </div>
                 </div>
             </div>
@@ -196,7 +200,8 @@ Menu
                     <div class="col-lg-6 items-menu">
                         <div class="food-menu-header mb-4">
                             <div class="food-menu-subtitle">
-                                <p>Maecenas faucibus mollis interdum. Sed posuere consectetur est at lobortis.</p>
+                                <p>Organic and Non-GMO veggies topped with truffle mushrooms, bacon, heirloom tomatoes,
+                                    croutons and roasted chicken.</p>
                             </div>
                         </div>
                         {% for item in salads %}
@@ -224,7 +229,7 @@ Menu
                         {% endfor %}
                     </div>
                     <div class="col-lg-4 ml-auto mt-5 sticky">
-                        <img src="../static/media/best2.jpg" alt="Image" class="img-fluid img-menu">
+                        <img src="../static/media/menu-salad.jpg" alt="Image" class="img-fluid img-menu">
                     </div>
                 </div>
 
@@ -234,7 +239,7 @@ Menu
                     <div class="col-lg-6 items-menu">
                         <div class="food-menu-header mb-4">
                             <div class="food-menu-subtitle">
-                                <p>Maecenas faucibus mollis interdum. Sed posuere consectetur est at lobortis.</p>
+                                <p>Arugula tossed in house-made balsamic vinaigrette. Paired with a side of fig jam baked bread.</p>
                             </div>
                         </div>
                         {% for item in dinnerplatters %}
@@ -262,7 +267,7 @@ Menu
                         {% endfor %} 
                     </div>
                     <div class="col-lg-4 ml-auto mt-5 sticky">
-                        <img src="../static/media/best2.jpg" alt="Image" class="img-fluid img-menu">
+                        <img src="../static/media/menu-dp.jpg" alt="Image" class="img-fluid img-menu">
                     </div>
                 </div>
             </div>

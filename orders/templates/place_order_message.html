@@ -13,7 +13,7 @@ Order submitted
         </a> will be ready in a few minutes.
         <ul>
             {% for item in items %}
-                <li>{{ item.quantity }} piece(s) of {{ item.item}}</li>
+                <li>{{ item.item}}: {{ item.quantity }}</li>
             {% endfor %}
         </ul>
     </div>

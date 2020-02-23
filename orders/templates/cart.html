@@ -6,9 +6,9 @@ Shopping cart
 
 {% block main %}
 
-<div class="container">
+<div class="container my-5 pb-5">
     <div class="row mx-0">
-        <div class="my-5 cart-heading">
+        <div class="my-4 cart-heading">
             <h2>Your cart</h2>
         </div>
     </div>
@@ -36,7 +36,7 @@ Shopping cart
                             <input name="item_id" value="{{ item.id }}" style="display: none">
 
                         </form>
-                        <a href="#" class="remove" id="{{ item.id }}">
+                        <a href="#" class="remove" id="{{ item.id }}" data-name="{{ item.item }}">
                             <i class="fa fa-times" style="color: grey"></i>
                         </a>
                     </td>
@@ -63,7 +63,7 @@ Shopping cart
                     {% endif %}
 
                     <!-- Price -->
-                    <td>$ <span class="item-price">{{ item.price }}</span></td>
+                    <td>$<span class="item-price">{{ item.price }}</span></td>
                     
                     
                 </tr>
@@ -80,11 +80,11 @@ Shopping cart
                 <form id="place_order_form" action="{% url 'new_order' %}" method="post">
                     {% csrf_token %}
                     <input name="order_id" value="{{ order_id }}" style="display: none">
-                    <button id="place_order_button" class="btn btn-primary my-3" type="submit">Place an order</button>
+                    <button id="place_order_button" class="btn btn-primary btn-lg my-3" type="submit">Place Order</button>
                 </form>
             </div>
         </div>
-        <!-- Modal -->
+        <!-- Confirmation Modal -->
         <div class="modal fade" id="confirmation" tabindex="-1" role="dialog" aria-labelledby="confirmationLabel"
             aria-hidden="true">
             <div class="modal-dialog" role="document">
@@ -98,12 +98,36 @@ Shopping cart
                         </button>
                     </div>
                     <div class="modal-body">
-                        <p>Please carefully check your order before submission.
-                            Press "Proceed" to submit your order.</p>
+                        <p>Please check your order before submission.
+                            Press <b>Proceed</b> to submit your order.</p>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Check order</button>
                         <button id="confirmed" type="button" class="btn btn-primary">Proceed</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- RemoveItem Modal -->
+        <div class="modal fade" id="remove-item-confirmation" tabindex="-1" role="dialog" aria-labelledby="remove-item-confirmationLabel"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">
+                            Are you sure?
+                        </h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Do you want to remove <b><span id="remove-item-name"></span></b> from your cart?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                        <button id="remove-item-confirmed" type="button" class="btn btn-primary">Yes</button>
                     </div>
                 </div>
             </div>
@@ -113,7 +137,7 @@ Shopping cart
             It's empty, let's start getting some good food!
             <div class="my-4 bd-highlight">
                 <a href="{% url 'menu' %}">
-                    <button class="btn btn-primary">View Menu</button>
+                    <button class="btn btn-primary btn-lg my-3">View Menu</button>
                 </a>   
             </div>
         </div>
@@ -135,16 +159,19 @@ Shopping cart
     document.querySelectorAll('.remove').forEach(item => {
         item.onclick = event => {
             event.preventDefault();
-            var result = confirm("Do you want to remove this item?");
-            if (result) {
+
+            document.querySelector('#remove-item-name').innerHTML = item.getAttribute('data-name');
+            // Activate confirmation modal
+            $('#remove-item-confirmation').modal();
+            document.querySelector('#remove-item-confirmed').onclick = () => {
                 var item_id = item.id
                 var form = document.querySelector('#remove_form_' + item_id)
                 form.submit()
-            };
+            }
         };
     });
     
-    // Trigger modal
+    // Trigger confirmation modal
     document.querySelector('#place_order_button').onclick = event => {
         event.preventDefault();
         

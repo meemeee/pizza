@@ -5,14 +5,15 @@ Order #{{ order.id }}
 {% endblock %}
 
 {% block main %}
-<div class="container">
-    <div class="my-5 single-order-heading">
-        <h2>Order #{{ order.id }}</h2>
-        <p><b>Status: </b>{{ order.get_status_display }}</p> 
-        <p><b>Total price: </b>${{ order.total_price }}</p>
+<div class="container my-5 pb-5">
+    <div class="row mx-0">
+        <div class="my-4 single-order-heading">
+            <h2>Order #{{ order.id }}</h2>
+            <p><b>Created by: </b>{{ order.created_by }}
+            <p><b>Status: </b>{{ order.get_status_display }}</p> 
+            <p><b>Total price: </b>${{ order.total_price }}</p>
+        </div>
     </div>
-     
-  
 
     <table class="table">
         <thead>

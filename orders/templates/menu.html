@@ -8,38 +8,40 @@ Menu
 
 <div class="container">
     <div class="row mb-5 justify-content-center">
-        <div class="my-5 col-md-7 text-center heading-wrap">
+        <div class="my-5 col-12 text-center heading-wrap"
+            data-aos="fade" data-aos-delay="200">
             <h2>Menu</h2>
             <p>Our menu is based on local products and passionate cooking.
                 Our menu is based on local products and passionate cooking.</p>
         </div>
 
-        <ul class="nav" id="menu" role="tablist">
-            <li class="nav-item">
+        <ul class="nav" id="menu" role="tablist" 
+            data-aos="fade" data-aos-delay="400" data-aos-duration="1000">
+            <li class="nav-item tab-item">
                 <a class="nav-link active" id="pizza-tab" data-toggle="tab" href="#pizza" role="tab"
                     aria-controls="pizza" aria-selected="true">Pizza</a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item tab-item">
                 <a class="nav-link" id="subs-tab" data-toggle="tab" href="#subs" role="tab" aria-controls="subs"
                     aria-selected="false">Subs</a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item tab-item">
                 <a class="nav-link" id="pasta-tab" data-toggle="tab" href="#pasta" role="tab" aria-controls="pasta"
                     aria-selected="false">Pasta</a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item tab-item">
                 <a class="nav-link" id="salad-tab" data-toggle="tab" href="#salad" role="tab" aria-controls="salad"
                     aria-selected="false">Salad</a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item tab-item">
                 <a class="nav-link" id="dp-tab" data-toggle="tab" href="#dp" role="tab" aria-controls="dp"
                     aria-selected="false">Dinner Platter</a>
             </li>
         </ul>
         <div class="mt-2 tab-content" id="myTabContent">
             <div class="tab-pane fade show active" id="pizza" role="tabpanel" aria-labelledby="pizza-tab">
-                <div class="row align-items-center py-5">
-                    <div class="col-lg-6">
+                <div class="row align-items-start py-5">
+                    <div class="col-lg-6 items-menu" style="animation-delay: 0.5s;">
                         <div class="food-menu-header mb-4">
                             <h4>Regular</h4>
                             <div class="food-menu-subtitle">
@@ -71,13 +73,13 @@ Menu
                         {% endfor %}
                         
                     </div>
-                    <div class="col-lg-5 ml-auto">
-                        <img src="../static/media/best2.jpg" alt="Image" class="img-fluid">
+                    <div class="col-lg-4 ml-auto mt-5 sticky">
+                        <img src="../static/media/best2.jpg" alt="Image" class="img-fluid img-menu" style="animation-delay: 0.5s;">
                     </div>
                 </div>
 
-                <div class="row align-items-center py-5">
-                    <div class="col-lg-6">
+                <div class="row align-items-start py-5">
+                    <div class="col-lg-6 items-menu">
                         <div class="food-menu-header mb-4">
                             <h4>Sicilian</h4>
                             <div class="food-menu-subtitle">
@@ -109,15 +111,15 @@ Menu
                         </div>
                         {% endfor %}                        
                     </div>
-                    <div class="col-lg-5 ml-auto">
-                        <img src="../static/media/best2.jpg" alt="Image" class="img-fluid">
+                    <div class="col-lg-4 ml-auto mt-5 sticky">
+                        <img src="../static/media/best2.jpg" alt="Image" class="img-fluid img-menu">
                     </div>
                 </div>
             </div>
 
             <div class="tab-pane fade" id="subs" role="tabpanel" aria-labelledby="subs-tab">
-                <div class="row align-items-center py-5">
-                    <div class="col-lg-6">
+                <div class="row align-items-start py-5">
+                    <div class="col-lg-6 items-menu">
                         <div class="food-menu-header mb-4">
                             <div class="food-menu-subtitle">
                                 <p>Maecenas faucibus mollis interdum. Sed posuere consectetur est at lobortis.</p>
@@ -147,14 +149,14 @@ Menu
                         </div>
                         {% endfor %}
                     </div>
-                    <div class="col-lg-5 ml-auto">
-                        <img src="../static/media/best2.jpg" alt="Image" class="img-fluid">
+                    <div class="col-lg-4 ml-auto mt-5 sticky">
+                        <img src="../static/media/best2.jpg" alt="Image" class="img-fluid img-menu">
                     </div>
                 </div>
             </div>
             <div class="tab-pane fade" id="pasta" role="tabpanel" aria-labelledby="pasta-tab">
-                <div class="row align-items-center py-5">
-                    <div class="col-lg-6">
+                <div class="row align-items-start py-5">
+                    <div class="col-lg-6 items-menu">
                         <div class="food-menu-header mb-4">
                             <div class="food-menu-subtitle">
                                 <p>Maecenas faucibus mollis interdum. Sed posuere consectetur est at lobortis.</p>
@@ -184,14 +186,14 @@ Menu
                         </div>
                         {% endfor %}
                     </div>
-                    <div class="col-lg-5 ml-auto">
-                        <img src="../static/media/best2.jpg" alt="Image" class="img-fluid">
+                    <div class="col-lg-4 ml-auto mt-5 sticky">
+                        <img src="../static/media/best2.jpg" alt="Image" class="img-fluid img-menu">
                     </div>
                 </div>
             </div>
             <div class="tab-pane fade" id="salad" role="tabpanel" aria-labelledby="salad-tab">
-                <div class="row align-items-center py-5">
-                    <div class="col-lg-6">
+                <div class="row align-items-start py-5">
+                    <div class="col-lg-6 items-menu">
                         <div class="food-menu-header mb-4">
                             <div class="food-menu-subtitle">
                                 <p>Maecenas faucibus mollis interdum. Sed posuere consectetur est at lobortis.</p>
@@ -221,15 +223,15 @@ Menu
                         </div>
                         {% endfor %}
                     </div>
-                    <div class="col-lg-5 ml-auto">
-                        <img src="../static/media/best2.jpg" alt="Image" class="img-fluid">
+                    <div class="col-lg-4 ml-auto mt-5 sticky">
+                        <img src="../static/media/best2.jpg" alt="Image" class="img-fluid img-menu">
                     </div>
                 </div>
 
             </div>
             <div class="tab-pane fade" id="dp" role="tabpanel" aria-labelledby="dp-tab">
-                <div class="row align-items-center py-5">
-                    <div class="col-lg-6">
+                <div class="row align-items-start py-5">
+                    <div class="col-lg-6 items-menu">
                         <div class="food-menu-header mb-4">
                             <div class="food-menu-subtitle">
                                 <p>Maecenas faucibus mollis interdum. Sed posuere consectetur est at lobortis.</p>
@@ -259,8 +261,8 @@ Menu
                         </div>
                         {% endfor %} 
                     </div>
-                    <div class="col-lg-5 ml-auto">
-                        <img src="../static/media/best2.jpg" alt="Image" class="img-fluid">
+                    <div class="col-lg-4 ml-auto mt-5 sticky">
+                        <img src="../static/media/best2.jpg" alt="Image" class="img-fluid img-menu">
                     </div>
                 </div>
             </div>
@@ -270,176 +272,5 @@ Menu
 
     </div>
 </div>
+
 {% endblock %}
-
-<div class="row flex-xl-nowrap">
-    <div class="d-none d-lg-block col-lg-2 py-lg-3 bd-toc">
-        <nav id="toc" data-toggle="toc" class="sticky-top">
-        </nav>
-
-    </div>
-    <div class="col-12 col-lg-10 py-lg-3 px-lg-5 bd-content">
-        <h2>PIZZA</h2>
-        <h3>Regular</h3>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th scope="col"></th>
-                    <th scope="col">Type</th>
-                    <th scope="col">Small</th>
-                    <th scope="col">Large</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for item in r_pizzas %}
-                <tr>
-                    <td>
-                        <a href="/menu/regular_{{ item.id }}">
-                            <i id="regular_{{ item.id }}" class="fa fa-plus-circle"></i>
-                        </a>
-                    </td>
-                    <td>{{ item.type }}</td>
-                    <td>{{ item.small }}</td>
-                    <td>{{ item.large }}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-        <br>
-
-
-        <h3>Sicilian</h3>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th scope="col"></th>
-                    <th scope="col">Type</th>
-                    <th scope="col">Small</th>
-                    <th scope="col">Large</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for item in s_pizzas %}
-                <tr>
-                    <td>
-                        <a href="/menu/sicilian_{{ item.id }}">
-                            <i id="sicilian_{{ item.id }}" class="fa fa-plus-circle"></i>
-                        </a>
-                    </td>
-                    <td>{{ item.type }}</td>
-                    <td>{{ item.small }}</td>
-                    <td>{{ item.large }}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-        <br>
-
-
-        <h2>SUBS</h2>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th scope="col"></th>
-                    <th scope="col">Type</th>
-                    <th scope="col">Small</th>
-                    <th scope="col">Large</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for item in subs %}
-                <tr>
-                    <td>
-                        <a href="/menu/sub_{{ item.id }}">
-                            <i id="sub_{{ item.id }}" class="fa fa-plus-circle"></i>
-                        </a>
-                    </td>
-                    <td>{{ item.type }}</td>
-                    <td>{{ item.small }}</td>
-                    <td>{{ item.large }}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-        <br>
-
-
-        <h2>PASTA</h2>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th scope="col"></th>
-                    <th scope="col">Type</th>
-                    <th scope="col">Price</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for item in pastas %}
-                <tr>
-                    <td>
-                        <a href="/menu/pasta_{{ item.id }}">
-                            <i id="pasta_{{ item.id }}" class="fa fa-plus-circle"></i>
-                        </a>
-                    </td>
-                    <td>{{ item.name }}</td>
-                    <td>{{ item.price }}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-        <br>
-
-
-        <h2>SALADS</h2>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th scope="col"></th>
-                    <th scope="col">Type</th>
-                    <th scope="col">Price</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for item in salads %}
-                <tr>
-                    <td>
-                        <a href="/menu/salad_{{ item.id }}">
-                            <i id="salad_{{ item.id }}" class="fa fa-plus-circle"></i>
-                        </a>
-                    </td>
-                    <td>{{ item.name }}</td>
-                    <td>{{ item.price }}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-        <br>
-
-
-        <h2>DINNER PLATTERS</h2>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th scope="col"></th>
-                    <th scope="col">Type</th>
-                    <th scope="col">Small</th>
-                    <th scope="col">Large</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for item in dinnerplatters %}
-                <tr>
-                    <td>
-                        <a href="/menu/dp_{{ item.id }}">
-                            <i id="dp_{{ item.id }}" class="fa fa-plus-circle"></i>
-                        </a>
-                    </td>
-                    <td>{{ item.type }}</td>
-                    <td>{{ item.small }}</td>
-                    <td>{{ item.large }}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    </div>
-</div>

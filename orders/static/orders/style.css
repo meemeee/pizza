@@ -1,11 +1,12 @@
 /* $font-heading: 'DM Serif Display', serif; */
 
-select {
-    /* max-width: 400px; */
-}
-
-nav[data-toggle="toc"] {
-    top: 42px;
+header {
+    /* position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%; */
+    z-index: 4;
+    padding: 0 0;
 }
 
 body {
@@ -22,9 +23,12 @@ main {
     flex: 1;
 }
 
-h1, h2, h3, h4, h5, .slide-text {
+h1, h2, h3, h4, h5 {
     font-family: 'DM Serif Display', serif;
     font-weight: 800;
+}
+.slider-text h1 {
+    font-size: 4.5rem;
 }
 
 p {
@@ -234,6 +238,58 @@ a:hover {
     font-size: 15px;
     font-weight: 300;
     font-style: italic;
+}
+
+.sticky {
+    /* max-width: 300px; */
+    position: -webkit-sticky;
+    position: sticky;
+    top: 50px;
+    
+}
+
+.fade {
+    /* transition: opacity 0.5s ease-in-out; */
+}
+
+.img-menu {
+    -webkit-animation-duration: 1s;
+    animation-duration: 0.8s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+    -webkit-animation-name: fadeInRight;
+    animation-name: fadeInRight;
+}
+
+.items-menu {
+    -webkit-animation-duration: 1s;
+    animation-duration: 1s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+    -webkit-animation-name: fadeInLeft;
+    animation-name: fadeInLeft;
+}
+ 
+@keyframes fadeInRight {
+    0% {
+        opacity: 0;
+        transform: translateX(50px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes fadeInLeft {
+    0% {
+        opacity: 0;
+        transform: translateX(-50px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
 }
 
 .single-item-body {

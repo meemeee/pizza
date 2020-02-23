@@ -22,6 +22,10 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    
+    <!-- aos CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
     <!-- Stylesheet -->
     {% load static %}
     <link rel="stylesheet" href="{% static 'orders/style.css' %}">
@@ -41,10 +45,12 @@
                 <img class="d-block w-100" src="../static/media/55 3.jpg" alt="First slide">
                 <div class="container">
                     <div class="carousel-caption">
-                        <div class="">
-                            <h1 class="slide-text"><b>Exquisite Italian food</b></h1>
-                            <h1 class="slide-text"><b>at Pinocchio</h1></b>
-                            <p class="mt-4"><a href="{% url 'menu' %}" class="btn btn-outline-light">Today's Menu</a></p>
+                        <div data-aos="fade-up" class="slider-text">
+                            <h1><b>Exquisite Italian food</b></h1>
+                            <h1><b>at Pinocchio</h1></b>
+                        </div>
+                        <div class="mt-4" data-aos="fade-up" data-aos-delay="200">
+                            <a href="{% url 'menu' %}" class="btn btn-outline-light">Today's Menu</a>
                         </div>
                     </div>
                 </div>
@@ -53,10 +59,12 @@
                 <img class="d-block w-100" src="../static/media/77 4.jpg" alt="Second slide">
                 <div class="container">
                     <div class="carousel-caption">
-                        <div class="">
-                            <h1 class="slide-text"><b>Our pizzas & subs are</b></h1>
-                            <h1 class="slide-text"><b><i>best in town</i></b></h1>
-                            <p class="mt-4"><a href="{% url 'menu' %}" class="btn btn-outline-light">Today's Menu</a></p>
+                        <div data-aos="fade-up" class="slider-text">
+                            <h1><b>Our pizzas & subs are</b></h1>
+                            <h1><b><i>best in town</i></b></h1>
+                        </div>
+                        <div class="mt-4" data-aos="fade-up" data-aos-delay="200">
+                            <a href="{% url 'menu' %}" class="btn btn-outline-light">Today's Menu</a>
                         </div>
                     </div>
                 </div>
@@ -74,19 +82,18 @@
 
     <div class="container">
         <div class="my-5 col-md-12 text-center heading-wrap">
-            <h2>About us</h2>
+            <h2 data-aos="fade-up">About us</h2>
         </div>
         <div class="row align-items-center pb-5">
             <div class="col-lg-6">
                 <img src="../static/media/about3 2.jpg" alt="Image" class="img-fluid">
             </div>
-            <div class="col-lg-5 ml-auto">
+            <div class="col-lg-5 ml-auto" data-aos="fade-left">
                 <h3 class="about-heading">Our start</h3>
 
                 <p>
                     Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live
                     the blind texts.
-                    Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.
                 </p>
                 <p>
                     A small river named Duden flows by their place and supplies it with the necessary regelialia.
@@ -98,27 +105,28 @@
             <div class="col-lg-6">
                 <img src="../static/media/about4 2.jpg" alt="Image" class="img-fluid">
             </div>
-            <div class="col-lg-5 ml-auto">
+            <div class="col-lg-5 ml-auto" data-aos="fade-left">
                 <h3 class="about-heading">Good food for the people</h3>
 
                 <p>
                     It is a paradisematic country, in which roasted parts of sentences fly into your mouth. Even the
                     all-powerful Pointing has no control about the blind texts it is an almost unorthographic life.
-                    <p>
-                        One day however a small line of blind text by the name of Lorem Ipsum decided to leave for the
-                        far World of Grammar.
-                    </p>
+                <p>
+                    One day however a small line of blind text by the name of Lorem Ipsum decided to leave for the
+                    far World of Grammar.
+                </p>
             </div>
         </div>
     </div>
 
     <div class="container">
         <div class="my-5 col-md-12 text-center heading-wrap">
-            <h2>Best of the week</h2>
+            <h2 data-aos="fade-up">Best of the week</h2>
         </div>
 
         <div class="row align-items-center justify-content-center">
-            <div class="col-lg-4 col-md-4 col-sm-10 mb-5">
+            <div class="col-lg-4 col-md-4 col-sm-10 mb-5"
+                data-aos="fade" data-aos-delay="400" data-aos-duration="1200">
                 <div class="img-zoom">
                     <a href="/menu/sicilian_3" class="item-dishes" style="display: block">
                         <div class="text">
@@ -129,7 +137,8 @@
                     </a>
                 </div>
             </div>
-            <div class="col-lg-4 col-md-4 col-sm-10 mb-5">
+            <div class="col-lg-4 col-md-4 col-sm-10 mb-5"
+                data-aos="fade" data-aos-delay="700" data-aos-duration="1200">
                 <div class="img-zoom">
                     <a href="/menu/salad_1" class="item-dishes" style="display: block">
                         <div class="text">
@@ -140,7 +149,8 @@
                     </a>
                 </div>
             </div>
-            <div class="col-lg-4 col-md-4 col-sm-10 mb-5">
+            <div class="col-lg-4 col-md-4 col-sm-10 mb-5"
+                data-aos="fade" data-aos-delay="1000" data-aos-duration="1200">
                 <div class="img-zoom">
                     <a href="/menu/sub_10" class="item-dishes" style="display: block">
                         <div class="text">
@@ -154,11 +164,12 @@
         </div>
 
         <div class="text-center mb-5 pb-5">
-            <a href="{% url 'menu' %}" class="btn btn-primary">View Full Menu</a>
+            <a href="{% url 'menu' %}" class="btn btn-primary btn-lg">
+            View Full Menu</a>
         </div>
     </div>
 
-    <footer class="site-footer">
+    <footer class="site-footer" data-aos="fade">
         <div class="container">
             <div class="row">
                 <div class="col-md-4 mt-5 mb-3">
@@ -193,7 +204,12 @@
             </div>
         </div>
     </footer>
-
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            duration: 800,
+        });
+    </script>
 </body>
 
 </html>

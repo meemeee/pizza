@@ -5,71 +5,78 @@ All orders
 {% endblock %}
 
 {% block main %}
-<h1>Orders in progress</h1>
-<br><br>
-<h3>Submitted</h3>
-{% if order_list %}
-<table class="table">
-    <thead>
-        <tr>
-            <th scope="col">ID</th>
-            <th scope="col">Total price</th>
-            <th scope="col">Status</th>
-            <th scope="col">Created at</th>
-            <th scope="col"></th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for order in order_list %}
-        <tr>
-            <td>#{{ order.id }}</td>
-            <td>{{ order.total_price }}</td>
-            <td><a href="{% url 'change-order-status' order.pk %}">{{ order.get_status_display }}</a></td>
-            <td>{{ order.time }}</td>
-            <td><a href="{% url 'order-detail' order.pk %}">Details</a></td>
-        </tr>
-        {% endfor %}
+<div class="row mx-0">
+    <div class="my-5">
+        <h2>Orders in progress</h2>
+    </div>
+</div>
 
-    </tbody>
-</table>
+<div class="mb-5">
+    <h3>Submitted</h3>
+    {% if order_list %}
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Total price</th>
+                <th scope="col">Status</th>
+                <th scope="col">Created at</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for order in order_list %}
+            <tr>
+                <td>#{{ order.id }}</td>
+                <td>{{ order.total_price }}</td>
+                <td><a href="{% url 'change-order-status' order.pk %}" style="color: black;">
+                    {{ order.get_status_display }}</a></td>
+                <td>{{ order.time }}</td>
+                <td><a href="{% url 'order-detail' order.pk %}" style="color: #ff7404;">
+                    Details</a></td>
+            </tr>
+            {% endfor %}
 
-<br>
+        </tbody>
+    </table>
 
-{% else %}
-<p><i>No submitted orders yet</i></p>
-{% endif %}
-<br>
-<br>
-<h3>Processing</h3>
-{% if processing_orders %}
-<table class="table">
-    <thead>
-        <tr>
-            <th scope="col">ID</th>
-            <th scope="col">Total price</th>
-            <th scope="col">Status</th>
-            <th scope="col">Created at</th>
-            <th scope="col"></th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for order in processing_orders %}
-        <tr>
-            <td>#{{ order.id }}</td>
-            <td>{{ order.total_price }}</td>
-            <td><a href="/order/{{ order.id }}/status">{{ order.get_status_display }}</a></td>
-            <td>{{ order.time }}</td>
-            <td><a href="{% url 'order-detail' order.pk %}">Details</a></td>
-        </tr>
-        {% endfor %}
+    {% else %}
+    <p><i>No submitted orders yet</i></p>
+    {% endif %}
+</div>
 
-    </tbody>
-</table>
+<div class="mb-5">
+    <h3>Processing</h3>
+    {% if processing_orders %}
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Total price</th>
+                <th scope="col">Status</th>
+                <th scope="col">Created at</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for order in processing_orders %}
+            <tr>
+                <td>#{{ order.id }}</td>
+                <td>{{ order.total_price }}</td>
+                <td><a href="/order/{{ order.id }}/status" style="color: black;">
+                    {{ order.get_status_display }}</a></td>
+                <td>{{ order.time }}</td>
+                <td><a href="{% url 'order-detail' order.pk %}" style="color: #ff7404;">
+                    Details</a></td>
+            </tr>
+            {% endfor %}
 
-<br>
+        </tbody>
+    </table>
 
-{% else %}
-<p><i>No processing orders yet</i></p>
+    {% else %}
+    <p><i>No processing orders yet</i></p>
+    {% endif %}
+</div>
 
-{% endif %}
 {% endblock %}

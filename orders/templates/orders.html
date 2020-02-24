@@ -5,48 +5,47 @@ Your orders
 {% endblock %}
 
 {% block main %}
-<div class="container my-5 pb-5">
-    <div class="row mx-0">
-        <div class="my-4 orders-heading">
-            <h2>Your orders</h2>
-        </div>
+<div class="row mx-0">
+    <div class="my-4">
+        <h2>Your orders</h2>
     </div>
-    {% if order_list %}
-    <table class="table mb-5">
-        <thead>
-            <tr>
-                <th scope="col">ID</th>
-                <th scope="col">Total Price</th>
-                <th scope="col">Status</th>
-                <th scope="col">Created At</th>
-                <th scope="col"></th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for order in order_list %}
-            <tr>
-                <td>#{{ order.id }}</td>
-                <td>${{ order.total_price }}</td>
-                <td>{{ order.get_status_display }}</td>
-                <td>{{ order.time }}</td>
-                <td><a href="{% url 'order-detail' order.pk %}" style="color: #ff7404;">
-                    Details</a>
-                </td>
-            </tr>
-            {% endfor %}
-
-        </tbody>
-    </table>
-
-    {% else %}
-    <p>You have no orders with us yet!</p>
-
-    <div class="my-4 bd-highlight">
-        <a href="{% url 'menu' %}">
-            <button class="btn btn-primary">View Menu</button>
-        </a>   
-    </div>
-    {% endif %}
 </div>
+
+{% if order_list %}
+<table class="table mb-5">
+    <thead>
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Total Price</th>
+            <th scope="col">Status</th>
+            <th scope="col">Created At</th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for order in order_list %}
+        <tr>
+            <td>#{{ order.id }}</td>
+            <td>${{ order.total_price }}</td>
+            <td>{{ order.get_status_display }}</td>
+            <td>{{ order.time }}</td>
+            <td><a href="{% url 'order-detail' order.pk %}" style="color: #ff7404;">
+                Details</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% else %}
+<p>You have no orders with us yet!</p>
+
+<div class="my-4 bd-highlight">
+    <a href="{% url 'menu' %}">
+        <button class="btn btn-primary btn-lg">View Menu</button>
+    </a>   
+</div>
+{% endif %}
+
 
 {% endblock %}

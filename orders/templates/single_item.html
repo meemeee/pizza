@@ -5,152 +5,148 @@
 {% endblock %}
 
 {% block main %}
-<div class="container">
-    <!-- Added-item success message -->
-    {% if success or error %}
-    <div class="">
-        <div class="alert alert-dismissible fade show" role="alert">
-            {% if success %}
-            <i class="fa fa-check" style="color: green; font-size: 1.3em;"></i>
-            Added to <a href="{% url 'cart' %}" style="color:#ff7404">your cart</a>: {{ quantity }} {{ dish.name }} {{ dish.type }}
-            <ul class="mb-0">
-                {% if size %}
-                <li>Size {{ size }}</li>
-                {% endif %}
+<!-- Added-item success message -->
+{% if success or error %}
+<div class="alert alert-dismissible fade show" role="alert">
+    {% if success %}
+    <i class="fa fa-check" style="color: green; font-size: 1.3em;"></i>
+    Added to <a href="{% url 'cart' %}" style="color:#ff7404">your cart</a>: 
+    {{ quantity }} {{ dish.name }} {{ dish.type }}
+    
+    <ul>
+        {% if size %}
+            <li>Size {{ size }}</li>
+        {% endif %}
 
-                {% if topping or subx %}
-                <li>Toppings/Sub extras:
-                    {% for item in topping %}
-                    {{ item }}
-                    {% endfor %}
-                    {% for item2 in subx %}
-                    {{ item2 }}
-                    {% endfor %}
-                </li>
-                {% endif %}
-            </ul>
-            {% else %}
-                <i class="fa fa-times" style="color: red; font-size: 1.3em;"></i>
-                {{ error }} 
-                Please edit <a href="{% url 'cart' %}" style="color:#ff7404">your cart.</a>
-            {% endif %}
-        
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-    </div>
+        {% if topping or subx %}
+            <li>Toppings/Sub extras:
+                {% for item in topping %}
+                {{ item }}
+                {% endfor %}
+                {% for item2 in subx %}
+                {{ item2 }}
+                {% endfor %}
+            </li>
+        {% endif %}
+    </ul>
+    
+    {% else %}
+        <i class="fa fa-times" style="color: red; font-size: 1.3em;"></i>
+        {{ error }} 
+        Please edit <a href="{% url 'cart' %}" style="color:#ff7404">your cart.</a>
     {% endif %}
 
-    <!-- Product details -->
-    <div class="row my-5 mx-auto single-item-body">
-        <!-- Product image -->
-        <div class="col-md-5 my-5 img-single-item">
-            <img id="img-pizza" src="../static/media/single-item-pizza.png" alt="pizza" class="img-fluid mx-auto"
-                style="display: none;">
-            <img id="img-sub" src="../static/media/single-item-sub4.png" alt="subs" class="img-fluid mx-auto"
-                style="display: none;">
-            <img id="img-pasta" src="../static/media/single-item-pasta.png" alt="pasta plate" class="img-fluid mx-auto"
-                style="display: none;">
-            <img id="img-salad" src="../static/media/single-item-salad.png" alt="salad plate" class="img-fluid mx-auto"
-                style="display: none;">
-            <img id="img-dp" src="../static/media/single-item-dp 3.png" alt="dinner platter" class="img-fluid mx-auto"
-                style="display: none;">
-        </div>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+{% endif %}
 
-        <!-- Product's specs -->
-        <div class="col-md-6 my-5 ml-auto">
-            <!-- Heading & description -->
-            <div class="col-12 mb-4 px-0 heading-wrap single-item-body">
-                <h3 class="mb-3"><span id="dish-name">{{ dish.name }}</span>
-                    <span id="dish-type">{{ dish.type }}</span>
-                </h3>
-                <p class=""><i>
-                        Maecenas faucibus mollis interdum. Sed posuere consectetur est at lobortis.
-                        Maecenas faucibus mollis interdum. Sed posuere consectetur est at lobortis.
-                    </i></p>
-            </div>
-            <!-- Specs' form -->
-            <form id="form" action="" method="post">
-                {% csrf_token %}
-                <div class="mb-4">
-                    <div id="subX" class="form-group row" style="display: none">
-                        <label class="col-sm-4 col-form-label">Sub Extra(s):</label>
-                        {% for item in form.subx %}
+<!-- Product details -->
+<div class="row my-5 mx-auto single-item-body">
+    <!-- Product image -->
+    <div class="col-md-5 my-5 img-single-item">
+        <img id="img-pizza" src="../static/media/single-item-pizza.png" alt="pizza" class="img-fluid mx-auto"
+            style="display: none;">
+        <img id="img-sub" src="../static/media/single-item-sub4.png" alt="subs" class="img-fluid mx-auto"
+            style="display: none;">
+        <img id="img-pasta" src="../static/media/single-item-pasta.png" alt="pasta plate" class="img-fluid mx-auto"
+            style="display: none;">
+        <img id="img-salad" src="../static/media/single-item-salad.png" alt="salad plate" class="img-fluid mx-auto"
+            style="display: none;">
+        <img id="img-dp" src="../static/media/single-item-dp 3.png" alt="dinner platter" class="img-fluid mx-auto"
+            style="display: none;">
+    </div>
+
+    <!-- Product specs -->
+    <div class="col-md-6 my-5 ml-auto">
+        <!-- Heading & description -->
+        <div class="col-12 mb-4 px-0 heading-wrap single-item-body">
+            <h3 class="mb-3"><span id="dish-name">{{ dish.name }}</span>
+                <span id="dish-type">{{ dish.type }}</span>
+            </h3>
+            <p><i>
+                    Maecenas faucibus mollis interdum. Sed posuere consectetur est at lobortis.
+                    Maecenas faucibus mollis interdum. Sed posuere consectetur est at lobortis.
+                </i></p>
+        </div>
+        <!-- Specs' form -->
+        <form id="form" method="post">
+            {% csrf_token %}
+            <div class="mb-4">
+                <div id="subX" class="form-group row" style="display: none">
+                    <label class="col-sm-4 col-form-label">Sub Extra(s):</label>
+                    {% for item in form.subx %}
                         <div class="form-check col-sm-8 px-0 ml-auto">
                             {{ item }}
                         </div>
-                        {% endfor %}
+                    {% endfor %}
 
-                        {% for error in form.subx.errors %}
+                    {% for error in form.subx.errors %}
                         <p style="color: #ff7404;">{{ error }}</p>
-                        {% endfor %}
-                    </div>
-                    <div id="topping" class="form-group row" style="display: none">
-                        <label for="id_topping" class="col-sm-4 col-form-label">Topping(s)</label>
-                        <div class="col-sm-8 ml-auto px-0">
-                            <select multiple class="form-control" name="topping" id="id_topping">
-                                {% for item in form.topping %}
-                                {{ item }}
-                                {% endfor %}
-                            </select>
+                    {% endfor %}
+                </div>
+                <div id="topping" class="form-group row" style="display: none">
+                    <label for="id_topping" class="col-sm-4 col-form-label">Topping(s)</label>
+                    <div class="col-sm-8 ml-auto px-0">
+                        <select multiple class="form-control" name="topping" id="id_topping">
+                            {% for item in form.topping %}
+                            {{ item }}
+                            {% endfor %}
+                        </select>
 
-                            <small style="color: grey">{{ form.topping.help_text }}</small>
-                            {% for error in form.topping.errors %}
+                        <small style="color: grey">{{ form.topping.help_text }}</small>
+                        {% for error in form.topping.errors %}
                             <p style="color: #ff7404;">{{ error }}</p>
-                            {% endfor %}
-                        </div>
-                    </div>
-
-                    <div id="size" class="form-group row" style="display: none">
-                        <label for="id_size" class="col-sm-4 col-form-label">Size:</label>
-                        <select class="form-control col-sm-8 ml-auto" name="size" id="id_size">
-                            {% for item in form.size %}
-                            {{ item }}
-                            {% endfor %}
-                        </select>
-
-                        {% for error in form.size.errors %}
-                        <p style="color: #ff7404">{{ error }}</p>
-                        {% endfor %}
-                    </div>
-
-                    <div id="quantity" class="form-group row">
-                        <label for="id_quantity" class="col-sm-4 col-form-label">Quantity:</label>
-                        <select class="form-control col-sm-8 ml-auto" name="quantity" id="id_quantity">
-                            {% for item in form.quantity %}
-                            {{ item }}
-                            {% endfor %}
-                        </select>
-
-                        {% for error in form.quantity.errors %}
-                        <p style="color: #ff7404">{{ error }}</p>
                         {% endfor %}
                     </div>
                 </div>
-                <!-- Price and button -->
-                <div class>
-                    <h4 style="color: #ff7404"><b>$
-                        {% if dish.type == 'Pasta' or dish.type == 'Salad' %}
+
+                <div id="size" class="form-group row" style="display: none">
+                    <label for="id_size" class="col-sm-4 col-form-label">Size:</label>
+                    <select class="form-control col-sm-8 ml-auto" name="size" id="id_size">
+                        {% for item in form.size %}
+                            {{ item }}
+                        {% endfor %}
+                    </select>
+
+                    {% for error in form.size.errors %}
+                        <p style="color: #ff7404">{{ error }}</p>
+                    {% endfor %}
+                </div>
+
+                <div id="quantity" class="form-group row">
+                    <label for="id_quantity" class="col-sm-4 col-form-label">Quantity:</label>
+                    <select class="form-control col-sm-8 ml-auto" name="quantity" id="id_quantity">
+                        {% for item in form.quantity %}
+                            {{ item }}
+                        {% endfor %}
+                    </select>
+
+                    {% for error in form.quantity.errors %}
+                        <p style="color: #ff7404">{{ error }}</p>
+                    {% endfor %}
+                </div>
+            </div>
+            <!-- Price and button -->
+            <div class>
+                <h4 style="color: #ff7404"><b>$
+                    {% if dish.type == 'Pasta' or dish.type == 'Salad' %}
                         <span id="id_price" value="{{ price.na }}">{{ price.na }}</span>
-                        {% elif dish.name == 'Sausage, Peppers & Onions' %}
+                    {% elif dish.name == 'Sausage, Peppers & Onions' %}
                         <span id="id_price" value="{{ price.large }}">{{ price.large }}</span>
-                        {% else %}
+                    {% else %}
                         <span id="id_price" value="{{ price.small }}">{{ price.small }}</span>
-                        {% endif %}
-                    </b></h4>
+                    {% endif %}
+                </b></h4>
 
-                    <div class="mt-3 bd-highlight">
-                        <button class="btn btn-primary" type="submit">Add to cart</button>
-                    </div>
+                <div class="mt-3 bd-highlight">
+                    <button class="btn btn-primary" type="submit">Add to cart</button>
                 </div>
-            </form>
-        </div>
-
+            </div>
+        </form>
     </div>
-
 </div>
-
 
 {% load static %}
 <script>

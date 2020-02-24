@@ -1,18 +1,51 @@
-# Project 3
+# Pinocchio Pizza & Subs
 
-Web Programming with Python and JavaScript
+## Table of contents
+* [Description](#description)
+* [Installation](#installation)
+* [Technologies](#technologies)
 
-*REQUIRED*
-"Reorder" package for Admin page
- $ pip3 install django-modeladmin-reorder
+## Description
 
-*DESCRIPTION*
-In this project, I created an online shopping page for a pizza store. User can:
-- View Menu: sectioned into Pizza, Subs, Salads,... with a Table of Contents on the side for easy browsing.
-- Add item to cart: each type of item is displayed differently depending on the kind of selections and add-ons it allows. (E.g subs has sub-extra section, pizza with toppings has topping section,...)
-- Manage cart: user can view details and remove items from cart. Cart will not have duplicates - adding the same item to cart will result in an increase in quantity of the existing cart item.
-- Place order: there will be an confirmation modal before order submission.
+This project is a web application for handling a pizza restaurant’s online orders, with features available for both users and restaurant owners. The menu was built with relational database design, allowing restaurant owner to update their menu items with ease on Django Admin site.
 
-My personal touch:
-- Admin side: can view all in-progress orders, check details and change their status.
-- User side: can view orders and check their status.
+Made for project 3 of CS50W.
+
+### Features
+User can:
+- Browse restaurant's menu, select toppings/extras (if any) and add items to cart
+- Manage cart with an option to remove selected items
+- Submit order, view order details and check order's status
+
+Restaurant owner can: 
+- Add and update menu items
+- View submitted and in-progress orders
+- Change an order's status
+
+## Installation
+
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
+
+### Prerequisites
+
+```
+pip3 install django
+pip3 install django-modeladmin-reorder
+```
+
+### Installing
+1. Clone the repo
+```
+git clone https://github.com/meemeee/pizza.git
+```
+
+2. Run on local server
+```
+python3 manage.py runserver
+```
+
+## Technologies
+
+* [Django](https://docs.djangoproject.com/en/3.0/) - Python Web framework
+* [Bootstrap](https://getbootstrap.com/docs/4.0/) - CSS framework
+* [AOS](https://michalsnik.github.io/aos/) - Animate on scroll library

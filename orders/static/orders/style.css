@@ -29,6 +29,11 @@ h1, h2, h3, h4, h5 {
     font-family: 'DM Serif Display', serif;
     font-weight: 800;
 }
+
+h2 {
+    font-size: 50px;
+}
+
 .slider-text h1 {
     font-size: 4.5rem;
 }
@@ -127,6 +132,7 @@ p {
     text-transform: uppercase;
     color: #fff;
 }
+
 .item-dishes::before {
     position: absolute;
     content: "";
@@ -139,15 +145,49 @@ p {
     opacity: .45;
 }
 @media (max-width: 991px) {
-    .slide-text {
+    .slider-text h1 {
         font-size: 2.5rem;
     }
     .dishes-heading, .dishes-price {
         font-size: 2rem;
     }
+    .btn-lg {
+        font-size: 1rem;
+    }
     .img-single-item img {
         max-width: 300px;
     }
+}
+@media (max-width: 425px) {
+    .slider-text h1 {
+        font-size: 1.5rem;
+    }
+    .dishes-heading, .dishes-price {
+        font-size: 1rem;
+    }
+    .btn, .btn-lg {
+        padding: 0.3rem 0.6rem;
+        font-size: 0.7rem;
+    }
+    h2 {
+        font-size: 30px;
+    }
+    h3 {
+        font-size: 25px;
+    }
+    h4 {
+        font-size: 20px;
+    }
+    body {
+        font-size: 12px;
+    }
+    .table td {
+        padding: 0.25rem;
+    }
+    .img-single-item img {
+        max-width: 300px;
+    }
+
 }
 
 /* Hover to zoom */
@@ -160,7 +200,6 @@ p {
 .img-zoom img {
     transition: transform .5s ease;
 }
-  
 /* [3] Finally, transforming the image when container gets hovered */
 .img-zoom:hover img {
     transform: scale(1.1);
@@ -219,6 +258,7 @@ a:hover {
     color: #ff7404;
     border-bottom: 1px solid #ff7404;
 }
+
 .food-menu-item {
     border-bottom: 1px dotted #999;
     margin-bottom: 1rem;
@@ -238,7 +278,6 @@ a:hover {
 }
 
 .sticky {
-    /* max-width: 300px; */
     position: -webkit-sticky;
     position: sticky;
     top: 50px;
@@ -290,8 +329,6 @@ a:hover {
 }
 
 .alert {
-    /* color: #1f1f1f;
-    background-color: transparent; */
     border-color: #ff7404;
 }
 
@@ -300,12 +337,7 @@ a:hover {
     border-bottom: none;
     border-top: none;
 }
+
 .table td {
     border-top: 1px dotted #ff7404;
-}
-
-.cart-heading h2, 
-.orders-heading h2,
-.single-order-heading h2 {
-    font-size: 50px;
 }

@@ -5,28 +5,24 @@ Order submitted
 {% endblock %}
 
 {% block main %}
-<div class="container my-5">
-    <div class="alert" role="alert">
-        Congrats! Order 
-        <a href="{% url 'order-detail' order_id %}" style="color: #ff7404;">
-            <b>#{{ order_id }}</b>
-        </a> will be ready in a few minutes.
-        <ul>
-            {% for item in items %}
-                <li>{{ item.item}}: {{ item.quantity }}</li>
-            {% endfor %}
-        </ul>
-    </div>
-    
-    <div class=" text-center p-2 bd-highlight">
-        <a href="{% url 'menu' %}">
-            <button class="btn btn-primary">Continue shopping</button>
-        </a>   
-        <a href="{% url 'orders' %}">
-            <button class="btn btn-primary">Your orders</button>
-        </a> 
-    </div>
+<div class="alert mb-5" role="alert">
+    Congrats! Order 
+    <a href="{% url 'order-detail' order_id %}" style="color: #ff7404;">
+        <b>#{{ order_id }}</b>
+    </a> will be ready in a few minutes.
+    <ul>
+        {% for item in items %}
+            <li>{{ item.item}}: {{ item.quantity }}</li>
+        {% endfor %}
+    </ul>
 </div>
 
-
+<div class=" text-center p-2 bd-highlight">
+    <a href="{% url 'menu' %}">
+        <button class="btn btn-primary">Continue shopping</button>
+    </a>   
+    <a href="{% url 'orders' %}">
+        <button class="btn btn-primary">Your orders</button>
+    </a> 
+</div>
 {% endblock %}

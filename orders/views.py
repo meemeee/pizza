@@ -13,7 +13,13 @@ from django.http import JsonResponse
 
 # Create your views here.
 def index(request):
-    return render(request, "index.html")
+    # Get cart num value
+    cart_num = len(Item.objects.filter(created_by=request.user).filter(status__exact='p'))
+
+    context = {
+        'cart_num': cart_num,
+    }
+    return render(request, "index.html", context)
 
 def register(request):
     if request.method == "POST":

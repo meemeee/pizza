@@ -5,145 +5,143 @@ Shopping cart
 {% endblock %}
 
 {% block main %}
+<div class="row mx-0">
+    <div class="my-4">
+        <h2>Your cart</h2>
+    </div>
+</div>
 
-<div class="container my-5 pb-5">
-    <div class="row mx-0">
-        <div class="my-4 cart-heading">
-            <h2>Your cart</h2>
+<div class="row mx-0 mb-5">
+{% if item_list %}
+    <table class="table mb-5">
+        <thead>
+            <tr>
+                <th scope="col"></th>
+                <th scope="col">Product</th>
+                <th scope="col">Quantity</th>
+                <th scope="col">Size</th>
+                <th scope="col">Notes</th>  
+                <th scope="col">Price</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in item_list %}
+            <tr>
+                <!-- Remove button  -->
+                <td>
+                    <form id="remove_form_{{ item.id }}" action="cart/remove_item" method="POST">
+                        {% csrf_token %}
+                        <input name="item_id" value="{{ item.id }}" style="display: none">
+
+                    </form>
+                    <a href="#" class="remove" id="{{ item.id }}" data-name="{{ item.item }}">
+                        <i class="fa fa-times" style="color: grey"></i>
+                    </a>
+                </td>
+
+                <!-- Product -->
+                <td>{{ item.item }}</td>
+                <!-- Quantity -->
+                <td>{{ item.quantity }}</td>
+                
+                <!-- Size -->
+                {% if item.get_size_display == 'Please choose size' %}
+                <td></td>
+                {% else %}
+                <td>{{ item.get_size_display }}</td>
+                {% endif %}
+
+                <!-- Notes -->
+                {% if item.display_topping %}
+                <td>{{ item.display_topping }}</td>
+                {% elif item.display_subx %}
+                <td>{{ item.display_subx}}</td>
+                {% else %}
+                <td></td>
+                {% endif %}
+
+                <!-- Price -->
+                <td>$<span class="item-price">{{ item.price }}</span></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- Total price & button -->
+    <div class="heading-wrap">
+        <h4>
+            Cart total: $<span id="total-price"></span>
+        </h4>
+
+        <div class="mt-3 bd-highlight">
+            <form id="place_order_form" action="{% url 'new-order' %}" method="post">
+                {% csrf_token %}
+                <input name="order_id" value="{{ order_id }}" style="display: none">
+                <button id="place_order_button" class="btn btn-primary btn-lg my-3" type="submit">Place Order</button>
+            </form>
         </div>
     </div>
-    <div class="row mx-0 mb-5">
-    {% if item_list %}
-        <table class="table mb-5">
-            <thead>
-                <tr>
-                    <th scope="col"></th>
-                    <th scope="col">Product</th>
-                    <th scope="col">Quantity</th>
-                    <th scope="col">Size</th>
-                    <th scope="col">Notes</th>  
-                    <th scope="col">Price</th>
-                    
-                </tr>
-            </thead>
-            <tbody>
-                {% for item in item_list %}
-                <tr>
-                    <!-- Remove button  -->
-                    <td>
-                        <form id="remove_form_{{ item.id }}" action="cart/remove_item" method="POST">
-                            {% csrf_token %}
-                            <input name="item_id" value="{{ item.id }}" style="display: none">
 
-                        </form>
-                        <a href="#" class="remove" id="{{ item.id }}" data-name="{{ item.item }}">
-                            <i class="fa fa-times" style="color: grey"></i>
-                        </a>
-                    </td>
-
-                    <!-- Product -->
-                    <td>{{ item.item }}</td>
-                    <!-- Quantity -->
-                    <td>{{ item.quantity }}</td>
-                    
-                    <!-- Size -->
-                    {% if item.get_size_display == 'Please choose size' %}
-                    <td></td>
-                    {% else %}
-                    <td>{{ item.get_size_display }}</td>
-                    {% endif %}
-
-                    <!-- Notes -->
-                    {% if item.display_topping %}
-                    <td>{{ item.display_topping }}</td>
-                    {% elif item.display_subx %}
-                    <td>{{ item.display_subx}}</td>
-                    {% else %}
-                    <td></td>
-                    {% endif %}
-
-                    <!-- Price -->
-                    <td>$<span class="item-price">{{ item.price }}</span></td>
-                    
-                    
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-
-        <div class="heading-wrap">
-            <h4>
-                Cart total: $<span id="total-price"></span>
-            </h4>
-
-            <div class="mt-3 bd-highlight">
-                <form id="place_order_form" action="{% url 'new_order' %}" method="post">
-                    {% csrf_token %}
-                    <input name="order_id" value="{{ order_id }}" style="display: none">
-                    <button id="place_order_button" class="btn btn-primary btn-lg my-3" type="submit">Place Order</button>
-                </form>
-            </div>
-        </div>
-        <!-- Confirmation Modal -->
-        <div class="modal fade" id="confirmation" tabindex="-1" role="dialog" aria-labelledby="confirmationLabel"
-            aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="">
-                            Order total: $<span id="total-price-modal"></span>
-                        </h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <p>Please check your order before submission.
-                            Press <b>Proceed</b> to submit your order.</p>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Check order</button>
-                        <button id="confirmed" type="button" class="btn btn-primary">Proceed</button>
-                    </div>
+    <!-- Confirmation Modal -->
+    <div class="modal fade" id="order-confirmation" tabindex="-1" role="dialog" aria-labelledby="order-confirmationLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">
+                        Order total: $<span id="total-price-modal"></span>
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Kindly check your order carefully before submission.
+                        Press <b>Proceed</b> to submit your order.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Check order</button>
+                    <button id="confirmed" type="button" class="btn btn-primary">Proceed</button>
                 </div>
             </div>
         </div>
+    </div>
 
-        <!-- RemoveItem Modal -->
-        <div class="modal fade" id="remove-item-confirmation" tabindex="-1" role="dialog" aria-labelledby="remove-item-confirmationLabel"
-            aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">
-                            Are you sure?
-                        </h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <p>Do you want to remove <b><span id="remove-item-name"></span></b> from your cart?</p>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
-                        <button id="remove-item-confirmed" type="button" class="btn btn-primary">Yes</button>
-                    </div>
+    <!-- RemoveItem Modal -->
+    <div class="modal fade" id="remove-item-confirmation" tabindex="-1" role="dialog" aria-labelledby="remove-item-confirmationLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">
+                        Are you sure?
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Do you want to remove <b><span id="remove-item-name"></span></b> from your cart?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                    <button id="remove-item-confirmed" type="button" class="btn btn-primary">Yes</button>
                 </div>
             </div>
         </div>
-        {% else %}
-        <div class>
-            It's empty, let's start getting some good food!
-            <div class="my-4 bd-highlight">
-                <a href="{% url 'menu' %}">
-                    <button class="btn btn-primary btn-lg my-3">View Menu</button>
-                </a>   
-            </div>
-        </div>
-        {% endif %}
     </div>
-</div> 
+
+    {% else %}
+    <div>
+        It's empty, let's start getting some good food!
+        <div class="my-4 bd-highlight">
+            <a href="{% url 'menu' %}">
+                <button class="btn btn-primary btn-lg my-3">View Menu</button>
+            </a>   
+        </div>
+    </div>
+    {% endif %}
+</div>
 
 <script>
     // Calculate total price
@@ -155,12 +153,12 @@ Shopping cart
     document.querySelector('#total-price').innerHTML = total_price.toFixed(2);
     document.querySelector('#total-price-modal').innerHTML = total_price.toFixed(2);
 
-    // Add remove button
+    // Trigger remove-item modal
     document.querySelectorAll('.remove').forEach(item => {
         item.onclick = event => {
             event.preventDefault();
-
             document.querySelector('#remove-item-name').innerHTML = item.getAttribute('data-name');
+            
             // Activate confirmation modal
             $('#remove-item-confirmation').modal();
             document.querySelector('#remove-item-confirmed').onclick = () => {
@@ -176,11 +174,10 @@ Shopping cart
         event.preventDefault();
         
         // Activate confirmation modal
-        $('#confirmation').modal();
+        $('#order-confirmation').modal();
         document.querySelector('#confirmed').onclick = () => {
             document.querySelector('#place_order_form').submit();
         }
     }
-
 </script>
 {% endblock %}

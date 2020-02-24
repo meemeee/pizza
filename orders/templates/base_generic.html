@@ -52,7 +52,7 @@
                         </li>
                     {% if user.is_authenticated %}
                         <li class="nav-item">
-                            <a class="nav-link" href="{% url 'orders' %}">Your orders</a>
+                            <a class="nav-link" href="{% url 'orders' %}">Orders</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'cart' %}">
@@ -60,12 +60,10 @@
                                 <span class="ml-1 cart-num">{{ cart_num }}</span>
                             </a>
                         </li>
-
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'logout' %}">Log out</a>
                         </li>
                     {% else %}
-  
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'register' %}">Register</a>
                         </li>
@@ -74,17 +72,14 @@
                         </li>
                     {% endif %}
                     </ul>
-
-                   
                 </div>
             </div>
         </nav>
 
-        <!-- <main class="container p-7"> -->
         <main>
-            <!-- <div class="container-fluid py-md-3 py-sm-3"> -->
+            <div class="container my-5 pb-5">
                 {% block main %}{% endblock %}
-            <!-- </div> -->
+            </div>
         </main>
 
         <footer class="mt-5 site-footer">
@@ -92,7 +87,7 @@
                 <div class="row">
                     <div class="col-md-4 mt-5 mb-3">
                         <h3>Follow us</h3>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit dolor sit amet.</p>
                         <ul class="list-unstyled footer-link d-flex footer-social">
                             <li><a href="#" class="p-2"><span class="fa fa-twitter"></span></a></li>
                             <li><a href="#" class="p-2"><span class="fa fa-facebook"></span></a></li>
@@ -120,6 +115,7 @@
                 </div>
             </div>
         </footer>
+        
         <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
         <script>
             AOS.init({
@@ -128,5 +124,4 @@
             });
         </script>
     </body>
-
 </html>

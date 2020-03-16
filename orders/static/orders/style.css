@@ -227,7 +227,7 @@ p {
 
 .btn-primary:hover,
 .btn-primary:focus,
-.btn-primary:active {
+.btn-primary:active, .btn-primary:active:hover {
     color: white;
     background-color: #e66a05;
     border-color: #e66a05;

@@ -9,7 +9,7 @@ header {
 
 body {
     font-family: "Open Sans", Arial, sans-serif;
-    font-size: 18px;
+    font-size: 19px;
     font-weight: 400;
     line-height: 1.8;
     display: flex;
@@ -22,7 +22,7 @@ main {
 }
 
 footer p {
-    font-size: 15px;
+    font-size: 18px;
 }
 
 h1, h2, h3, h4, h5 {
@@ -142,8 +142,24 @@ p {
     top: 0;
     z-index: 2;
     background: #000;
-    opacity: .45;
+    opacity: .25;
 }
+
+@media (max-width: 1200px) {
+    .slider-text h1 {
+        font-size: 3rem;
+    }
+    .dishes-heading, .dishes-price {
+        font-size: 2rem;
+    }
+    .btn-lg {
+        font-size: 1rem;
+    }
+    body {
+        font-size: 18px;
+    }
+}
+
 @media (max-width: 991px) {
     .slider-text h1 {
         font-size: 2.5rem;
@@ -156,6 +172,9 @@ p {
     }
     .img-single-item img {
         max-width: 300px;
+    }
+    body {
+        font-size: 18px;
     }
 }
 @media (max-width: 425px) {
@@ -219,6 +238,12 @@ p {
     color: #ff7404;
 }
 
+.btn-light {
+    color: white;
+    background-color: transparent;
+    border: 2px white solid
+}
+
 .btn-primary {
     color: white;
     border-color: #ff7404;
@@ -248,7 +273,7 @@ a:hover {
 }
 
 .navbar-nav>.nav-item>.nav-link {
-    font-size: 16px;
+    font-size: 18px;
     padding-left: 20px;
     padding-right: 20px;
     font-weight: 400;

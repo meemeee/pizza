@@ -13,7 +13,16 @@ from django.http import JsonResponse
 
 # Create your views here.
 def index(request):
-    return render(request, "index.html")
+    # Get cart num value if user has logged in
+    if request.user.is_authenticated:
+        cart_num = len(Item.objects.filter(created_by=request.user).filter(status__exact='p'))
+
+        context = {
+            'cart_num': cart_num,
+        }
+        return render(request, "index.html", context)
+    else:
+        return render(request, "index.html")
 
 def register(request):
     if request.method == "POST":
@@ -131,7 +140,6 @@ def menu(request):
 
     return render(request, "menu.html", context)
 
-@login_required
 def item(request, item_id):
     # Get item's info from item_id
     item = item_id.split("_")   
@@ -178,7 +186,7 @@ def item(request, item_id):
                 raise Http404("Dish does not exist")           
             break
 
-    if request.method == "POST":
+    if request.method == "POST" and request.user.is_authenticated:
         # Create form from Order Model
         form2 = ItemForm()
 
@@ -297,14 +305,22 @@ def item(request, item_id):
             
             # return render(request, "add_item_message.html", context)
             return render(request, "single_item.html", context)
-                      
+    
+    # Redirect to Login page if not logged in
+    elif request.method == "POST" and not request.user.is_authenticated:    
+        return redirect('%s?next=%s' % (settings.LOGIN_URL, request.path))         
+    
+    # Get request
     else:
         # Create form from Order Model
         form = ItemForm()
+    
+    # Set cart num value if user has logged in
+    if request.user.is_authenticated:
+        cart_num = len(Item.objects.filter(created_by=request.user).filter(status__exact='p'))
+    else:
+        cart_num = 0
         
-    # Set cart num value
-    cart_num = len(Item.objects.filter(created_by=request.user).filter(status__exact='p'))
-
     context = {
         "price": price,
         "dish": dish,

@@ -22,7 +22,8 @@ main {
 }
 
 footer p {
-    font-size: 18px;
+    font-size: 16px;
+    color: rgb(121, 121, 121);
 }
 
 h1, h2, h3, h4, h5 {
@@ -39,7 +40,7 @@ h2 {
 }
 
 p {
-    color: rgb(97, 96, 96);
+    color: rgb(122, 121, 121);
     margin-top: 0;
     margin-bottom: 1rem;
 }
@@ -174,7 +175,13 @@ p {
         max-width: 300px;
     }
     body {
-        font-size: 18px;
+        font-size: 16px;
+    }
+    .heading-wrap h2 {
+        font-size: 40px;
+    }
+    h3 {
+        font-size: 25px;
     }
 }
 @media (max-width: 425px) {
@@ -229,7 +236,7 @@ p {
 }
 
 .site-footer h3 {
-    font-size: 16px;
+    font-size: 18px;
     margin-bottom: 20px;
     font-weight: 700;
 }

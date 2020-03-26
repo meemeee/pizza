@@ -29,8 +29,11 @@
         <!-- Stylesheet -->
         {% load static %}
         <link rel="stylesheet" href="{% static 'orders/style.css' %}">
-        <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-        <link rel="shortcut icon" type="image/png" href="{% static 'favicon.ico' %}"/>
+        <link rel="shortcut icon" type="image/png" href="{% static 'favicon.ico' %}">
+
+        <!-- Fontawesome -->
+        <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
     </head>
 
     <body data-spy="scroll" data-target="#toc">
@@ -85,9 +88,9 @@
         <footer class="mt-5 site-footer">
             <div class="container">
                 <div class="row">
-                    <div class="col-md-4 mt-5 mb-3">
+                    <div class="col-md-4 mt-5 mb-md-4">
                         <h3>Follow us</h3>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit dolor sit amet.</p>
+                        <p>Lorem ipsum dolor sit amet consectetur adipisice elit dolor sit amet.</p>
                         <ul class="list-unstyled footer-link d-flex footer-social">
                             <li><a href="#" class="p-2"><span class="fa fa-twitter"></span></a></li>
                             <li><a href="#" class="p-2"><span class="fa fa-facebook"></span></a></li>
@@ -95,12 +98,12 @@
                             <li><a href="#" class="p-2"><span class="fa fa-instagram"></span></a></li>
                         </ul>
                     </div>
-                    <div class="col-md-4 mt-5 mb-3">
+                    <div class="col-md-auto mx-auto mt-4 mt-md-5 mb-md-4">
                         <h3>Opening Hours</h3>
                         <p><strong class="d-block font-weight-normal text-black">Monday - Wednesday</strong>11:00 AM – 1:00 AM</p>
                         <p><strong class="d-block font-weight-normal text-black">Thursday - Sunday</strong>11:00 AM – 2:00 AM</p>
                     </div>
-                    <div class="col-md-4 mt-5 mb-3">
+                    <div class="col-md-4 mt-4 mt-md-5 mb-md-4">
                         <h3>Contact Info</h3>
                         <ul class="list-unstyled footer-link">
                             <li class="d-block">

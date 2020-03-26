@@ -21,16 +21,17 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-    
+
     <!-- aos CSS -->
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
 
     <!-- Stylesheet -->
     {% load static %}
     <link rel="stylesheet" href="{% static 'orders/style.css' %}">
-    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-    <link rel="shortcut icon" type="image/png" href="{% static 'favicon.ico' %}"/>
+    <link rel="shortcut icon" type="image/png" href="{% static 'favicon.ico' %}" />
+
+    <!-- Fontawesome -->
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 
 </head>
 
@@ -43,7 +44,7 @@
                     aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                
+
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item">
@@ -52,7 +53,7 @@
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'menu' %}">Menu</a>
                         </li>
-                    {% if user.is_authenticated %}
+                        {% if user.is_authenticated %}
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'orders' %}">Orders</a>
                         </li>
@@ -66,15 +67,15 @@
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'logout' %}">Log out</a>
                         </li>
-                    {% else %}
+                        {% else %}
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'register' %}">Register</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'login' %}">Log in</a>
                         </li>
-                    {% endif %}
-                    </ul>  
+                        {% endif %}
+                    </ul>
                 </div>
             </div>
         </nav>
@@ -130,32 +131,32 @@
             <div class="my-5 pt-5 pb-2 col-md-12 text-center heading-wrap">
                 <h2 data-aos="fade-up">About us</h2>
             </div>
-            <div class="row align-items-center pb-4" data-aos="fade" data-aos-easing="linear">
-                <div class="col-lg-6 pb-4">
+            <div class="row no-gutters align-items-center pb-4" data-aos="fade" data-aos-easing="linear">
+                <div class="col-md-6 pb-4">
                     <img src="../static/media/about1.jpg" alt="Restaurant owner picture" class="img-fluid">
                 </div>
-                <div class="col-lg-5 ml-auto pb-4">
+                <div class="col-md-5 ml-auto pb-4">
                     <h3 class="about-heading">Our start</h3>
                     <p>
-                        Born from a passion for cuisine and inspired by nature’s finest flavors, 
-                        Pinocchio brings the most beloved Italian recipes home to you.   
+                        Born from a passion for cuisine and inspired by nature’s finest flavors,
+                        Pinocchio brings the most beloved Italian recipes home to you.
                     </p>
                     <p>
                         We’re ready to share our passion with you for lunch, dinner, and every meal in-between.
                     </p>
                 </div>
             </div>
-            <div class="row align-items-center pb-4">
-                <div class="col-lg-6 pb-4">
+            <div class="row no-gutters align-items-center pb-4">
+                <div class="col-md-6 pb-4">
                     <img src="../static/media/about2.jpg" alt="People sharing pizza" class="img-fluid">
                 </div>
-                <div class="col-lg-5 ml-auto pb-4">
+                <div class="col-md-5 ml-auto pb-4">
                     <h3 class="about-heading">Good food for the people</h3>
                     <p>
-                        We have committed ourselves at Pinocchio to providing a meal that anyone and everyone can enjoy: 
+                        We have committed ourselves at Pinocchio to providing a meal that anyone and everyone can enjoy:
                         always finding new and exciting ways to bring Italian flavors to your plate.
-                    <p>
-                        That’s the Pinocchio lifestyle: delicious Italian cuisine, made for you.                    </p>
+                        <p>
+                            That’s the Pinocchio lifestyle: delicious Italian cuisine, made for you. </p>
                 </div>
             </div>
         </div>
@@ -164,26 +165,27 @@
             <div class="my-5 pt-5 pb-2 col-lg-7 text-center mx-auto heading-wrap">
                 <h2 data-aos="fade-up">Best of the week</h2>
                 <p data-aos="fade-up">
-                    Taking pride and joy in the satisfaction a good meal, 
+                    Taking pride and joy in the satisfaction a good meal,
                     we represent to you our most-beloveds to bring authentic Italian cuisine to your table!
                 </p>
             </div>
 
             <div class="row pb-4 align-items-center justify-content-center">
-                <div class="col-lg-4 col-md-4 col-sm-10 mb-5"
-                    data-aos="fade" data-aos-delay="400" data-aos-duration="1200">
+                <div class="col-lg-4 col-md-4 col-sm-10 mb-5" data-aos="fade" data-aos-delay="400"
+                    data-aos-duration="1200">
                     <div class="img-zoom">
                         <a href="/menu/sicilian_3" class="item-dishes" style="display: block">
                             <div class="text">
                                 <h3 class="dishes-price">$28.45</p>
                                     <h2 class="dishes-heading">Sicilian Pizza w Tomato & Basil</h2>
                             </div>
-                            <img src="../static/media/best6.jpg" alt="Sicilian Pizza w Tomato & Basil" class="img-fluid">
+                            <img src="../static/media/best6.jpg" alt="Sicilian Pizza w Tomato & Basil"
+                                class="img-fluid">
                         </a>
                     </div>
                 </div>
-                <div class="col-lg-4 col-md-4 col-sm-10 mb-5"
-                    data-aos="fade" data-aos-delay="700" data-aos-duration="1200">
+                <div class="col-lg-4 col-md-4 col-sm-10 mb-5" data-aos="fade" data-aos-delay="700"
+                    data-aos-duration="1200">
                     <div class="img-zoom">
                         <a href="/menu/salad_1" class="item-dishes" style="display: block">
                             <div class="text">
@@ -194,8 +196,8 @@
                         </a>
                     </div>
                 </div>
-                <div class="col-lg-4 col-md-4 col-sm-10 mb-5"
-                    data-aos="fade" data-aos-delay="1000" data-aos-duration="1200">
+                <div class="col-lg-4 col-md-4 col-sm-10 mb-5" data-aos="fade" data-aos-delay="1000"
+                    data-aos-duration="1200">
                     <div class="img-zoom">
                         <a href="/menu/sub_10" class="item-dishes" style="display: block">
                             <div class="text">
@@ -210,17 +212,17 @@
 
             <div class="text-center mb-5" data-aos="fade">
                 <a href="{% url 'menu' %}" class="btn btn-primary btn-lg">
-                View Full Menu</a>
+                    View Full Menu</a>
             </div>
         </div>
     </main>
 
     <footer class="site-footer mt-5" data-aos="fade">
         <div class="container">
-            <div class="row">
-                <div class="col-md-4 mt-5 mb-3">
+            <div class="row no-gutters">
+                <div class="col-md-4 mt-5 mb-md-4">
                     <h3>Follow us</h3>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit dolor sit amet.</p>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisice elit dolor sit amet.</p>
                     <ul class="list-unstyled footer-link d-flex footer-social">
                         <li><a href="#" class="p-2"><span class="fa fa-twitter"></span></a></li>
                         <li><a href="#" class="p-2"><span class="fa fa-facebook"></span></a></li>
@@ -228,12 +230,14 @@
                         <li><a href="#" class="p-2"><span class="fa fa-instagram"></span></a></li>
                     </ul>
                 </div>
-                <div class="col-md-4 mt-5 mb-3">
+                <div class="col-md-auto mx-auto mt-4 mt-md-5 mb-md-4">
                     <h3>Opening Hours</h3>
-                    <p><strong class="d-block font-weight-normal text-black">Monday - Wednesday</strong>11:00 AM – 1:00 AM</p>
-                    <p><strong class="d-block font-weight-normal text-black">Thursday - Sunday</strong>11:00 AM – 2:00 AM</p>
+                    <p><strong class="d-block font-weight-normal text-black">Monday - Wednesday</strong>11:00 AM – 1:00
+                        AM</p>
+                    <p><strong class="d-block font-weight-normal text-black">Thursday - Sunday</strong>11:00 AM – 2:00
+                        AM</p>
                 </div>
-                <div class="col-md-4 mt-5 mb-3">
+                <div class="col-md-4 mt-4 mt-md-5 mb-md-4">
                     <h3>Contact Info</h3>
                     <ul class="list-unstyled footer-link">
                         <li class="d-block">

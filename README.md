@@ -31,7 +31,7 @@ These instructions will get you a copy of the project up and running on your loc
 git clone https://github.com/meemeee/pizza.git
 ```
 
-2. Install requirements
+2. Navigate into `pizza` directory, then install requirements
 ```
 pip3 install -r requirements.txt
 ```

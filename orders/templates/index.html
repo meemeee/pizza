@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
     <title>Pinocchio Pizza & Subs</title>
@@ -82,10 +82,11 @@
     </header>
 
     <main class="mb-5">
-        <div id="carouselExampleIndicators" class="carousel slide carousel-fade mb-5 pb-5" data-ride="carousel">
+        <div id="carousel" class="carousel slide carousel-fade mb-5 pb-5" 
+        data-ride="carousel" data-interval="3500" data-pause="false">
             <ol class="carousel-indicators">
-                <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-                <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+                <li data-target="#carousel" data-slide-to="0" class="active"></li>
+                <li data-target="#carousel" data-slide-to="1"></li>
             </ol>
             <div class="carousel-inner">
                 <div class="carousel-item active">
@@ -94,7 +95,7 @@
                         <div class="carousel-caption">
                             <div data-aos="fade-up" class="slider-text">
                                 <h1><b>Exquisite Italian food</b></h1>
-                                <h1><b>at Pinocchio</h1></b>
+                                <h1><b>at Pinocchio</b></h1>
                             </div>
                             <div class="mt-4" data-aos="fade" data-aos-duration="300">
                                 <a href="{% url 'menu' %}" class="btn btn-light btn-lg">Today's Menu</a>
@@ -117,11 +118,11 @@
                     </div>
                 </div>
             </div>
-            <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+            <a class="carousel-control-prev" href="#carousel" role="button" data-slide="prev">
                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                 <span class="sr-only">Previous</span>
             </a>
-            <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+            <a class="carousel-control-next" href="#carousel" role="button" data-slide="next">
                 <span class="carousel-control-next-icon" aria-hidden="true"></span>
                 <span class="sr-only">Next</span>
             </a>
@@ -131,7 +132,7 @@
             <div class="my-5 pt-5 pb-2 col-md-12 text-center heading-wrap">
                 <h2 data-aos="fade-up">About us</h2>
             </div>
-            <div class="row no-gutters align-items-center pb-4" data-aos="fade" data-aos-easing="linear">
+            <div class="row no-gutters align-items-center pb-5" data-aos="fade" data-aos-easing="linear">
                 <div class="col-md-6 pb-4">
                     <img src="../static/media/about1.jpg" alt="Restaurant owner picture" class="img-fluid">
                 </div>
@@ -176,8 +177,8 @@
                     <div class="img-zoom">
                         <a href="/menu/sicilian_3" class="item-dishes" style="display: block">
                             <div class="text">
-                                <h3 class="dishes-price">$28.45</p>
-                                    <h2 class="dishes-heading">Sicilian Pizza w Tomato & Basil</h2>
+                                <h3 class="dishes-price">$28.45</h3>
+                                <h2 class="dishes-heading">Sicilian Pizza w Tomato & Basil</h2>
                             </div>
                             <img src="../static/media/best6.jpg" alt="Sicilian Pizza w Tomato & Basil"
                                 class="img-fluid">
@@ -189,8 +190,8 @@
                     <div class="img-zoom">
                         <a href="/menu/salad_1" class="item-dishes" style="display: block">
                             <div class="text">
-                                <h3 class="dishes-price">$6.25</p>
-                                    <h2 class="dishes-heading">Fresh Garden Salad</h2>
+                                <h3 class="dishes-price">$6.25</h3>
+                                <h2 class="dishes-heading">Fresh Garden Salad</h2>
                             </div>
                             <img src="../static/media/best 4.jpg" alt="Fresh Garden Salad" class="img-fluid">
                         </a>
@@ -201,8 +202,8 @@
                     <div class="img-zoom">
                         <a href="/menu/sub_10" class="item-dishes" style="display: block">
                             <div class="text">
-                                <h3 class="dishes-price">$6.95</p>
-                                    <h2 class="dishes-heading">Steak and Cheese Sub</h2>
+                                <h3 class="dishes-price">$6.95</h3>
+                                <h2 class="dishes-heading">Steak and Cheese Sub</h2>
                             </div>
                             <img src="../static/media/best3.jpg" alt="Steak and Cheese Sub" class="img-fluid">
                         </a>
@@ -210,7 +211,7 @@
                 </div>
             </div>
 
-            <div class="text-center mb-5" data-aos="fade">
+            <div class="text-center mb-5 pb-5" data-aos="fade">
                 <a href="{% url 'menu' %}" class="btn btn-primary btn-lg">
                     View Full Menu</a>
             </div>

@@ -132,11 +132,11 @@
             <div class>
                 <h4 style="color: #ff7404"><b>$
                     {% if dish.type == 'Pasta' or dish.type == 'Salad' %}
-                        <span id="id_price" value="{{ price.na }}">{{ price.na }}</span>
+                        <span id="id_price" data-price="{{ price.na }}">{{ price.na }}</span>
                     {% elif dish.name == 'Sausage, Peppers & Onions' %}
-                        <span id="id_price" value="{{ price.large }}">{{ price.large }}</span>
+                        <span id="id_price" data-price="{{ price.large }}">{{ price.large }}</span>
                     {% else %}
-                        <span id="id_price" value="{{ price.small }}">{{ price.small }}</span>
+                        <span id="id_price" data-price="{{ price.small }}">{{ price.small }}</span>
                     {% endif %}
                 </b></h4>
 

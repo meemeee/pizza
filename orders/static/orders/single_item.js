@@ -87,7 +87,7 @@ var quantity = document.querySelector('#id_quantity');
 var quantity_value = quantity.options[quantity.selectedIndex].value;
 
 var price = document.querySelector('#id_price');
-var price_from_size = price.getAttribute('value');
+var price_from_size = price.getAttribute('data-price');
 var final_price = parseFloat(price_from_size);
 
 // Change price when selecting subx
@@ -112,13 +112,13 @@ size.onchange = () => {
     size_value = size.options[size.selectedIndex].value;
 
     if (size_value == 'L') {
-        price.setAttribute('value', localStorage.getItem("price_large"));
-        price_from_size = price.getAttribute('value');
+        price.setAttribute('data-price', localStorage.getItem("price_large"));
+        price_from_size = price.getAttribute('data-price');
         
     }
     else {
-        price.setAttribute('value', localStorage.getItem("price_small"));
-        price_from_size = price.getAttribute('value');
+        price.setAttribute('data-price', localStorage.getItem("price_small"));
+        price_from_size = price.getAttribute('data-price');
     }
     
     final_price = (parseFloat(price_from_size) + checked_count * 0.5) * parseInt(quantity_value);
